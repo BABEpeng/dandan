@@ -5,6 +5,14 @@ import qs from 'qs'
 import merge from 'lodash/merge'
 import { clearLoginInfo } from '@/utils'
 
+// 全局axios通信默认配置
+// axios.defaults.baseURL = 'http://127.0.0.1:8000'
+// axios.defaults.headers.post['Content-Type'] = 'application/json'
+// axios.defaults.withCredentials = true
+// axios.defaults.headers.common['Authorization'] = this.$store.state.token
+// Vue.prototype.$axios = axios
+
+// axios实例默认配置
 const http = axios.create({
   timeout: 1000 * 30,
   withCredentials: true,
@@ -12,12 +20,14 @@ const http = axios.create({
     'Content-Type': 'application/json; charset=utf-8'
   }
 })
+// http.defaults.headers.common['Authorization'] = this.$store.state.token
 
 /**
  * 请求拦截
  */
 http.interceptors.request.use(config => {
   config.headers['token'] = Vue.cookie.get('token') // 请求头带上token
+  config.headers.common['Authorization'] = localStorage.getItem('token')
   return config
 }, error => {
   return Promise.reject(error)
