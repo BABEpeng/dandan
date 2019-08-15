@@ -26,8 +26,8 @@ const http = axios.create({
  * 请求拦截
  */
 http.interceptors.request.use(config => {
-  config.headers['token'] = Vue.cookie.get('token') // 请求头带上token
-  config.headers.common['Authorization'] = localStorage.getItem('token')
+  config.headers['token'] = Vue.cookie.get('token') ? Vue.cookie.get('token') : localStorage.getItem('token') // 请求头带上token
+  // config.headers.common['Authorization'] = localStorage.getItem('token')
   return config
 }, error => {
   return Promise.reject(error)

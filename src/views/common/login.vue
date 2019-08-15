@@ -7,12 +7,12 @@
           <p class="brand-info__intro">renren-fast-vue基于vue、element-ui构建开发，实现renren-fast后台管理前端功能，提供一套更优的前端解决方案。</p>
         </div>
         <div class="login-main">
-          <div>
-            <h2>{{this.$store.state.count}}</h2>
-            <h2>{{this.$store.getters.getStateCount}}</h2>
-            <button @click="addFun"></button>
-            <button @click="reductionFun"></button>
-          </div>
+<!--          <div>-->
+<!--            <h2>{{this.$store.state.count}}</h2>-->
+<!--            <h2>{{this.$store.getters.getStateCount}}</h2>-->
+<!--            <button @click="addFun"></button>-->
+<!--            <button @click="reductionFun"></button>-->
+<!--          </div>-->
           <h3 class="login-title">管理员登录</h3>
           <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
             <el-form-item prop="userName">
