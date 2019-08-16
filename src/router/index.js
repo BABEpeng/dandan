@@ -9,10 +9,11 @@ import Router from 'vue-router'
 import http from '@/utils/httpRequest'
 import { isURL } from '@/utils/validate'
 import { clearLoginInfo } from '@/utils'
-
+import store from '@/store'
 Vue.use(Router)
 
 // 开发环境不使用懒加载, 因为懒加载页面太多的话会造成webpack热更新太慢, 所以只有生产环境使用懒加载
+console.log(process.env.NODE_ENV)
 const _import = require('./import-' + process.env.NODE_ENV)
 
 // 全局路由(无需嵌套上左右整体布局)
@@ -39,13 +40,19 @@ const mainRoutes = {
     { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } }
   ],
   beforeEnter (to, from, next) {
-    let token = Vue.cookie.get('token')
+    let token = Vue.cookie.get('token') ? Vue.cookie.get('token') : localStorage.getItem('token')
+    console.log(localStorage.getItem('token'))
     if (!token || !/\S/.test(token)) {
       clearLoginInfo()
       next({ name: 'login' })
     }
     next()
   }
+}
+
+// 页面刷新时，重新赋值token
+if (localStorage.getItem('token')) {
+  store.commit('setToken', localStorage.getItem('token'))
 }
 
 const router = new Router({

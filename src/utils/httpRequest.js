@@ -4,6 +4,7 @@ import router from '@/router'
 import qs from 'qs'
 import merge from 'lodash/merge'
 import { clearLoginInfo } from '@/utils'
+// import store from '@/store'
 
 // 全局axios通信默认配置
 // axios.defaults.baseURL = 'http://127.0.0.1:8000'
@@ -26,8 +27,11 @@ const http = axios.create({
  * 请求拦截
  */
 http.interceptors.request.use(config => {
-  config.headers['token'] = Vue.cookie.get('token') ? Vue.cookie.get('token') : localStorage.getItem('token') // 请求头带上token
-  // config.headers.common['Authorization'] = localStorage.getItem('token')
+  config.headers['token'] = Vue.cookie.get('token')// 请求头带上token
+   // 判断是否存在token，如果存在将每个页面header都添加token
+  // if (store.state.token) {
+  //   config.headers.common['Authorization'] = store.state.token
+  // }
   return config
 }, error => {
   return Promise.reject(error)

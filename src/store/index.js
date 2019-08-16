@@ -3,17 +3,29 @@ import Vuex from 'vuex'
 import cloneDeep from 'lodash/cloneDeep'
 import common from './modules/common'
 import user from './modules/user'
+import http from '../utils/httpRequest'
+
+// 模块扩展
+import feeds from './modules/feeds'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
     common,
-    user
+    user,
+    feeds
   },
   state: {
     count: 1,
-    token: localStorage.getItem('token') ? localStorage.getItem('token') : ''
+    // token: localStorage.getItem('token') ? localStorage.getItem('token') : '',
+    params: {},
+    platIcon: {
+      instagram: require('../assets/images/instagram.png'),
+      weibo: require('../assets/images/weibo.png'),
+      twitter: require('../assets/images/twitter.png'),
+      facebook: require('../assets/images/facebook.png')
+    }
   },
   getters: {
     getStateCount: function (state) {
@@ -49,6 +61,32 @@ export default new Vuex.Store({
     },
     reduction (context) {
       context.commit('reduction')
+    },
+    server (context, params) {
+      let { data, url } = params
+      if (data) {
+        http({
+          url: http.adornUrl(url),
+          method: 'get',
+          params: http.adornParams(data)
+        }).then(({data}) => {
+          if (data && data.code === 0) {
+            this.createMatrix(data)
+          }
+        })
+      }
+    },
+    handleDownload () {
+      let startTime = Date.now()
+      let timer = setTimeout(() => {
+        let endTime = Date.now()
+        if ((endTime - startTime) < 2200) {
+          window.location.href = ''
+        }
+      }, 2000)
+      window.onblur = () => {
+        clearTimeout(timer)
+      }
     }
   },
   strict: process.env.NODE_ENV !== 'production'
