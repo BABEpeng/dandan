@@ -18,6 +18,7 @@
   import MainNavbar from './main-navbar'
   import MainSidebar from './main-sidebar'
   import MainContent from './main-content'
+  import Feeds from '../components/feeds/feeds'
   export default {
     provide () {
       return {
@@ -38,7 +39,8 @@
     components: {
       MainNavbar,
       MainSidebar,
-      MainContent
+      MainContent,
+      Feeds
     },
     computed: {
       documentClientHeight: {

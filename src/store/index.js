@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import cloneDeep from 'lodash/cloneDeep'
 import common from './modules/common'
 import user from './modules/user'
-import http from '../utils/httpRequest'
 
 // 模块扩展
 import feeds from './modules/feeds'
@@ -61,20 +60,6 @@ export default new Vuex.Store({
     },
     reduction (context) {
       context.commit('reduction')
-    },
-    server (context, params) {
-      let { data, url } = params
-      if (data) {
-        http({
-          url: http.adornUrl(url),
-          method: 'get',
-          params: http.adornParams(data)
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.createMatrix(data)
-          }
-        })
-      }
     },
     handleDownload () {
       let startTime = Date.now()

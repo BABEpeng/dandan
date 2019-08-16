@@ -39,13 +39,11 @@
         </div>
       </div>
     </div>
-    <feeds></feeds>
   </div>
 </template>
 
 <script>
   import { getUUID } from '@/utils'
-  import feeds from '../../components/feeds/feeds'
   export default {
     data () {
       return {
@@ -112,9 +110,6 @@
         this.dataForm.uuid = getUUID()
         this.captchaPath = this.$http.adornUrl(`/captcha.jpg?uuid=${this.dataForm.uuid}`)
       }
-    },
-    components: {
-      feeds
     }
   }
 </script>

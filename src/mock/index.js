@@ -8,6 +8,9 @@ import * as sysMenu from './modules/sys-menu'
 import * as sysRole from './modules/sys-role'
 import * as sysUser from './modules/sys-user'
 
+// 模拟feeds数据
+import * as sysFeeds from './modules/sys-feeds'
+
 // tips
 // 1. 开启/关闭[业务模块]拦截, 通过调用fnCreate方法[isOpen参数]设置.
 // 2. 开启/关闭[业务模块中某个请求]拦截, 通过函数返回对象中的[isOpen属性]设置.
@@ -20,6 +23,9 @@ fnCreate(sysMenu, false)
 fnCreate(sysRole, false)
 fnCreate(sysUser, false)
 
+// 模拟feeds数据
+fnCreate(sysFeeds, true)
+
 /**
  * 创建mock模拟数据
  * @param {*} mod 模块
@@ -28,6 +34,8 @@ fnCreate(sysUser, false)
 function fnCreate (mod, isOpen = true) {
   if (isOpen) {
     for (var key in mod) {
+      // eslint-disable-next-line func-call-spacing
+      // eslint-disable-next-line no-unexpected-multiline
       ((res) => {
         if (res.isOpen !== false) {
           Mock.mock(new RegExp(res.url), res.type, (opts) => {

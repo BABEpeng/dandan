@@ -13,6 +13,7 @@ const feedsStore = {
 
         item.images.forEach((item0, index0) => {
           arr.push(item0)
+          // eslint-disable-next-line eqeqeq
           if ((index0 + 1) % 3 == 0) {
             Matrix.push(arr)
             arr = []

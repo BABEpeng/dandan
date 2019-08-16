@@ -49,21 +49,6 @@ export function info () {
   }
 }
 
-// 获取feeds数据
-export function feeds () {
-  return {
-    // isOpen: false,
-    url: '/sys/feeds',
-    type: 'get',
-    data: {
-      'msg': 'success',
-      'code': 0,
-      'content': [
-      ]
-    }
-  }
-}
-
 // 修改密码
 export function updatePassword () {
   return {
