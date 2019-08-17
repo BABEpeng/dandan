@@ -33,7 +33,7 @@ export function feeds () {
             'avatar': '/static/images/roughness_map.jpg',
             'platform': 'instagram'
           },
-          'content': 'Merry Christmas from everyone at #MUFC!',
+          'content': '',
           'images': [
             {
               'imageId': 'b5mw31CboiQh31o/OqN6TX///qbKp1MXEar/3g+WLgA=imageDetailSplit137764826714843_6231605072384491520',

@@ -4,14 +4,14 @@
       <div class="feeds-author overflow">
         <div class="feeds-avatar l bg-img">
           <div class="bg-img" :style="{backgroundImage: 'url('+item.author.avatar+')'}"></div>
-        <img class="plat-icon" :src= "platIcon[item.author.platform]" />
-    </div>
-    <div class="l">
-      <p class="f-15 f-bold" style="margin:8px 0 2px 0;">{{item.author.nickname}}</p>
-      <p class="c-9b">{{formatTime(item.publishTime)}}</p>
-    </div>
-  </div>
-  <div class="feeds-media">
+          <img class="plat-icon" :src= "platIcon[item.author.platform]" />
+        </div>
+        <div class="l">
+          <p class="f-15 f-bold" style="margin:8px 0 2px 0;">{{item.author.nickname}}</p>
+          <p class="c-9b">{{formatTime(item.publishTime)}}</p>
+        </div>
+      </div>
+      <div class="feeds-media">
     <div v-if="item.postType=='image'" v-for="item0 in item.feedsMatrix" class="feeds-media-row overflow">
       <div v-for="item1 in item0"
       :class="[item.images.length > 2 ? 'media-item-3' : (item0.length == 1 ? 'media-item-1' : 'media-item-2'), 'feeds-media-item', 'bg-img', 'l']"
@@ -28,14 +28,14 @@
 <video v-show="currentPlayer==item.postId" controls="controls" preload="preload" :src="item.video.videoUrl"></video>
 </div>
 </div>
-<p class="f-15 c-47 lh-130" style="margin-bottom: 18px;">{{item.content}}</p>
-<div class="overflow feeds-contral">
+      <p class="f-15 c-47 lh-130" style="margin-bottom: 18px;">{{item.content}}</p>
+      <div class="overflow feeds-contral">
   <img class="l" :src = "like_url" />
   <span class="c-47 f-bold l" style="margin-right: 23px;">{{item.likeCount}}</span>
   <img class="l" :src = "comment_url" />
   <span class="c-47 f-bold l">{{item.commentCount}}</span>
 </div>
-<div class="comment-list" v-if="item.hotComments.length > 0">
+      <div class="comment-list" v-if="item.hotComments.length > 0">
   <ul>
     <li class="overflow" v-for="item0 in item.hotComments">
       <div class="comment-avatar l bg-img">
@@ -46,7 +46,7 @@
 </ul>
 <a @click="handleDownload" href="tanqu://home/test?p=12&d=1"><p v-if="Number(item.commentCount) > 3" class="c-47" style="margin-top:2px;">查看所有{{item.commentCount}}条评论 &gt;</p></a>
 </div>
-</div>
+    </div>
 </div>
 </template>
 <script>
@@ -102,7 +102,6 @@ export default {
         method: 'get',
         params: this.$http.adornParams(params)
       }).then(({data}) => {
-        console.log(data)
         if (data && data.code === 0) {
           this.createMatrix(data.content)
         }
@@ -116,6 +115,20 @@ export default {
 
   }
 
+/*  .comment-list {
+    margin-top: 14px;
+    border-top: 1px solid #bababa;
+    padding-top: 12px;
+  }
+  .l {
+    float: left;
+  }*/
+  .plat-icon {
+    width: 18px;
+    position: absolute;
+    bottom: -1px;
+    right: 0;
+  }
   .feeds-item {
     background-color: #fff;
     padding: 16px 14px 21px 14px;

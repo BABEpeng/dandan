@@ -6,6 +6,7 @@ import user from './modules/user'
 
 // 模块扩展
 import feeds from './modules/feeds'
+import banner from './modules/banner'
 
 Vue.use(Vuex)
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
   modules: {
     common,
     user,
-    feeds
+    feeds,
+    banner
   },
   state: {
     count: 1,
