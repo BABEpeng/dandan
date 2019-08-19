@@ -27,7 +27,7 @@ const globalRoutes = [
 
 // 前端页面路由
 const websiteRoutes = [
-  { path: '/page', component: require('@/views/website/page.vue').default, name: 'page', meta: { title: '主页' } }
+  { path: '/page', component: require('@/views/website/page').default, name: 'page', meta: { title: '主页' } }
 ]
 // 主入口路由(需嵌套上左右整体布局)
 const mainRoutes = {

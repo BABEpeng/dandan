@@ -1,16 +1,14 @@
 <template>
   <div>
-    <main-layout />
+    头部
   </div>
 </template>
 
 <script>
-  import MainLayout from './mainlayout'
   export default {
     data () {
       return {
       }
-    },
-    components: {MainLayout}
+    }
   }
 </script>
