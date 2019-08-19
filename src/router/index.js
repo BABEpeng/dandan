@@ -9,7 +9,6 @@ import Router from 'vue-router'
 import http from '@/utils/httpRequest'
 import { isURL } from '@/utils/validate'
 import { clearLoginInfo } from '@/utils'
-import store from '@/store'
 Vue.use(Router)
 
 // 开发环境不使用懒加载, 因为懒加载页面太多的话会造成webpack热更新太慢, 所以只有生产环境使用懒加载
@@ -26,6 +25,10 @@ const globalRoutes = [
   { path: '/banner', name: 'banner', component: () => import('../components/banner/banner')}
 ]
 
+// 前端页面路由
+const websiteRoutes = [
+  { path: '/page', component: require('@/views/website/page.vue').default, name: 'page', meta: { title: '主页' } }
+]
 // 主入口路由(需嵌套上左右整体布局)
 const mainRoutes = {
   path: '/',
@@ -44,7 +47,8 @@ const mainRoutes = {
     { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } }
   ],
   beforeEnter (to, from, next) {
-    let token = Vue.cookie.get('token') ? Vue.cookie.get('token') : localStorage.getItem('token')
+    // let token = Vue.cookie.get('token')
+    let token = JSON.parse(sessionStorage.getItem('token'))
     if (!token || !/\S/.test(token)) {
       clearLoginInfo()
       next({ name: 'login' })
@@ -54,15 +58,15 @@ const mainRoutes = {
 }
 
 // 页面刷新时，重新赋值token
-if (localStorage.getItem('token')) {
-  store.commit('setToken', localStorage.getItem('token'))
-}
+// if (localStorage.getItem('token')) {
+//   store.commit('setToken', localStorage.getItem('token'))
+// }
 
 const router = new Router({
   mode: 'hash',
   scrollBehavior: () => ({ y: 0 }),
   isAddDynamicMenuRoutes: false, // 是否已经添加动态(菜单)路由
-  routes: globalRoutes.concat(mainRoutes)
+  routes: globalRoutes.concat(mainRoutes).concat(websiteRoutes)
 })
 
 router.beforeEach((to, from, next) => {

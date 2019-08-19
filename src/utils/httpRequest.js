@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import axios from 'axios'
 import router from '@/router'
 import qs from 'qs'
@@ -27,11 +26,8 @@ const http = axios.create({
  * 请求拦截
  */
 http.interceptors.request.use(config => {
-  config.headers['token'] = Vue.cookie.get('token')// 请求头带上token
-   // 判断是否存在token，如果存在将每个页面header都添加token
-  // if (store.state.token) {
-  //   config.headers.common['Authorization'] = store.state.token
-  // }
+  // config.headers['token'] = Vue.cookie.get('token')// 请求头带上token
+  config.headers['token'] = JSON.parse(sessionStorage.getItem('token'))
   return config
 }, error => {
   return Promise.reject(error)

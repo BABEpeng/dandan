@@ -94,8 +94,8 @@
               })
             }).then(({data}) => {
               if (data && data.code === 0) {
-                this.$cookie.set('token', data.token)
-                this.$store.commit('setToken', data.token)
+                // this.$cookie.set('token', data.token)
+                sessionStorage.setItem('token', JSON.stringify(data.token))
                 this.$router.replace({ name: 'home' })
               } else {
                 this.getCaptcha()

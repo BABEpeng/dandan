@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import router from '@/router'
 import store from '@/store'
 
@@ -52,8 +51,8 @@ export function treeDataTranslate (data, id = 'id', pid = 'parentId') {
  * 清除登录信息
  */
 export function clearLoginInfo () {
-  Vue.cookie.delete('token')
-  // store.commit('delToken')
+  // Vue.cookie.delete('token')
+  sessionStorage.removeItem('token')
   store.commit('resetStore')
   router.options.isAddDynamicMenuRoutes = false
 }
