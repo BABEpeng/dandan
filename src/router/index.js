@@ -27,8 +27,16 @@ const globalRoutes = [
 
 // 前端页面路由
 const websiteRoutes = [
-  { path: '/page', component: require('@/views/website/page').default, name: 'page', meta: { title: '主页' } }
+  { path: '/font',
+    component: require('@/views/website/page').default,
+    name: 'font',
+    meta: { title: '主页' },
+    children: [
+      // { path: '/font/component', component: () => import('../components/fon/component'), name: 'component', meta: { title: '主题' } }
+    ]
+  }
 ]
+
 // 主入口路由(需嵌套上左右整体布局)
 const mainRoutes = {
   path: '/',

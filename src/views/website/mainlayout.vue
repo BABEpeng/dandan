@@ -6,7 +6,9 @@
       </el-header>
 <!--      <el-main :style="{ height }">-->
        <el-main>
-         <div class="content"></div>
+         <div class="content">
+           <router-view></router-view>
+         </div>
       </el-main>
       <el-footer>
         <footer-container class="footer-wrap"></footer-container>
@@ -63,10 +65,9 @@
     padding: 3px;
   }
   .content {
-    width: 100%;
+    width: 1200px;
     height: auto !important;
-    _height: 500px;
-    min-height: 600px;
+    min-height: 700px;
     position: relative;
     margin: 0 auto;
     padding-bottom: 80px;
