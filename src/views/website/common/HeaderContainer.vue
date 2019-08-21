@@ -1,29 +1,64 @@
 <template>
   <div class="header">
-    <div class="logoBox">
-      <h1>
-        <router-link to="/page">
-           <img src="~@/assets/img/logo.svg" />
-        </router-link>
-      </h1>
-    </div>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-      <el-menu-item index="1">处理中心</el-menu-item>
-      <el-submenu index="2">
-        <template slot="title">我的工作台</template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-        <el-menu-item index="2-3">选项3</el-menu-item>
-        <el-submenu index="2-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="2-4-1">选项1</el-menu-item>
-          <el-menu-item index="2-4-2">选项2</el-menu-item>
-          <el-menu-item index="2-4-3">选项3</el-menu-item>
-        </el-submenu>
-      </el-submenu>
-      <el-menu-item index="3" disabled>消息中心</el-menu-item>
-      <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
-    </el-menu>
+    <el-row>
+      <el-col :span="4">
+        <div class="grid-content bg-purple">
+          <div class="logoBox">
+            <h1>
+              <router-link to="/page">
+                <img src="~@/assets/img/logo.svg" />
+              </router-link>
+            </h1>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="16">
+        <div class="grid-content bg-purple-light">
+          <el-menu
+            :default-active="activeIndex"
+            class="el-menu-demo"
+            mode="horizontal"
+            @select="handleSelect"
+            background-color="#22325E"
+            text-color="#fff"
+            active-text-color="#ffd04b">
+            <el-menu-item index="1">项目管理</el-menu-item>
+            <el-menu-item index="2" disabled>楼宇全息</el-menu-item>
+            <el-submenu index="3">
+              <template slot="title">综合报表</template>
+              <el-menu-item index="3-1"><router-link to=''>能源报表</router-link></el-menu-item>
+              <el-menu-item index="3-2"><router-link to=''>设备视图</router-link></el-menu-item>
+              <el-menu-item index="3-3"><router-link to=''>工单视图</router-link></el-menu-item>
+            </el-submenu>
+            <el-submenu index="4">
+              <template slot="title">触发器管理</template>
+              <el-menu-item index="4-1"><router-link to=''>触发器列表</router-link></el-menu-item>
+              <el-menu-item index="4-2"><router-link to=''>触发器添加</router-link></el-menu-item>
+            </el-submenu>
+            <el-submenu index="5">
+              <template slot="title">设备管理</template>
+              <el-menu-item index="5-1"><router-link to=''>设备列表</router-link></el-menu-item>
+              <el-menu-item index="5-2"><router-link to=''>设备添加</router-link></el-menu-item>
+            </el-submenu>
+            <el-submenu index="6">
+              <template slot="title">网管管理</template>
+              <el-menu-item index="6-1"><router-link to=''>网管管理</router-link></el-menu-item>
+              <el-menu-item index="6-2"><router-link to=''>网管添加</router-link></el-menu-item>
+            </el-submenu>
+            <el-submenu index="7">
+              <template slot="title">权限管理</template>
+              <el-menu-item index="7-1"><router-link to=''>人员管理</router-link></el-menu-item>
+              <el-menu-item index="7-2"><router-link to=''>角色添加</router-link></el-menu-item>
+            </el-submenu>
+          </el-menu>
+        </div>
+      </el-col>
+      <el-col :span="4">
+        <div class="grid-content bg-purple">
+
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -31,8 +66,7 @@
   export default {
     data () {
       return {
-        activeIndex: '1',
-        activeIndex2: '1'
+        activeIndex: '1'
       }
     },
     methods: {
@@ -46,7 +80,7 @@
 
   .header{
     width:1200px;
-    height:60px;
+    height:61px;
     position:relative;
     margin: 0 auto;
     text-align:left;
@@ -65,14 +99,15 @@
   .logoBox{
     width: 146px;
     height: 38px;
-    position: absolute;
-    top: 8px;
-    float: left;
+    padding-top: 8px;
   }
   .logoBox:hover{
     background: #8794BA;
   }
   .logoBox img {
     width: 146px;
+  }
+  .el-submenu >.el-menu-item {
+    width:200px;
   }
 </style>

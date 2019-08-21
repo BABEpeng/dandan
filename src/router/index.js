@@ -27,12 +27,12 @@ const globalRoutes = [
 
 // 前端页面路由
 const websiteRoutes = [
-  { path: '/font',
-    component: require('@/views/website/page').default,
-    name: 'font',
+  { path: '/page',
+    component: require('@/views/website/mainlayout').default,
+    name: 'page',
     meta: { title: '主页' },
     children: [
-      // { path: '/font/component', component: () => import('../components/fon/component'), name: 'component', meta: { title: '主题' } }
+      { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } }
     ]
   }
 ]

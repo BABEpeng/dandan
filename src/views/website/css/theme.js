@@ -100,7 +100,7 @@ export default {
 
     layoutBackground: '#22325E',
     headerBackground: '#22325E',
-    mainBackground: '#22325E',
+    mainBackground: '#e5e9f2',
     headerMenuTextUnFocus: '#8794BA',
     headerMenuDarkBackground: '#132045',
     footerMainBackground: '#22325E',

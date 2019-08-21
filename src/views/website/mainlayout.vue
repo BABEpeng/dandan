@@ -6,9 +6,7 @@
       </el-header>
 <!--      <el-main :style="{ height }">-->
        <el-main>
-         <div class="content">
-           <router-view></router-view>
-         </div>
+         <content-container class = 'content-wrap'></content-container>
       </el-main>
       <el-footer>
         <footer-container class="footer-wrap"></footer-container>
@@ -19,6 +17,7 @@
 
 <script>
   import HeaderContainer from '../../views/website/common/headercontainer'
+  import ContentContainer from '../../views/website/common/contentcontainer'
   import FooterContainer from '../../views/website/common/footercontainer'
   export default {
     data () {
@@ -31,7 +30,7 @@
         default: '70px'
       }
     },
-    components: {HeaderContainer, FooterContainer}
+    components: {HeaderContainer, ContentContainer, FooterContainer}
   }
 </script>
 <style lang="scss" scoped >
@@ -64,17 +63,15 @@
   .el-main{
     padding: 3px;
   }
-  .content {
-    width: 1200px;
+
+  .content-wrap {
+    width: 100%;
     height: auto !important;
-    min-height: 700px;
     position: relative;
     margin: 0 auto;
-    padding-bottom: 80px;
-    background: #22325E;
     text-align: left;
-
   }
+
   .el-footer{
     padding: 0;
   }
