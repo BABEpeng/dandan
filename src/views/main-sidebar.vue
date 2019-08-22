@@ -82,6 +82,7 @@
     methods: {
       // 路由操作
       routeHandle (route) {
+        console.log(route)
         if (route.meta.isTab) {
           // tab选中, 不存在先添加
           var tab = this.mainTabs.filter(item => item.name === route.name)[0]

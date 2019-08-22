@@ -61,10 +61,16 @@
     data () {
       return {
       }
+    },
+    computed: {
+      mainTabs: {
+        get () { return this.$store.state.common.mainTabs },
+        set (val) { this.$store.commit('common/updateMainTabs', val) }
+      }
     }
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 
   .contents{
     width:1200px;
@@ -74,7 +80,7 @@
   }
   .content{
     width: 100%;
-    height: auto !important;
+    height: auto;
     min-height: 700px;
     position: relative;
     margin: 0 auto;
@@ -83,7 +89,7 @@
   }
   .content-sidebar {
     width: 100%;
-    height: auto !important;
+    height: auto;
     min-height: 700px;
     position: relative;
     margin: 0 auto;

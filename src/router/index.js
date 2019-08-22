@@ -32,7 +32,7 @@ const websiteRoutes = [
     name: 'page',
     meta: { title: '主页' },
     children: [
-      { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } }
+      { path: '/page/demo-echarts', component: _import('demo/echarts'), name: 'demo-echart', meta: { title: 'demo-echart', isTab: true } }
     ]
   }
 ]

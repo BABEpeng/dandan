@@ -20,7 +20,7 @@
     }
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   .footer{
     height: 100%;
     width: 1200px;

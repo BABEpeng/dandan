@@ -52,22 +52,15 @@
     padding: 0;
   }
   .header-wrap{
-    height: 88px;
-    width:100%;
-    position:relative;
     padding: 0;
     border-bottom:1px solid #ddd;
-    background: #22325E;
-    z-index:9;
+
   }
   .el-main{
-    padding: 3px;
+    padding: 10px;
   }
 
   .content-wrap {
-    width: 100%;
-    height: auto !important;
-    position: relative;
     margin: 0 auto;
     text-align: left;
   }
@@ -77,7 +70,6 @@
   }
   .footer-wrap{
     height: 60px;
-    width:100%;
     padding: 0;
     background:#22325E;
     text-align:center;
