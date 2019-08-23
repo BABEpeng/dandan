@@ -1,5 +1,5 @@
 <template>
-  <aside class="site-sidebar" :class="'site-sidebar--' + sidebarLayoutSkin">
+  <aside class="content-side" :class="'site-sidebar--' + sidebarLayoutSkin">
     <div class="site-sidebar__inner">
       <el-menu
         :default-active="menuActiveName || 'home'"
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-  import SubMenu from './main-sidebar-sub-menu'
+  import SubMenu from './contentsidebarmenu'
   import { isURL } from '@/utils/validate'
   export default {
     data () {
@@ -110,3 +110,8 @@
     }
   }
 </script>
+<style lang="scss">
+  .content-side {
+    overflow: hidden;
+  }
+</style>

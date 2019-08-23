@@ -22,12 +22,12 @@
             background-color="#22325E"
             text-color="#fff"
             active-text-color="#ffd04b">
-            <el-menu-item index="home" @click="$router.push({ name: 'home' })">
+            <el-menu-item index="home" @click="$router.push({ name: 'demo-echart' })">
               <span slot="title">项目管理</span>
             </el-menu-item>
-            <el-menu-item index="2" @click="$router.push({ name: '' })">
-              <span slot="title">楼宇全息</span>
-            </el-menu-item>
+<!--            <el-menu-item index="2" @click="$router.push({ name: '' })">-->
+<!--              <span slot="title">楼宇全息</span>-->
+<!--            </el-menu-item>-->
             <el-submenu index="3">
               <template slot="title">
                 综合报表
@@ -178,7 +178,6 @@
     created () {
       this.menuList = JSON.parse(sessionStorage.getItem('menuList') || '[]')
       this.dynamicMenuRoutes = JSON.parse(sessionStorage.getItem('dynamicMenuRoutes') || '[]')
-      console.log(this.$route)
       this.routeHandle(this.$route)
     },
     methods: {

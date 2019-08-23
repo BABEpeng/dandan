@@ -137,7 +137,7 @@ function fnAddDynamicMenuRoutes (menuList = [], routes = []) {
     } else if (menuList[i].url && /\S/.test(menuList[i].url)) {
       menuList[i].url = menuList[i].url.replace(/^\//, '')
       var route = {
-        path: menuList[i].url.replace('/', '-'),
+        path: 'page/' + menuList[i].url.replace('/', '-'),
         component: null,
         name: menuList[i].url.replace('/', '-'),
         meta: {
