@@ -115,7 +115,7 @@
           }
         } else {
           this.menuActiveName = ''
-          this.$router.push({ name: 'home' })
+          this.$router.push({ name: 'fonthome' })
         }
       },
       // tabs, 关闭当前

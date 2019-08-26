@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="../../../../../../../Downloads/style 2/theme/index.css">
 <template>
   <aside class="content-side" :class="'site-sidebar--' + sidebarLayoutSkin">
     <div class="site-sidebar__inner">

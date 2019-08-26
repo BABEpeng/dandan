@@ -3,8 +3,8 @@
     <div class="site-content__wrapper">
       <div class="site-content">
         <div class="brand-info">
-          <h2 class="brand-info__text">renren-fast-vue</h2>
-          <p class="brand-info__intro">renren-fast-vue基于vue、element-ui构建开发，实现renren-fast后台管理前端功能，提供一套更优的前端解决方案。</p>
+          <h2 class="brand-info__text">logo</h2>
+          <p class="brand-info__intro"></p>
         </div>
         <div class="login-main">
 <!--          <div>-->
@@ -13,29 +13,31 @@
 <!--            <button @click="addFun"></button>-->
 <!--            <button @click="reductionFun"></button>-->
 <!--          </div>-->
-          <h3 class="login-title">管理员登录</h3>
-          <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
-            <el-form-item prop="userName">
-              <el-input v-model="dataForm.userName" placeholder="帐号"></el-input>
-            </el-form-item>
-            <el-form-item prop="password">
-              <el-input v-model="dataForm.password" type="password" placeholder="密码"></el-input>
-            </el-form-item>
-            <el-form-item prop="captcha">
-              <el-row :gutter="20">
-                <el-col :span="14">
-                  <el-input v-model="dataForm.captcha" placeholder="验证码">
-                  </el-input>
-                </el-col>
-                <el-col :span="10" class="login-captcha">
-                  <img :src="captchaPath" @click="getCaptcha()" alt="">
-                </el-col>
-              </el-row>
-            </el-form-item>
-            <el-form-item>
-              <el-button class="login-btn-submit" type="primary" @click="dataFormSubmit()">登录</el-button>
-            </el-form-item>
-          </el-form>
+          <div class = "login-contain">
+            <h3 class="login-title">管理员登录</h3>
+            <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
+              <el-form-item prop="userName">
+                <el-input v-model="dataForm.userName" placeholder="帐号"></el-input>
+              </el-form-item>
+              <el-form-item prop="password">
+                <el-input v-model="dataForm.password" type="password" placeholder="密码"></el-input>
+              </el-form-item>
+              <el-form-item prop="captcha">
+                <el-row :gutter="20">
+                  <el-col :span="14">
+                    <el-input v-model="dataForm.captcha" placeholder="验证码">
+                    </el-input>
+                  </el-col>
+                  <el-col :span="10" class="login-captcha">
+                    <img :src="captchaPath" @click="getCaptcha()" alt="">
+                  </el-col>
+                </el-row>
+              </el-form-item>
+              <el-form-item>
+                <el-button class="login-btn-submit" type="primary" @click="dataFormSubmit()">登录</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
         </div>
       </div>
     </div>
@@ -121,18 +123,23 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(38, 50, 56, .6);
+    background-color: #2082D9;
     overflow: hidden;
     &:before {
       position: fixed;
       top: 0;
       left: 0;
-      z-index: -1;
+      z-index: 0;
       width: 100%;
       height: 100%;
       content: "";
-      background-image: url(~@/assets/img/login_bg.jpg);
+      background-image: url(~@/assets/img/bg_login.png);
       background-size: cover;
+      /*-webkit-animation: bounce-up 1.4s linear infinite;*/
+      /*animation: bounce-up 1.4s linear infinite;*/
+      -webkit-animation: bounce-down 1.5s linear infinite;
+      animation: bounce-down 1.5s linear infinite;
+
     }
     .site-content__wrapper {
       position: absolute;
@@ -156,7 +163,7 @@
     }
     .brand-info__text {
       margin:  0 0 22px 0;
-      font-size: 48px;
+      font-size: 18px;
       font-weight: 400;
       text-transform : uppercase;
     }
@@ -168,12 +175,12 @@
     }
     .login-main {
       position: absolute;
-      top: 0;
-      right: 0;
+      top: 64px;
+      right: 132px;
       padding: 150px 60px 180px;
       width: 470px;
       min-height: 100%;
-      background-color: #fff;
+      background-color: #2082D9;
     }
     .login-title {
       font-size: 16px;
@@ -190,4 +197,47 @@
       margin-top: 38px;
     }
   }
+
+   .el-form-item.is-success .el-input__inner, .el-form-item.is-success .el-input__inner:focus, .el-form-item.is-success .el-textarea__inner, .el-form-item.is-success .el-textarea__inner:focus {
+     border-color:#D3D3D3;
+   }
+  .el-form-item.is-success .el-input__validateIcon {
+    color: #B7B7B7;
+  }
+  .el-button--primary {
+    color: #FFFFFF;
+    background-color: #1A74C3;
+    border-color: #D3D3D3;
+  }
+  .el-button--primary:hover {
+    color: #FFFFFF;
+    background-color: #3795E8;
+    border-color: #3795E8;
+  }
+  .site-wrapper.site-page--login .login-title {
+    color: #646464;
+  }
+
+  .site-wrapper.site-page--login .brand-info {
+    margin: 38px 100px 0 219px;
+    color: #fff;
+  }
+
+  .login-contain{
+    background: #FFFFFF;
+    padding: 12px;
+  }
+
+  @keyframes bounce-up {
+  25% {transform: translateY(10px);}
+  50%, 100% {transform: translateY(0);}
+  75% {transform: translateY(-10px);}
+  }
+ .animate-bounce-up{-webkit-animation: bounce-up 1.4s linear infinite;animation: bounce-up 1.4s linear infinite;}
+
+ @keyframes bounce-down {
+  25% {transform: translateY(-10px);}
+  50%, 100% {transform: translateY(0);}
+  75% {transform: translateY(10px);}
+ }
 </style>

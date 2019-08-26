@@ -29,10 +29,13 @@ const globalRoutes = [
 const websiteRoutes = [
   { path: '/page',
     component: require('@/views/website/mainlayout').default,
+    redirect: { name: 'fonthome' },
     name: 'page',
-    meta: { title: '主页' },
+    meta: { title: '主页入口布局' },
     children: [
-      { path: '/page/demo-echarts', component: _import('demo/echarts'), name: 'demo-echart', meta: { title: 'demo-echart', isTab: true } }
+      // eslint-disable-next-line standard/object-curly-even-spacing
+      { path: '/page/home', component: require('@/views/website/common/contenthome').default, name: 'fonthome', meta: { title: '主页'} },
+      { path: '/page/demo-echart', component: _import('demo/echarts'), name: 'demo-echart', meta: { title: 'demo-echart', isTab: true } }
     ]
   }
 ]
@@ -49,10 +52,11 @@ const mainRoutes = {
     // 1. isTab: 是否通过tab展示内容, true: 是, false: 否
     // 2. iframeUrl: 是否通过iframe嵌套展示内容, '以http[s]://开头': 是, '': 否
     // 提示: 如需要通过iframe嵌套展示内容, 但不通过tab打开, 请自行创建组件使用iframe处理!
-    { path: '/home', component: _import('common/home'), name: 'home', meta: { title: '首页' } },
-    { path: '/theme', component: _import('common/theme'), name: 'theme', meta: { title: '主题' } },
-    { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } },
-    { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } }
+    // { path: '/home', component: _import('common/home'), name: 'home', meta: { title: '首页' } },
+    // { path: '/theme', component: _import('common/theme'), name: 'theme', meta: { title: '主题' } },
+    // { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } },
+    // { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } }
+    { path: '/manage', component: _import('common/manger'), name: 'home', meta: { title: '项目' } }
   ],
   beforeEnter (to, from, next) {
     // let token = Vue.cookie.get('token')
@@ -89,6 +93,7 @@ router.beforeEach((to, from, next) => {
       method: 'get',
       params: http.adornParams()
     }).then(({data}) => {
+      console.log(data)
       if (data && data.code === 0) {
         fnAddDynamicMenuRoutes(data.menuList)
         router.options.isAddDynamicMenuRoutes = true
@@ -137,7 +142,7 @@ function fnAddDynamicMenuRoutes (menuList = [], routes = []) {
     } else if (menuList[i].url && /\S/.test(menuList[i].url)) {
       menuList[i].url = menuList[i].url.replace(/^\//, '')
       var route = {
-        path: 'page/' + menuList[i].url.replace('/', '-'),
+        path: menuList[i].url.replace('/', '-'),
         component: null,
         name: menuList[i].url.replace('/', '-'),
         meta: {
