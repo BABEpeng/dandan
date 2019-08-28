@@ -5,7 +5,6 @@
         <el-button v-if="isAuth('sys:menu:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
       </el-form-item>
     </el-form>
-
     <el-table
       :data="dataList"
       row-key="menuId"

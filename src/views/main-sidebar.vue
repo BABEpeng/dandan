@@ -24,14 +24,14 @@
 <!--            <span slot="title">ueditor</span>-->
 <!--          </el-menu-item>-->
 <!--        </el-submenu>-->
-        <el-menu-item index="manage" @click="$router.push({ name: 'home' })">
-          <icon-svg name="system" class="site-sidebar__menu-icon"></icon-svg>
-          <span slot="title">项目管理</span>
-        </el-menu-item>
-        <el-menu-item index="hologram" @click="$router.push({ name: '' })">
-          <icon-svg name="system" class="site-sidebar__menu-icon"></icon-svg>
-          <span slot="title">楼宇全息</span>
-        </el-menu-item>
+<!--        <el-menu-item index="manage" @click="$router.push({ name: 'home' })">-->
+<!--          <icon-svg name="system" class="site-sidebar__menu-icon"></icon-svg>-->
+<!--          <span slot="title">项目管理</span>-->
+<!--        </el-menu-item>-->
+<!--        <el-menu-item index="hologram" @click="$router.push({ name: '' })">-->
+<!--          <icon-svg name="system" class="site-sidebar__menu-icon"></icon-svg>-->
+<!--          <span slot="title">楼宇全息</span>-->
+<!--        </el-menu-item>-->
         <sub-menu
           v-for="menu in menuList"
           :key="menu.menuId"

@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 import App from '@/App'
 import router from '@/router'                 // api: https://github.com/vuejs/vue-router
 import store from '@/store'                   // api: https://github.com/vuejs/vuex
@@ -9,9 +10,14 @@ import '@/element-ui-theme'
 import '@/assets/scss/index.scss'
 import httpRequest from '@/utils/httpRequest' // api: https://github.com/axios/axios
 import { isAuth } from '@/utils'
+import BaiduMap from 'vue-baidu-map'
 import cloneDeep from 'lodash/cloneDeep'
 Vue.use(VueCookie)
 Vue.config.productionTip = false
+Vue.use(BaiduMap, {
+  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+  ak: 'DD279b2a90afdf0ae7a3796787a0742e'
+})
 
 // 非生产环境, 适配mockjs模拟数据                 // api: https://github.com/nuysoft/Mock
 if (process.env.NODE_ENV !== 'production') {

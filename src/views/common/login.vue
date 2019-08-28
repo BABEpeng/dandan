@@ -130,11 +130,11 @@
       top: 0;
       left: 0;
       z-index: 0;
-      width: 100%;
+      width: 60%;
       height: 100%;
       content: "";
-      background-image: url(~@/assets/img/bg_login.png);
-      background-size: cover;
+      background: url(~@/assets/img/bg.png) no-repeat;
+      background-size:100% 100%;
       /*-webkit-animation: bounce-up 1.4s linear infinite;*/
       /*animation: bounce-up 1.4s linear infinite;*/
       -webkit-animation: bounce-down 1.5s linear infinite;
@@ -228,12 +228,12 @@
     padding: 12px;
   }
 
-  @keyframes bounce-up {
+/*  @keyframes bounce-up {
   25% {transform: translateY(10px);}
   50%, 100% {transform: translateY(0);}
   75% {transform: translateY(-10px);}
   }
- .animate-bounce-up{-webkit-animation: bounce-up 1.4s linear infinite;animation: bounce-up 1.4s linear infinite;}
+ .animate-bounce-up{-webkit-animation: bounce-up 1.4s linear infinite;animation: bounce-up 1.4s linear infinite;}*/
 
  @keyframes bounce-down {
   25% {transform: translateY(-10px);}

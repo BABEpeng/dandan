@@ -107,6 +107,7 @@ module.exports = {
   externals: {
     mockjs: 'Mock',
     echarts: 'echarts',
-    ueditor: 'UE'
+    ueditor: 'UE',
+    BMap: 'BMap'
   }
 }

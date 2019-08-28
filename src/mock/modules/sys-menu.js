@@ -1,4 +1,3 @@
-// 生成数据列表
 var dataList = [
   {
     'menuId': 1,
@@ -376,6 +375,71 @@ var dataList = [
     'orderNum': 6,
     'open': null,
     'list': null
+  },
+  {
+    'menuId': 31,
+    'parentId': 0,
+    'parentName': null,
+    'name': '项目管理',
+    'url': 'sys/manger',
+    'perms': null,
+    'type': 0,
+    'icon': 'system',
+    'orderNum': 0,
+    'open': null,
+    'list': null
+  },
+  {
+    'menuId': 2,
+    'parentId': 1,
+    'parentName': '项目管理',
+    'name': '查看',
+    'url': null,
+    'perms': 'sys:manger:list,sys:manger:info',
+    'type': 2,
+    'icon': null,
+    'orderNum': 0,
+    'open': null,
+    'list': null
+  },
+  {
+    'menuId': 3,
+    'parentId': 1,
+    'parentName': '项目管理',
+    'name': '新增',
+    'url': null,
+    'perms': 'sys:manger:save,sys:manger:select',
+    'type': 2,
+    'icon': null,
+    'orderNum': 0,
+    'open': null,
+    'list': null
+  },
+  {
+    'menuId': 4,
+    'parentId': 1,
+    'parentName': '项目管理',
+    'name': '修改',
+    'url': null,
+    'perms': 'sys:manger:update,sys:manger:select',
+    'type': 2,
+    'icon': null,
+    'orderNum': 0,
+    'open': null,
+    'list': null
+  },
+  {
+    'menuId': 5,
+    'parentId': 1,
+    'parentName': '项目管理',
+    'name': '删除',
+    'url': null,
+    'perms': 'sys:manger:delete',
+    'type': 2,
+    'icon': null,
+    'orderNum': 0,
+    'open': null,
+    'list': null
   }
 ]
 var navDataList = [
@@ -509,250 +573,287 @@ var navDataList = [
         'list': null
       }
     ]
+  },
+  {
+    'menuId': 31,
+    'parentId': 0,
+    'parentName': null,
+    'name': '项目管理',
+    'url': 'sys/manger',
+    'perms': null,
+    'type': 0,
+    'icon': 'system',
+    'orderNum': 0,
+    'open': null,
+    'list': null
+  },
+  {
+    'menuId': 32,
+    'parentId': 0,
+    'parentName': null,
+    'name': '楼宇全息',
+    'url': 'sys/hologram',
+    'perms': null,
+    'type': 0,
+    'icon': 'system',
+    'orderNum': 0,
+    'open': null,
+    'list': null
+  },
+  {
+    'menuId': 33,
+    'parentId': 0,
+    'parentName': null,
+    'name': '综合报表',
+    'url': null,
+    'perms': null,
+    'type': 0,
+    'icon': 'system',
+    'orderNum': 0,
+    'open': null,
+    'list': [
+      {
+        'menuId': 34,
+        'parentId': 33,
+        'parentName': null,
+        'name': '能源报表',
+        'url': 'sys/energy',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 1,
+        'open': null,
+        'list': null
+      },
+      {
+        'menuId': 35,
+        'parentId': 33,
+        'parentName': null,
+        'name': '设备视图',
+        'url': 'sys/device',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 2,
+        'open': null,
+        'list': null
+      },
+      {
+        'menuId': 36,
+        'parentId': 33,
+        'parentName': null,
+        'name': '工单视图',
+        'url': 'sys/worker',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 3,
+        'open': null,
+        'list': null
+      }
+    ]
+  },
+  {
+    'menuId': 37,
+    'parentId': 0,
+    'parentName': null,
+    'name': '触发器管理',
+    'url': null,
+    'perms': null,
+    'type': 0,
+    'icon': 'system',
+    'orderNum': 0,
+    'open': null,
+    'list': [
+      {
+        'menuId': 38,
+        'parentId': 37,
+        'parentName': null,
+        'name': '触发器列表',
+        'url': 'sys/triggerList',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 1,
+        'open': null,
+        'list': null
+      },
+      {
+        'menuId': 39,
+        'parentId': 37,
+        'parentName': null,
+        'name': '添加触发器',
+        'url': 'sys/addTrigger',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 2,
+        'open': null,
+        'list': null
+      }
+    ]
+  },
+  {
+    'menuId': 40,
+    'parentId': 0,
+    'parentName': null,
+    'name': '设备管理',
+    'url': null,
+    'perms': null,
+    'type': 0,
+    'icon': 'system',
+    'orderNum': 0,
+    'open': null,
+    'list': [
+      {
+        'menuId': 41,
+        'parentId': 40,
+        'parentName': null,
+        'name': '设备列表',
+        'url': 'sys/device',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 1,
+        'open': null,
+        'list': null
+      },
+      {
+        'menuId': 42,
+        'parentId': 40,
+        'parentName': null,
+        'name': '设备添加向导',
+        'url': 'sys/DeviceAddGuide',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 2,
+        'open': null,
+        'list': null
+      }
+    ]
+  },
+  {
+    'menuId': 43,
+    'parentId': 0,
+    'parentName': null,
+    'name': '网管管理',
+    'url': null,
+    'perms': null,
+    'type': 0,
+    'icon': 'system',
+    'orderNum': 0,
+    'open': null,
+    'list': [
+      {
+        'menuId': 44,
+        'parentId': 43,
+        'parentName': null,
+        'name': '网管列表',
+        'url': 'sys/NetworkList',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 1,
+        'open': null,
+        'list': null
+      },
+      {
+        'menuId': 45,
+        'parentId': 43,
+        'parentName': null,
+        'name': '网管添加向导',
+        'url': 'sys/NetworkWizard',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 2,
+        'open': null,
+        'list': null
+      }
+    ]
+  },
+  {
+    'menuId': 46,
+    'parentId': 0,
+    'parentName': null,
+    'name': '权限管理',
+    'url': null,
+    'perms': null,
+    'type': 0,
+    'icon': 'system',
+    'orderNum': 0,
+    'open': null,
+    'list': [
+      {
+        'menuId': 47,
+        'parentId': 46,
+        'parentName': null,
+        'name': '人员管理',
+        'url': 'sys/PersonManage',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 1,
+        'open': null,
+        'list': null
+      },
+      {
+        'menuId': 48,
+        'parentId': 46,
+        'parentName': null,
+        'name': '角色管理',
+        'url': 'sys/RoleManage',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 2,
+        'open': null,
+        'list': null
+      }
+    ]
+  },
+  {
+    'menuId': 49,
+    'parentId': 0,
+    'parentName': null,
+    'name': '智慧智控',
+    'url': null,
+    'perms': null,
+    'type': 0,
+    'icon': 'system',
+    'orderNum': 0,
+    'open': null,
+    'list': [
+      {
+        'menuId': 50,
+        'parentId': 49,
+        'parentName': null,
+        'name': '智能控制',
+        'url': 'sys/intelligent',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 1,
+        'open': null,
+        'list': null
+      },
+      {
+        'menuId': 51,
+        'parentId': 49,
+        'parentName': null,
+        'name': '楼宇控制',
+        'url': 'sys/buildControl',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 2,
+        'open': null,
+        'list': null
+      }
+    ]
   }
 ]
-
-// var navDataList = [
-//   // {
-//   //   'menuId': 17,
-//   //   'parentId': 0,
-//   //   'parentName': null,
-//   //   'name': '项目管理',
-//   //   'url': null,
-//   //   'perms': null,
-//   //   'type': 0,
-//   //   'icon': 'system',
-//   //   'orderNum': 0,
-//   //   'open': null,
-//   //   'list': null
-//   // },
-//   // {
-//   //   'menuId': 18,
-//   //   'parentId': 0,
-//   //   'parentName': null,
-//   //   'name': '楼宇全息',
-//   //   'url': null,
-//   //   'perms': null,
-//   //   'type': 0,
-//   //   'icon': 'system',
-//   //   'orderNum': 0,
-//   //   'open': null,
-//   //   'list': null
-//   // },
-//   {
-//     'menuId': 1,
-//     'parentId': 0,
-//     'parentName': null,
-//     'name': '综合报表',
-//     'url': null,
-//     'perms': null,
-//     'type': 0,
-//     'icon': 'system',
-//     'orderNum': 0,
-//     'open': null,
-//     'list': [
-//       {
-//         'menuId': 2,
-//         'parentId': 1,
-//         'parentName': null,
-//         'name': '能源报表',
-//         'url': 'sys/energy',
-//         'perms': null,
-//         'type': 1,
-//         'icon': '',
-//         'orderNum': 1,
-//         'open': null,
-//         'list': null
-//       },
-//       {
-//         'menuId': 3,
-//         'parentId': 1,
-//         'parentName': null,
-//         'name': '设备视图',
-//         'url': 'sys/device',
-//         'perms': null,
-//         'type': 1,
-//         'icon': '',
-//         'orderNum': 2,
-//         'open': null,
-//         'list': null
-//       },
-//       {
-//         'menuId': 4,
-//         'parentId': 1,
-//         'parentName': null,
-//         'name': '工单视图',
-//         'url': 'sys/worker',
-//         'perms': null,
-//         'type': 1,
-//         'icon': '',
-//         'orderNum': 3,
-//         'open': null,
-//         'list': null
-//       }
-//     ]
-//   },
-//   {
-//     'menuId': 5,
-//     'parentId': 0,
-//     'parentName': null,
-//     'name': '触发器管理',
-//     'url': null,
-//     'perms': null,
-//     'type': 0,
-//     'icon': 'system',
-//     'orderNum': 0,
-//     'open': null,
-//     'list': [
-//       {
-//         'menuId': 6,
-//         'parentId': 5,
-//         'parentName': null,
-//         'name': '触发器列表',
-//         'url': 'sys/triggerList',
-//         'perms': null,
-//         'type': 1,
-//         'icon': '',
-//         'orderNum': 1,
-//         'open': null,
-//         'list': null
-//       },
-//       {
-//         'menuId': 7,
-//         'parentId': 5,
-//         'parentName': null,
-//         'name': '添加触发器',
-//         'url': 'sys/addTrigger',
-//         'perms': null,
-//         'type': 1,
-//         'icon': '',
-//         'orderNum': 2,
-//         'open': null,
-//         'list': null
-//       }
-//     ]
-//   },
-//   {
-//     'menuId': 8,
-//     'parentId': 0,
-//     'parentName': null,
-//     'name': '设备管理',
-//     'url': null,
-//     'perms': null,
-//     'type': 0,
-//     'icon': 'system',
-//     'orderNum': 0,
-//     'open': null,
-//     'list': [
-//       {
-//         'menuId': 9,
-//         'parentId': 8,
-//         'parentName': null,
-//         'name': '设备列表',
-//         'url': 'sys/deviceList',
-//         'perms': null,
-//         'type': 1,
-//         'icon': '',
-//         'orderNum': 1,
-//         'open': null,
-//         'list': null
-//       },
-//       {
-//         'menuId': 10,
-//         'parentId': 8,
-//         'parentName': null,
-//         'name': '设备添加向导',
-//         'url': 'sys/DeviceAddWizard',
-//         'perms': null,
-//         'type': 1,
-//         'icon': '',
-//         'orderNum': 2,
-//         'open': null,
-//         'list': null
-//       }
-//     ]
-//   },
-//   {
-//     'menuId': 11,
-//     'parentId': 0,
-//     'parentName': null,
-//     'name': '网管管理',
-//     'url': null,
-//     'perms': null,
-//     'type': 0,
-//     'icon': 'system',
-//     'orderNum': 0,
-//     'open': null,
-//     'list': [
-//       {
-//         'menuId': 12,
-//         'parentId': 11,
-//         'parentName': null,
-//         'name': '网管列表',
-//         'url': 'sys/NetworkList',
-//         'perms': null,
-//         'type': 1,
-//         'icon': '',
-//         'orderNum': 1,
-//         'open': null,
-//         'list': null
-//       },
-//       {
-//         'menuId': 13,
-//         'parentId': 11,
-//         'parentName': null,
-//         'name': '网管添加向导',
-//         'url': 'sys/NetworkWizard',
-//         'perms': null,
-//         'type': 1,
-//         'icon': '',
-//         'orderNum': 2,
-//         'open': null,
-//         'list': null
-//       }
-//     ]
-//   },
-//   {
-//     'menuId': 14,
-//     'parentId': 0,
-//     'parentName': null,
-//     'name': '权限管理',
-//     'url': null,
-//     'perms': null,
-//     'type': 0,
-//     'icon': 'system',
-//     'orderNum': 0,
-//     'open': null,
-//     'list': [
-//       {
-//         'menuId': 15,
-//         'parentId': 14,
-//         'parentName': null,
-//         'name': '人员管理',
-//         'url': 'sys/PersonManage',
-//         'perms': null,
-//         'type': 1,
-//         'icon': '',
-//         'orderNum': 1,
-//         'open': null,
-//         'list': null
-//       },
-//       {
-//         'menuId': 16,
-//         'parentId': 14,
-//         'parentName': null,
-//         'name': '角色管理',
-//         'url': 'sys/RoleManage',
-//         'perms': null,
-//         'type': 1,
-//         'icon': '',
-//         'orderNum': 2,
-//         'open': null,
-//         'list': null
-//       }
-//     ]
-//   }
-// ]
 
 // 获取导航菜单列表 / 权限
 export function nav () {
@@ -797,7 +898,13 @@ export function nav () {
         'sys:user:save',
         'sys:schedule:pause',
         'sys:log:list',
-        'sys:oss:all'
+        'sys:oss:all',
+        'sys:manger:update',
+        'sys:manger:delete',
+        'sys:manger:list',
+        'sys:manger:info',
+        'sys:manger:select',
+        'sys:manger:save'
       ]
     }
   }
@@ -812,7 +919,6 @@ export function list () {
     data: dataList
   }
 }
-
 // 获取上级菜单
 export function select () {
   let dataList = JSON.parse(JSON.stringify(navDataList))
@@ -828,7 +934,6 @@ export function select () {
     }
   }
 }
-
 // 获取菜单信息
 export function info () {
   return {
