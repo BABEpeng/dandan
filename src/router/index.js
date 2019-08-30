@@ -56,7 +56,10 @@ const mainRoutes = {
     // { path: '/theme', component: _import('common/theme'), name: 'theme', meta: { title: '主题' } },
     // { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } },
     // { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } }
-    { path: '/sys-manger', component: _import('modules/sys/manger'), name: 'home', meta: { title: '项目' } }
+    { path: '/sys-manger', component: _import('modules/sys/manger'), name: 'home', meta: { title: '项目' } },
+    { path: '/sys-deviceb', component: _import('modules/sys/devicebase'), name: 'deviceb', meta: { title: '设备基础' } }
+    // { path: '/sys-ortensia', component: _import('modules/sys/ortensiabase'), name: 'ortensia', meta: { title: '传感器' } },
+    // { path: '/sys-trigger', component: _import('modules/sys/triggerbase'), name: 'trigger', meta: { title: '触发器' } }
   ],
   beforeEnter (to, from, next) {
     // let token = Vue.cookie.get('token')
@@ -93,7 +96,6 @@ router.beforeEach((to, from, next) => {
       method: 'get',
       params: http.adornParams()
     }).then(({data}) => {
-      console.log(data)
       if (data && data.code === 0) {
         fnAddDynamicMenuRoutes(data.menuList)
         router.options.isAddDynamicMenuRoutes = true

@@ -61,10 +61,10 @@
           ],
           password: [
             { required: true, message: '密码不能为空', trigger: 'blur' }
-          ],
-          captcha: [
-            { required: true, message: '验证码不能为空', trigger: 'blur' }
           ]
+          // captcha: [
+          //   { required: true, message: '验证码不能为空', trigger: 'blur' }
+          // ]
         },
         captchaPath: ''
       }
@@ -91,8 +91,8 @@
               data: this.$http.adornData({
                 'username': this.dataForm.userName,
                 'password': this.dataForm.password,
-                'uuid': this.dataForm.uuid,
-                'captcha': this.dataForm.captcha
+                'uuid': this.dataForm.uuid
+                // 'captcha': this.dataForm.captcha
               })
             }).then(({data}) => {
               if (data && data.code === 0) {
@@ -110,7 +110,7 @@
       // 获取验证码
       getCaptcha () {
         this.dataForm.uuid = getUUID()
-        this.captchaPath = this.$http.adornUrl(`/captcha.jpg?uuid=${this.dataForm.uuid}`)
+        // this.captchaPath = this.$http.adornUrl(`/captcha.jpg?uuid=${this.dataForm.uuid}`)
       }
     }
   }

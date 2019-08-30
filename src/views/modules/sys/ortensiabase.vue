@@ -78,7 +78,7 @@
         label="操作">
         <template slot-scope="scope">
           <div class="fl">
-            <el-button type="primary" size="small"  @click="$router.push({ name: 'deviceb',params: {id: scope.row.id}})">编辑</el-button>
+            <el-button type="primary" size="small"  @click="$router.push({ name: 'home' })">编辑</el-button>
             <el-button type="primary" size="small" @click="sensorHandle(scope.row.id)">传感器</el-button>
             <el-button type="primary" size="small" @click="triggerHandle(scope.row.id)">触发器</el-button>
           </div>

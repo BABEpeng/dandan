@@ -1,19 +1,13 @@
 import Mock from 'mockjs'
-import vip from '../../assets/img/device.png'
+import vip from '../../assets/images/vip.png'
 // 生成数据列表
 var dataList = []
 for (let i = 0; i < Math.floor(Math.random() * 10 + 1); i++) {
   dataList.push(Mock.mock({
-    'name': '@name',
-    'number': '@increment',
-    'data': '2019',
-    'prod': '北京***',
-    'got': '@last',
-    'pos': 'F5',
-    'fuz': '孙先生',
-    'tel': '010-000000',
     'img': vip,
+    'name': '@name',
     'id': '@increment',
+    'type': '温度传感器',
     'paramKey': '@first',
     'paramValue': '@last',
     'remark': '@csentence',
@@ -22,11 +16,11 @@ for (let i = 0; i < Math.floor(Math.random() * 10 + 1); i++) {
   }))
 }
 
-// 获取设备列表
+// 获取传感器列表
 export function list () {
   return {
     // isOpen: false,
-    url: '/sys/device/list',
+    url: '/sys/ortensia/list',
     type: 'get',
     data: {
       'msg': 'success',
@@ -42,11 +36,11 @@ export function list () {
   }
 }
 
-// 获取设备信息
+// 获取传感器信息
 export function info () {
   return {
     // isOpen: false,
-    url: '/sys/device/info',
+    url: '/sys/ortensia/info',
     type: 'get',
     data: {
       'msg': 'success',
@@ -56,11 +50,11 @@ export function info () {
   }
 }
 
-// 添加设备信息
+// 添加传感器
 export function add () {
   return {
     // isOpen: false,
-    url: '/sys/device/save',
+    url: '/sys/ortensia/save',
     type: 'post',
     data: {
       'msg': 'success',
@@ -69,11 +63,11 @@ export function add () {
   }
 }
 
-// 修改设备信息
+// 修改传感器
 export function update () {
   return {
     // isOpen: false,
-    url: '/sys/device/update',
+    url: '/sys/ortensia/update',
     type: 'post',
     data: {
       'msg': 'success',
@@ -82,11 +76,11 @@ export function update () {
   }
 }
 
-// 删除设备信息
+// 删除传感器
 export function del () {
   return {
     // isOpen: false,
-    url: '/sys/devices/delete',
+    url: '/sys/ortensia/delete',
     type: 'post',
     data: {
       'msg': 'success',

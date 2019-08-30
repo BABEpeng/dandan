@@ -20,6 +20,7 @@ import {
   MenuItem,
   MenuItemGroup,
   Input,
+  Image,
   InputNumber,
   Radio,
   RadioGroup,
@@ -72,6 +73,7 @@ import {
   Aside,
   Main,
   Footer,
+  Divider,
   Loading,
   MessageBox,
   Message,
@@ -141,6 +143,8 @@ Vue.use(Header)
 Vue.use(Aside)
 Vue.use(Main)
 Vue.use(Footer)
+Vue.use(Image)
+Vue.use(Divider)
 
 Vue.use(Loading.directive)
 

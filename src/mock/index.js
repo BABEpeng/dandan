@@ -9,24 +9,27 @@ import * as sysRole from './modules/sys-role'
 import * as sysUser from './modules/sys-user'
 import * as sysManger from './modules/sys-manger'
 import * as sysDevice from './modules/sys-device'
+import * as sysOrsensor from './modules/sys-orsensor'
 // 模拟feeds数据
 import * as sysFeeds from './modules/sys-feeds'
 import * as sysTest from './modules/sys-test'
 // tips
 // 1. 开启/关闭[业务模块]拦截, 通过调用fnCreate法[isOpen参数]设置.
 // 2. 开启/关闭[业务模块中某个请求]拦截, 通过函数返回对象中的[isOpen属性]设置.
-fnCreate(common, false)
-fnCreate(jobSchedule, false)
-fnCreate(oss, false)
-fnCreate(sysConfig, false)
-fnCreate(sysLog, false)
+fnCreate(common, true)
+fnCreate(jobSchedule, true)
+fnCreate(oss, true)
+fnCreate(sysConfig, true)
+fnCreate(sysLog, true)
 fnCreate(sysMenu, true)
-fnCreate(sysRole, false)
-fnCreate(sysUser, false)
+fnCreate(sysRole, true)
+fnCreate(sysUser, true)
 // 项目管理
 fnCreate(sysManger, true)
 // 设备管理
 fnCreate(sysDevice, true)
+// 传感器
+fnCreate(sysOrsensor, true)
 
 // 模拟feeds数据
 fnCreate(sysFeeds, true)
