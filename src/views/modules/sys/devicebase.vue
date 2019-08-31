@@ -4,7 +4,6 @@
        <el-breadcrumb separator="/">
          <el-breadcrumb-item>设备管理</el-breadcrumb-item>
          <el-breadcrumb-item>设备列表</el-breadcrumb-item>
-         <el-breadcrumb-item>基础信息</el-breadcrumb-item>
        </el-breadcrumb>
      </div>
     <el-main>
@@ -56,113 +55,138 @@
             </el-tab-pane>
             <el-tab-pane label="传感器" name="second">
               <div v-if="isSecond">
-                传感器
+                <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+                  <el-form-item>
+                    <el-input v-model="dataForm.paramKey" placeholder="传感器名称" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" @click="getDataList()">查询</el-button>
+                  </el-form-item>
+                  <el-form-item class="lay-dev">
+                    <el-button type="primary" @click="ortensiaHandle()">绑定传感器</el-button>
+<!--                    <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>-->
+<!--                    <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
+                  </el-form-item>
+                </el-form>
               </div>
             </el-tab-pane>
             <el-tab-pane label="触发器" name="third">
               <div v-if="isThird">
-                触发器
+                <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+                  <el-form-item>
+                    <el-input v-model="dataForm.paramKey" placeholder="触发器名称" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" @click="getDataList()">查询</el-button>
+                  </el-form-item>
+                  <el-form-item class="lay-dev">
+                    <el-button type="primary" @click="ortensiaHandle()">新建触发器</el-button>
+                  </el-form-item>
+                </el-form>
               </div>
             </el-tab-pane>
             <el-tab-pane label="维修记录" name="four">
               <div v-if="isFour">
-                维修记录
+                <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+                  <el-form-item>
+                    <el-input v-model="dataForm.paramKey" placeholder="故障原因" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" @click="getDataList()">查询</el-button>
+                  </el-form-item>
+                </el-form>
               </div>
             </el-tab-pane>
             <el-tab-pane label="保养记录" name="five">
               <div v-if="isFive">
-                保养记录
+                <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+                  <el-form-item>
+                    <el-input v-model="dataForm.paramKey" placeholder="保养事项" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" @click="getDataList()">查询</el-button>
+                  </el-form-item>
+                </el-form>
               </div>
             </el-tab-pane>
           </el-tabs>
         </div>
       </div>
     </el-main>
-    <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
-      <el-form-item>
-        <el-input v-model="dataForm.paramKey" placeholder="设备名称 / 设备编号" clearable></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button @click="getDataList()">查询</el-button>
-      </el-form-item>
-      <el-form-item class="lay-dev">
-          <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>
-          <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
-      </el-form-item>
-    </el-form>
-    <el-table
-      :data="dataList"
-      border
-      v-loading="dataListLoading"
-      @selection-change="selectionChangeHandle"
-      style="width: 100%;">
-      <el-table-column
-        type="selection"
-        header-align="center"
-        align="center"
-        width="50">
-      </el-table-column>
-      <el-table-column
-        prop="img"
-        header-align="center"
-        align="center"
-        width="80"
-        label="设备图片">
-        <template   slot-scope="scope">
-          <img :src="scope.row.img"  min-width="70" height="70" />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        header-align="center"
-        align="center"
-        label="设备名称">
-      </el-table-column>
-      <el-table-column
-        prop="id"
-        header-align="center"
-        align="center"
-        label="设备编号">
-      </el-table-column>
-      <el-table-column
-        prop="pos"
-        header-align="center"
-        align="center"
-        label="设备位置">
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        header-align="center"
-        align="center"
-        label="设备型号">
-      </el-table-column>
-      <el-table-column
-        prop="state"
-        header-align="center"
-        align="center"
-        label="设备状态">
-      </el-table-column>
-      <el-table-column
-        prop="onTime"
-        header-align="center"
-        align="center"
-        label="最后上线时间">
-      </el-table-column>
-      <el-table-column
-        fixed="right"
-        header-align="center"
-        align="center"
-        width="230"
-        label="操作">
-        <template slot-scope="scope">
-          <div class="fl">
-            <el-button type="primary" size="small"  @click="$router.push({ name: 'home' })">编辑</el-button>
-            <el-button type="primary" size="small" @click="sensorHandle(scope.row.id)">传感器</el-button>
-            <el-button type="primary" size="small" @click="triggerHandle(scope.row.id)">触发器</el-button>
-          </div>
-        </template>
-      </el-table-column>
-    </el-table>
+
+<!--    <el-table-->
+<!--      :data="dataList"-->
+<!--      border-->
+<!--      v-loading="dataListLoading"-->
+<!--      @selection-change="selectionChangeHandle"-->
+<!--      style="width: 100%;">-->
+<!--      <el-table-column-->
+<!--        type="selection"-->
+<!--        header-align="center"-->
+<!--        align="center"-->
+<!--        width="50">-->
+<!--      </el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="img"-->
+<!--        header-align="center"-->
+<!--        align="center"-->
+<!--        width="80"-->
+<!--        label="设备图片">-->
+<!--        <template   slot-scope="scope">-->
+<!--          <img :src="scope.row.img"  min-width="70" height="70" />-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="name"-->
+<!--        header-align="center"-->
+<!--        align="center"-->
+<!--        label="设备名称">-->
+<!--      </el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="id"-->
+<!--        header-align="center"-->
+<!--        align="center"-->
+<!--        label="设备编号">-->
+<!--      </el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="pos"-->
+<!--        header-align="center"-->
+<!--        align="center"-->
+<!--        label="设备位置">-->
+<!--      </el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="name"-->
+<!--        header-align="center"-->
+<!--        align="center"-->
+<!--        label="设备型号">-->
+<!--      </el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="state"-->
+<!--        header-align="center"-->
+<!--        align="center"-->
+<!--        label="设备状态">-->
+<!--      </el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="onTime"-->
+<!--        header-align="center"-->
+<!--        align="center"-->
+<!--        label="最后上线时间">-->
+<!--      </el-table-column>-->
+<!--      <el-table-column-->
+<!--        fixed="right"-->
+<!--        header-align="center"-->
+<!--        align="center"-->
+<!--        width="230"-->
+<!--        label="操作">-->
+<!--        <template slot-scope="scope">-->
+<!--          <div class="fl">-->
+<!--            <el-button type="primary" size="small"  @click="$router.push({ name: 'home' })">编辑</el-button>-->
+<!--            <el-button type="primary" size="small" @click="sensorHandle(scope.row.id)">传感器</el-button>-->
+<!--            <el-button type="primary" size="small" @click="triggerHandle(scope.row.id)">触发器</el-button>-->
+<!--          </div>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--    </el-table>-->
     <el-pagination
       @size-change="sizeChangeHandle"
       @current-change="currentChangeHandle"
@@ -173,12 +197,12 @@
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
-    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <add-or-update v-if="addOrUpdateVisible" ref="addOrtensia" @refreshDataList="getDataList"></add-or-update>
   </div>
 </template>
 
 <script>
-  import AddOrUpdate from './device-add-or-update'
+  import AddOrUpdate from './ortensia-add-or-update'
   export default {
     data () {
       return {
@@ -247,13 +271,6 @@
       // 多选
       selectionChangeHandle (val) {
         this.dataListSelections = val
-      },
-      // 新增 / 修改
-      addOrUpdateHandle (id) {
-        this.addOrUpdateVisible = true
-        this.$nextTick(() => {
-          this.$refs.addOrUpdate.init(id)
-        })
       },
       // 删除
       deleteHandle (id) {
@@ -337,6 +354,14 @@
             this.getDataList()
           }, 1)
         }
+      },
+      // 传感器设置
+      ortensiaHandle (id) {
+        this.addOrUpdateVisible = true
+        this.visible = false
+        this.$nextTick(() => {
+          this.$refs.addOrtensia.init(id)
+        })
       }
     }
   }
