@@ -84,8 +84,8 @@
                     prop="number"
                     header-align="center"
                     align="center"
-                    width="60"
-                    label="设备编号">
+                    width="50"
+                    label="从机ID">
                   </el-table-column>
                   <el-table-column
                     prop="name"
@@ -94,76 +94,58 @@
                     label="传感器名称">
                   </el-table-column>
                   <el-table-column
-                    prop="numType"
-                    header-align="center"
-                    align="center"
-                    width="60"
-                    label="数据类型">
-                  </el-table-column>
-                  <el-table-column
                     prop="number"
                     header-align="center"
                     align="center"
-                    width="60"
-                    label="寄存器">
+                    width="50"
+                    label="设备编号">
                   </el-table-column>
-                  <el-table-column
-                    prop="numTypes"
-                    header-align="center"
-                    align="center"
-                    label="数值类型">
-                  </el-table-column>
-                  <el-table-column
-                    prop="numb"
-                    header-align="center"
-                    align="center"
-                    width="60"
-                    label="小数位数">
-                  </el-table-column>
-                  <el-table-column
-                    prop="write"
-                    header-align="center"
-                    align="center"
-                    width="60"
-                    label="读写">
+                    <el-table-column
+                      prop="name"
+                      header-align="center"
+                      align="center"
+                      label="点位模版">
                   </el-table-column>
                     <el-table-column
                       prop="numb"
                       header-align="center"
                       align="center"
-                      width="60"
-                      label="寄存器长度">
+                      width="50"
+                      label="点位数">
                     </el-table-column>
                   <el-table-column
-                    prop="name"
+                    prop="numType"
                     header-align="center"
                     align="center"
-                    width="60"
-                    label="单位">
+                    label="位置">
                   </el-table-column>
                   <el-table-column
                     prop="number"
                     header-align="center"
                     align="center"
-                    width="60"
-                    label="公式">
+                    label="备注">
                   </el-table-column>
                   <el-table-column
-                    prop="number"
+                    prop="numTypes"
                     header-align="center"
                     align="center"
-                    width="60"
-                    label="数据存储">
+                    label="在线/离线">
+                  </el-table-column>
+                  <el-table-column
+                    prop="numb"
+                    header-align="center"
+                    align="center"
+                    width="50"
+                    label="状态">
                   </el-table-column>
                   <el-table-column
                     fixed="right"
                     header-align="center"
                     align="center"
-                    width="230"
                     label="操作">
                     <template slot-scope="scope">
                       <div class="fl">
-                        <el-button type="primary" size="small"  @click="addOrUpdateHandle(scope.row.id)">查看</el-button>
+<!--                    <el-button type="primary" size="small"  @click="addOrUpdateHandle(scope.row.id)">查看</el-button>-->
                         <el-button type="primary" size="small" @click="editorHandle(scope.row.id)">编辑</el-button>
                         <el-button type="primary" size="small" @click="deleteHandle(scope.row.id)">删除
                         </el-button>
@@ -200,6 +182,12 @@
                   width="50">
                 </el-table-column>
                 <el-table-column
+                  prop="number"
+                  header-align="center"
+                  align="center"
+                  label="ID">
+                </el-table-column>
+                <el-table-column
                   prop="name"
                   header-align="center"
                   align="center"
@@ -221,7 +209,7 @@
                   prop="name"
                   header-align="center"
                   align="center"
-                  label="保存条件">
+                  label="保存规则">
                 </el-table-column>
                 <el-table-column
                   prop="name"
@@ -251,14 +239,13 @@
                   fixed="right"
                   header-align="center"
                   align="center"
-                  width="230"
-                  label="操作">
+                  width="150px"
+                  label="更新时间">
                   <template slot-scope="scope">
                     <div class="fl">
-                      <el-button type="primary" size="small"  @click="addOrUpdateHandle(scope.row.id)">查看</el-button>
-                      <el-button type="primary" size="small" @click="editorHandle(scope.row.id)">编辑</el-button>
-                      <el-button type="primary" size="small" @click="deleteHandle(scope.row.id)">删除
-                      </el-button>
+<!--                      <el-button type="primary" size="small"  @click="addOrUpdateHandle(scope.row.id)">查看</el-button>-->
+                      <el-button type="primary" size="small" @click="editorHandles(scope.row.id)">编辑</el-button>
+                      <el-button type="primary" size="small" @click="deleteHandles(scope.row.id)">删除</el-button>
                     </div>
                   </template>
                 </el-table-column>
@@ -304,11 +291,13 @@
     <!-- 弹窗,绑定路由器 -->
     <add-or-update v-if="addOrUpdateVisible" ref="addOrtensia" @refreshDataList="getDataList"></add-or-update>
     <!--    查看-->
-    <add-or-updates v-if="addOrUpdateVisible" ref="addOrtensias" @refreshDataList="getDataList"></add-or-updates>
+<!--    <add-or-updates v-if="addOrUpdateVisible" ref="addOrtensias" @refreshDataList="getDataList"></add-or-updates>-->
     <!--    编辑-->
     <add-or-updatess v-if="addOrUpdateVisible" ref="addOrtensiass" @refreshDataList="getDataList"></add-or-updatess>
     <!-- 新建触发器-->
     <add-or-updata v-if="addOrUpdateVisible" ref="addTrigger" @refreshDataList="getDataList"></add-or-updata>
+<!--    编辑-->
+    <add-or-updatas v-if="addOrUpdateVisible" ref="editorTriggers" @refreshDataList="getDataList"></add-or-updatas>
   </div>
 </template>
 
@@ -317,6 +306,7 @@
   import AddOrUpdates from './ortensias-add-or-update'
   import AddOrUpdatess from './ortensiass-add-or-update'
   import AddOrUpdata from './trigger-add-or-update'
+  import AddOrUpdatas from './triggers-add-or-update'
   export default {
     data () {
       return {
@@ -344,7 +334,8 @@
       AddOrUpdate,
       AddOrUpdates,
       AddOrUpdatess,
-      AddOrUpdata
+      AddOrUpdata,
+      AddOrUpdatas
     },
     activated () {
       this.getDataList()
@@ -475,12 +466,12 @@
         })
       },
       // 传感器查看
-      addOrUpdateHandle (id) {
-        this.addOrUpdateVisible = true
-        this.$nextTick(() => {
-          this.$refs.addOrtensias.init(id)
-        })
-      },
+      // addOrUpdateHandle (id) {
+      //   this.addOrUpdateVisible = true
+      //   this.$nextTick(() => {
+      //     this.$refs.addOrtensias.init(id)
+      //   })
+      // },
       // 传感器编辑
       editorHandle (id) {
         this.addOrUpdateVisible = true
@@ -493,6 +484,13 @@
         this.addOrUpdateVisible = true
         this.$nextTick(() => {
           this.$refs.addTrigger.init(id)
+        })
+      },
+      // 编辑触发器
+      editorHandles (id) {
+        this.addOrUpdateVisible = true
+        this.$nextTick(() => {
+          this.$refs.editorTriggers.init(id)
         })
       }
     }
