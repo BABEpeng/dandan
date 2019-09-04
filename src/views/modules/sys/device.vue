@@ -94,8 +94,9 @@
       :total="totalPage"
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
-    <!-- 弹窗, 新增 / 修改 -->
+    <!-- 弹窗, 绑定传感器 -->
     <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+
   </div>
 </template>
 
@@ -114,6 +115,7 @@
         dataListLoading: false,
         dataListSelections: [],
         addOrUpdateVisible: false
+
       }
     },
     components: {

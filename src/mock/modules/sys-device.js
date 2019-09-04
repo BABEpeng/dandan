@@ -18,7 +18,11 @@ for (let i = 0; i < Math.floor(Math.random() * 10 + 1); i++) {
     'paramValue': '@last',
     'remark': '@csentence',
     'state': '启用/停用',
-    'onTime': '@datetime'
+    'onTime': '@datetime',
+    'numType': '数值型',
+    'numTypes': '2字节无符号整数',
+    'write': '读/写',
+    'numb': '1'
   }))
 }
 
@@ -51,7 +55,8 @@ export function info () {
     data: {
       'msg': 'success',
       'code': 0,
-      'config': dataList[0]
+      'config': dataList[0],
+      'info': dataList
     }
   }
 }

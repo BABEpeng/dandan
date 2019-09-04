@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "8f7e39e7-2523-4b09-8043-d7b11fb72ad5",
+		"name": "device",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "添加设备",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\":\"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE1NjcwNzg4NjksInN1YiI6IjExMGYyNGY4LTBlNmEtNDI1NC05NzhlLWMzOWVkZmU1Nzc2YyIsImlhdCI6MTU2NzA3ODI2NDgzNH0._l53tWVMYSRaE-c4sP730aEHv6nkhp876Za4G3Wyj9o8ipXZpdh2s-3q_6qs2U3C_9eCSZ8WhIoQ5h1z-VbXnw\",\n\t\"deviceEntityTo\":{\n\t\t\"deviceProgramId\":\"0d7fe3b0-d7a4-42d7-8840-e3abe2786245\",\n\t\t\"deviceNo\":\"1T2N\",\n\t\t\"deviceName\":\"testDevice\",\n\t\t\"deviceDescription\":\"this is a test Device\",\n\t\t\"devicePos\":\"beijing-302\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/device/add/program",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"device",
+						"add",
+						"program"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "登陆",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"loginChannel\":1,\n\t\"password\":\"password8\",\n\t\"username\":\"15329647829\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/account/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"account",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "注册",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"user8\",\n\t\"password\":\"password8\",\n\t\"phone\":\"15329647829\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/account/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "添加项目",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\":\"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE1NjcwNzg4NjksInN1YiI6IjExMGYyNGY4LTBlNmEtNDI1NC05NzhlLWMzOWVkZmU1Nzc2YyIsImlhdCI6MTU2NzA3ODI2NDgzNH0._l53tWVMYSRaE-c4sP730aEHv6nkhp876Za4G3Wyj9o8ipXZpdh2s-3q_6qs2U3C_9eCSZ8WhIoQ5h1z-VbXnw\",\n\t\"programEntityTo\": {\n\t\t\"name\":\"项目名称\",\n\t\t\"description\":\"项目描述\",\n\t\t\"positionName\":\"项目位置名称\",\n\t\t\"positionCoordinate\":\"项目位置坐标\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/device/add/program",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"device",
+						"add",
+						"program"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "添加网关",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\":\"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE1NjcwNzg4NjksInN1YiI6IjExMGYyNGY4LTBlNmEtNDI1NC05NzhlLWMzOWVkZmU1Nzc2YyIsImlhdCI6MTU2NzA3ODI2NDgzNH0._l53tWVMYSRaE-c4sP730aEHv6nkhp876Za4G3Wyj9o8ipXZpdh2s-3q_6qs2U3C_9eCSZ8WhIoQ5h1z-VbXnw\",\n\t\"gatewayEntityTo\": {\n\t\t\"gatewayProgramId\":\"项目id\",\n\t\t\"gatewayNo\":\"网关编号\",\n\t\t\"gatewayName\":\"网关名字\",\n\t\t\"gatewayIcon\":\"网关图片地址\",\n\t\t\"gatewayProtocol\":\"网关协议\",\n\t\t\"gatewayPos\":\"网关位置\",\n\t\t\"gatewayDescription\":\"网关描述\",\n\t\t\"gatewayRegisterModel\":1\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/device/add/gateway",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"device",
+						"add",
+						"gateway"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "添加传感器",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\":\"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE1NjcwNzg4NjksInN1YiI6IjExMGYyNGY4LTBlNmEtNDI1NC05NzhlLWMzOWVkZmU1Nzc2YyIsImlhdCI6MTU2NzA3ODI2NDgzNH0._l53tWVMYSRaE-c4sP730aEHv6nkhp876Za4G3Wyj9o8ipXZpdh2s-3q_6qs2U3C_9eCSZ8WhIoQ5h1z-VbXnw\",\n\t\"SensorEntityTo\": {\n\t\t\"sensorGatewayId\":\"项目id\",\n\t\t\"sensorNo\":\"传感器编号\",\n\t\t\"sensorName\":\"传感器名称\",\n\t\t\"sensorDataType\":1, //\"传感器数据类型\",\n\t\t\"sensorRegisterAddress\":\"传感器地址\",\n\t\t\"sensorValueType\":1, //\"传感器值类型\",\n\t\t\"sensorValueDecimalDigit\":1, //\"传感器值的小数点位数\",\n\t\t\"sensorFunction\":1, //\"传感器功能\",\n\t\t\"sensorRegisterLength\":11, //\"传感器存储器长度\",\n\t\t\"sensorUnit\":\"传感器单位\",\n\t\t\"sensorExpression\":\"传感器值转换计算公式\",\n\t\t\"sensorSavePolicy\":1, //\"传感器值存储策略\"\n\t\t\"sensorDescription\":\"传感器描述\",\n\t\t\"sensorLoopTime\":6000,\n\t\t\"sensorSlaveId\":1 //\"传感器主从id\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/device/add/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"device",
+						"add",
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "添加传绑定设备",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\":\"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE1NjcwNzg4NjksInN1YiI6IjExMGYyNGY4LTBlNmEtNDI1NC05NzhlLWMzOWVkZmU1Nzc2YyIsImlhdCI6MTU2NzA3ODI2NDgzNH0._l53tWVMYSRaE-c4sP730aEHv6nkhp876Za4G3Wyj9o8ipXZpdh2s-3q_6qs2U3C_9eCSZ8WhIoQ5h1z-VbXnw\",\n\t\"deviceSensorEntityTo\": {\n\t\t\"deviceId\":\"设备id\",\n\t\t\"sensorId\":\"传感器id\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/device/bind/device/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"device",
+						"bind",
+						"device",
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
