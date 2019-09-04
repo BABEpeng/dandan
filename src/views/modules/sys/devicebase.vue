@@ -183,7 +183,7 @@
                     <el-button type="primary" @click="getDataList()">查询</el-button>
                   </el-form-item>
                   <el-form-item class="lay-dev">
-                    <el-button type="primary" @click="ortensiaHandle()">新建触发器</el-button>
+                    <el-button type="primary" @click="addTriggerHandle()">新建触发器</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -307,6 +307,8 @@
     <add-or-updates v-if="addOrUpdateVisible" ref="addOrtensias" @refreshDataList="getDataList"></add-or-updates>
     <!--    编辑-->
     <add-or-updatess v-if="addOrUpdateVisible" ref="addOrtensiass" @refreshDataList="getDataList"></add-or-updatess>
+    <!-- 新建触发器-->
+    <add-or-updata v-if="addOrUpdateVisible" ref="addTrigger" @refreshDataList="getDataList"></add-or-updata>
   </div>
 </template>
 
@@ -314,6 +316,7 @@
   import AddOrUpdate from './ortensia-add-or-update'
   import AddOrUpdates from './ortensias-add-or-update'
   import AddOrUpdatess from './ortensiass-add-or-update'
+  import AddOrUpdata from './trigger-add-or-update'
   export default {
     data () {
       return {
@@ -340,7 +343,8 @@
     components: {
       AddOrUpdate,
       AddOrUpdates,
-      AddOrUpdatess
+      AddOrUpdatess,
+      AddOrUpdata
     },
     activated () {
       this.getDataList()
@@ -482,6 +486,13 @@
         this.addOrUpdateVisible = true
         this.$nextTick(() => {
           this.$refs.addOrtensiass.init(id)
+        })
+      },
+     // 新建触发器
+      addTriggerHandle (id) {
+        this.addOrUpdateVisible = true
+        this.$nextTick(() => {
+          this.$refs.addTrigger.init(id)
         })
       }
     }
