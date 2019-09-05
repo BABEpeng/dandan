@@ -7,15 +7,15 @@
       :closable="true"
       @tab-click="selectedTabHandle"
       @tab-remove="removeTabHandle">
-      <el-dropdown class="site-tabs__tools" :show-timeout="0">
-        <i class="el-icon-arrow-down el-icon--right"></i>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="tabsCloseCurrentHandle">关闭当前标签页</el-dropdown-item>
-          <el-dropdown-item @click.native="tabsCloseOtherHandle">关闭其它标签页</el-dropdown-item>
-          <el-dropdown-item @click.native="tabsCloseAllHandle">关闭全部标签页</el-dropdown-item>
-          <el-dropdown-item @click.native="refresh()">刷新当前标签页</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+<!--      <el-dropdown class="site-tabs__tools" :show-timeout="0">-->
+<!--        <i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+<!--        <el-dropdown-menu slot="dropdown">-->
+<!--          <el-dropdown-item @click.native="tabsCloseCurrentHandle">关闭当前标签页</el-dropdown-item>-->
+<!--          <el-dropdown-item @click.native="tabsCloseOtherHandle">关闭其它标签页</el-dropdown-item>-->
+<!--          <el-dropdown-item @click.native="tabsCloseAllHandle">关闭全部标签页</el-dropdown-item>-->
+<!--          <el-dropdown-item @click.native="refresh()">刷新当前标签页</el-dropdown-item>-->
+<!--        </el-dropdown-menu>-->
+<!--      </el-dropdown>-->
       <el-tab-pane
         v-for="item in mainTabs"
         :key="item.name"

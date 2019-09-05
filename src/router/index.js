@@ -57,7 +57,8 @@ const mainRoutes = {
     // { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } },
     // { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } }
     { path: '/sys-manger', component: _import('modules/sys/manger'), name: 'home', meta: { title: '项目' } },
-    { path: '/sys-deviceb', component: _import('modules/sys/devicebase'), name: 'deviceb', meta: { title: '设备基础' } }
+    { path: '/sys-deviceb', component: _import('modules/sys/devicebase'), name: 'deviceb', meta: { title: '设备基础' } },
+    { path: '/sys-netbase', component: _import('modules/sys/netbase'), name: 'netbase', meta: { title: '网关详情' } }
     // { path: '/sys-ortensia', component: _import('modules/sys/ortensiabase'), name: 'ortensia', meta: { title: '传感器' } },
     // { path: '/sys-trigger', component: _import('modules/sys/triggerbase'), name: 'trigger', meta: { title: '触发器' } }
   ],

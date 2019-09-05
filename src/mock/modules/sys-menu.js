@@ -575,7 +575,7 @@ var navDataList = [
     ]
   },
   {
-    'menuId': 31,
+    'menuId': 30,
     'parentId': 0,
     'parentName': null,
     'name': '项目管理',
@@ -588,11 +588,11 @@ var navDataList = [
     'list': null
   },
   {
-    'menuId': 32,
+    'menuId': 31,
     'parentId': 0,
     'parentName': null,
-    'name': '楼宇全息',
-    'url': 'sys/hologram',
+    'name': '项目概况',
+    'url': 'sys/survey',
     'perms': null,
     'type': 0,
     'icon': 'system',
@@ -604,7 +604,7 @@ var navDataList = [
     'menuId': 33,
     'parentId': 0,
     'parentName': null,
-    'name': '综合报表',
+    'name': '综合视图',
     'url': null,
     'perms': null,
     'type': 0,
@@ -654,10 +654,10 @@ var navDataList = [
     ]
   },
   {
-    'menuId': 37,
+    'menuId': 50,
     'parentId': 0,
     'parentName': null,
-    'name': '触发器管理',
+    'name': '控制策略',
     'url': null,
     'perms': null,
     'type': 0,
@@ -666,11 +666,11 @@ var navDataList = [
     'open': null,
     'list': [
       {
-        'menuId': 38,
-        'parentId': 37,
+        'menuId': 51,
+        'parentId': 50,
         'parentName': null,
-        'name': '触发器列表',
-        'url': 'sys/triggerList',
+        'name': '策略管理',
+        'url': 'sys/strategic',
         'perms': null,
         'type': 1,
         'icon': '',
@@ -679,15 +679,28 @@ var navDataList = [
         'list': null
       },
       {
-        'menuId': 39,
-        'parentId': 37,
+        'menuId': 51,
+        'parentId': 50,
         'parentName': null,
-        'name': '添加触发器',
-        'url': 'sys/addTrigger',
+        'name': '模式管理',
+        'url': 'sys/model',
         'perms': null,
         'type': 1,
         'icon': '',
         'orderNum': 2,
+        'open': null,
+        'list': null
+      },
+      {
+        'menuId': 51,
+        'parentId': 50,
+        'parentName': null,
+        'name': '任务管理',
+        'url': 'sys/task',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 3,
         'open': null,
         'list': null
       }
@@ -737,7 +750,7 @@ var navDataList = [
         'parentId': 43,
         'parentName': null,
         'name': '网关列表',
-        'url': 'sys/NetworkList',
+        'url': 'sys/netlist',
         'perms': null,
         'type': 1,
         'icon': '',
@@ -750,7 +763,47 @@ var navDataList = [
         'parentId': 43,
         'parentName': null,
         'name': '点位模板管理',
-        'url': 'sys/NetworkWizard',
+        'url': 'sys/netwizard',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 2,
+        'open': null,
+        'list': null
+      }
+    ]
+  },
+  {
+    'menuId': 37,
+    'parentId': 0,
+    'parentName': null,
+    'name': '组态',
+    'url': null,
+    'perms': null,
+    'type': 0,
+    'icon': 'system',
+    'orderNum': 0,
+    'open': null,
+    'list': [
+      {
+        'menuId': 38,
+        'parentId': 37,
+        'parentName': null,
+        'name': '组态管理',
+        'url': 'sys/configuration',
+        'perms': null,
+        'type': 1,
+        'icon': '',
+        'orderNum': 1,
+        'open': null,
+        'list': null
+      },
+      {
+        'menuId': 39,
+        'parentId': 37,
+        'parentName': null,
+        'name': '组态创建',
+        'url': 'sys/creation',
         'perms': null,
         'type': 1,
         'icon': '',
@@ -776,7 +829,7 @@ var navDataList = [
         'menuId': 47,
         'parentId': 46,
         'parentName': null,
-        'name': '人员管理',
+        'name': '角色管理',
         'url': 'sys/PersonManage',
         'perms': null,
         'type': 1,
@@ -789,48 +842,8 @@ var navDataList = [
         'menuId': 48,
         'parentId': 46,
         'parentName': null,
-        'name': '角色管理',
+        'name': '人员管理',
         'url': 'sys/RoleManage',
-        'perms': null,
-        'type': 1,
-        'icon': '',
-        'orderNum': 2,
-        'open': null,
-        'list': null
-      }
-    ]
-  },
-  {
-    'menuId': 49,
-    'parentId': 0,
-    'parentName': null,
-    'name': '智慧智控',
-    'url': null,
-    'perms': null,
-    'type': 0,
-    'icon': 'system',
-    'orderNum': 0,
-    'open': null,
-    'list': [
-      {
-        'menuId': 50,
-        'parentId': 49,
-        'parentName': null,
-        'name': '智能控制',
-        'url': 'sys/intelligent',
-        'perms': null,
-        'type': 1,
-        'icon': '',
-        'orderNum': 1,
-        'open': null,
-        'list': null
-      },
-      {
-        'menuId': 51,
-        'parentId': 49,
-        'parentName': null,
-        'name': '楼宇控制',
-        'url': 'sys/buildControl',
         'perms': null,
         'type': 1,
         'icon': '',
@@ -841,7 +854,6 @@ var navDataList = [
     ]
   }
 ]
-
 // 获取导航菜单列表 / 权限
 export function nav () {
   return {
@@ -896,7 +908,6 @@ export function nav () {
     }
   }
 }
-
 // 获取菜单列表
 export function list () {
   return {
@@ -934,7 +945,6 @@ export function info () {
     }
   }
 }
-
 // 添加菜单
 export function add () {
   return {
@@ -947,7 +957,6 @@ export function add () {
     }
   }
 }
-
 // 修改菜单
 export function update () {
   return {
@@ -960,7 +969,6 @@ export function update () {
     }
   }
 }
-
 // 删除菜单
 export function del () {
   return {

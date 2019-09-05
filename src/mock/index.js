@@ -10,6 +10,7 @@ import * as sysUser from './modules/sys-user'
 import * as sysManger from './modules/sys-manger'
 import * as sysDevice from './modules/sys-device'
 import * as sysOrsensor from './modules/sys-orsensor'
+import * as sysNet from './modules/sys-net'
 // 模拟feeds数据
 import * as sysFeeds from './modules/sys-feeds'
 import * as sysTest from './modules/sys-test'
@@ -30,6 +31,8 @@ fnCreate(sysManger, true)
 fnCreate(sysDevice, true)
 // 传感器
 fnCreate(sysOrsensor, true)
+// 网关
+fnCreate(sysNet, true)
 
 // 模拟feeds数据
 fnCreate(sysFeeds, true)

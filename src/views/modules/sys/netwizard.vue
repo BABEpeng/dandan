@@ -2,13 +2,13 @@
   <div class="mod-device">
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="dataForm.paramKey" placeholder="设备名称 / 设备编号" clearable></el-input>
+        <el-input v-model="dataForm.paramKey" placeholder="模板名称" clearable></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
       </el-form-item>
       <el-form-item class="lay-dev">
-          <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>
+          <el-button type="primary" @click="addOrUpdateHandle()">新增点位模板</el-button>
           <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
@@ -25,62 +25,28 @@
         width="50">
       </el-table-column>
       <el-table-column
-        prop="img"
-        header-align="center"
-        align="center"
-        width="80"
-        label="示意图片">
-        <template   slot-scope="scope">
-          <img :src="scope.row.img"  min-width="70" height="70" />
-        </template>
-      </el-table-column>
-      <el-table-column
         prop="name"
         header-align="center"
         align="center"
-        label="网关名称">
+        label="点位模板名称">
       </el-table-column>
       <el-table-column
         prop="id"
         header-align="center"
         align="center"
-        label="网关编号">
-      </el-table-column>
-      <el-table-column
-        prop="id"
-        header-align="center"
-        align="center"
-        label="注册码">
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        header-align="center"
-        align="center"
-        label="数据协议">
-      </el-table-column>
-      <el-table-column
-        prop="pos"
-        header-align="center"
-        align="center"
-        label="网关位置">
-      </el-table-column>
-      <el-table-column
-        prop="state"
-        header-align="center"
-        align="center"
-        label="在线/离线">
-      </el-table-column>
-      <el-table-column
-        prop="state"
-        header-align="center"
-        align="center"
-        label="状态">
+        label="数据点数">
       </el-table-column>
       <el-table-column
         prop="onTime"
         header-align="center"
         align="center"
-        label="最后上线时间">
+        label="最后更新时间">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        header-align="center"
+        align="center"
+        label="操作者">
       </el-table-column>
       <el-table-column
         fixed="right"
@@ -90,9 +56,9 @@
         label="操作">
         <template slot-scope="scope">
           <div class="fl">
-            <el-button type="primary" size="small"  @click="$router.push({ name: 'deviceb',params: {id: scope.row.id}})">编辑</el-button>
+            <el-button type="primary" size="small"  @click="$router.push({ name: 'netbase',params: {id: scope.row.id}})">编辑</el-button>
+            <el-button type="primary" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
             <el-button type="primary" size="small" @click="sensorHandle(scope.row.id)">传感器</el-button>
-            <el-button type="primary" size="small" @click="triggerHandle(scope.row.id)">触发器</el-button>
           </div>
         </template>
       </el-table-column>
@@ -141,7 +107,7 @@
       getDataList () {
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/sys/device/list'),
+          url: this.$http.adornUrl('/sys/net/list'),
           method: 'get',
           params: this.$http.adornParams({
             'page': this.pageIndex,
