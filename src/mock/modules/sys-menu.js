@@ -717,19 +717,6 @@ var navDataList = [
         'orderNum': 1,
         'open': null,
         'list': null
-      },
-      {
-        'menuId': 42,
-        'parentId': 40,
-        'parentName': null,
-        'name': '设备添加向导',
-        'url': 'sys/DeviceAddGuide',
-        'perms': null,
-        'type': 1,
-        'icon': '',
-        'orderNum': 2,
-        'open': null,
-        'list': null
       }
     ]
   },
@@ -737,7 +724,7 @@ var navDataList = [
     'menuId': 43,
     'parentId': 0,
     'parentName': null,
-    'name': '网管管理',
+    'name': '网关管理',
     'url': null,
     'perms': null,
     'type': 0,
@@ -749,7 +736,7 @@ var navDataList = [
         'menuId': 44,
         'parentId': 43,
         'parentName': null,
-        'name': '网管列表',
+        'name': '网关列表',
         'url': 'sys/NetworkList',
         'perms': null,
         'type': 1,
@@ -762,7 +749,7 @@ var navDataList = [
         'menuId': 45,
         'parentId': 43,
         'parentName': null,
-        'name': '网管添加向导',
+        'name': '点位模板管理',
         'url': 'sys/NetworkWizard',
         'perms': null,
         'type': 1,
