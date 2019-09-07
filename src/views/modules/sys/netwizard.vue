@@ -1,17 +1,25 @@
 <template>
   <div class="mod-device">
-    <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
-      <el-form-item>
-        <el-input v-model="dataForm.paramKey" placeholder="模板名称" clearable></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button @click="getDataList()">查询</el-button>
-      </el-form-item>
-      <el-form-item class="lay-dev">
-          <el-button type="primary" @click="addOrUpdateHandle()">新增点位模板</el-button>
+    <div class="top_title">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item>网关管理</el-breadcrumb-item>
+        <el-breadcrumb-item>点位模版</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <div class="top_content">
+      <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+        <el-form-item>
+          <el-input v-model="dataForm.paramKey" placeholder="模版名称" clearable></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="getDataList()">查询</el-button>
+        </el-form-item>
+        <el-form-item class="lay-dev">
+          <el-button type="primary" @click="addOrUpdateHandle()">新增点位模版</el-button>
           <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
-      </el-form-item>
-    </el-form>
+        </el-form-item>
+      </el-form>
+    </div>
     <el-table
       :data="dataList"
       border
@@ -25,22 +33,22 @@
         width="50">
       </el-table-column>
       <el-table-column
-        prop="name"
-        header-align="center"
-        align="center"
-        label="点位模板名称">
-      </el-table-column>
-      <el-table-column
         prop="id"
         header-align="center"
         align="center"
-        label="数据点数">
+        label="编号">
       </el-table-column>
       <el-table-column
-        prop="onTime"
+        prop="name"
         header-align="center"
         align="center"
-        label="最后更新时间">
+        label="点位模版名称">
+      </el-table-column>
+      <el-table-column
+        prop="pos"
+        header-align="center"
+        align="center"
+        label="数据点数">
       </el-table-column>
       <el-table-column
         prop="name"
@@ -49,16 +57,21 @@
         label="操作者">
       </el-table-column>
       <el-table-column
+        prop="onTime"
+        header-align="center"
+        align="center"
+        label="最后更新时间">
+      </el-table-column>
+      <el-table-column
         fixed="right"
         header-align="center"
         align="center"
-        width="230"
+        width="150"
         label="操作">
         <template slot-scope="scope">
           <div class="fl">
-            <el-button type="primary" size="small"  @click="$router.push({ name: 'netbase',params: {id: scope.row.id}})">编辑</el-button>
+            <el-button type="primary" size="small" @click="addOrUpdateHandles(scope.row.id)">编辑</el-button>
             <el-button type="primary" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
-            <el-button type="primary" size="small" @click="sensorHandle(scope.row.id)">传感器</el-button>
           </div>
         </template>
       </el-table-column>
@@ -72,14 +85,16 @@
       :total="totalPage"
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
-    <!-- 弹窗, 绑定传感器 -->
-    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <!-- 弹窗, 新增点位模版 -->
+    <net-wizard-add v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></net-wizard-add>
+    <net-wizard-update v-if="addOrUpdateVisible" ref="NetWizardUpdate" @refreshDataList="getDataList"></net-wizard-update>
 
   </div>
 </template>
 
 <script>
-  import AddOrUpdate from './device-add-or-update'
+  import NetWizardAdd from './netwizard-add'
+  import NetWizardUpdate from './netwizardbase'
   export default {
     data () {
       return {
@@ -97,7 +112,8 @@
       }
     },
     components: {
-      AddOrUpdate
+      NetWizardAdd,
+      NetWizardUpdate
     },
     activated () {
       this.getDataList()
@@ -140,11 +156,18 @@
       selectionChangeHandle (val) {
         this.dataListSelections = val
       },
-      // 新增 / 修改
+      // 新增
       addOrUpdateHandle (id) {
         this.addOrUpdateVisible = true
         this.$nextTick(() => {
           this.$refs.addOrUpdate.init(id)
+        })
+      },
+      // 编辑
+      addOrUpdateHandles (id) {
+        this.addOrUpdateVisible = true
+        this.$nextTick(() => {
+          this.$refs.NetWizardUpdate.init(id)
         })
       },
       // 删除
@@ -158,7 +181,7 @@
           type: 'warning'
         }).then(() => {
           this.$http({
-            url: this.$http.adornUrl('/sys/device/delete'),
+            url: this.$http.adornUrl('/sys/net/delete'),
             method: 'post',
             data: this.$http.adornData(ids, false)
           }).then(({data}) => {
@@ -187,5 +210,20 @@
   }
   .fl{
     display: flex;
+  }
+  .top_title{
+    position: relative;
+    top: -11px;
+    /*background: #f1f4f5;*/
+  }
+  .top_content {
+    position: relative;
+    background: #f1f4f5;
+    padding: 18px 0px 0px;
+  }
+  .el-form--inline .el-form-item {
+    display: inline-block;
+    margin-right: -20px;
+    vertical-align: top;
   }
 </style>

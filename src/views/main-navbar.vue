@@ -118,4 +118,28 @@
   .el-menu.el-menu--horizontal {
     border-bottom: solid 0px #e6e6e6;
   }
+  .site-content > .el-tabs > .el-tabs__header {
+    position: static;
+    top: 0px;
+    left: 0px;
+    right: 0;
+    z-index: 0;
+    padding: 0;
+    -webkit-box-shadow: 0;
+    box-shadow: 0;
+    background-color: #fff;
+  }
+  .site-navbar__header {
+    position: relative;
+    float: left;
+    width: 117px;
+    height: 50px;
+    overflow: hidden;
+  }
+  .site-navbar__body {
+    position: relative;
+    margin-left: 117px;
+    padding-right: 15px;
+    background-color: #fff;
+  }
 </style>

@@ -1,12 +1,12 @@
 <template>
   <main class="site-content" :class="{ 'site-content--tabs': $route.meta.isTab }">
     <!-- 主入口标签页 s -->
-    <el-tabs
-      v-if="$route.meta.isTab"
-      v-model="mainTabsActiveName"
-      :closable="true"
-      @tab-click="selectedTabHandle"
-      @tab-remove="removeTabHandle">
+<!--    <el-tabs-->
+<!--      v-if="$route.meta.isTab"-->
+<!--      v-model="mainTabsActiveName"-->
+<!--      :closable="false"-->
+<!--      @tab-click="selectedTabHandle"-->
+<!--      @tab-remove="removeTabHandle">-->
 <!--      <el-dropdown class="site-tabs__tools" :show-timeout="0">-->
 <!--        <i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
 <!--        <el-dropdown-menu slot="dropdown">-->
@@ -16,25 +16,24 @@
 <!--          <el-dropdown-item @click.native="refresh()">刷新当前标签页</el-dropdown-item>-->
 <!--        </el-dropdown-menu>-->
 <!--      </el-dropdown>-->
-      <el-tab-pane
-        v-for="item in mainTabs"
-        :key="item.name"
-        :label="item.title"
-        :name="item.name">
-        <el-card :body-style="siteContentViewHeight">
-          <iframe
-            v-if="item.type === 'iframe'"
-            :src="item.iframeUrl"
-            width="100%" height="100%" frameborder="0" scrolling="yes">
-          </iframe>
-          <keep-alive v-else>
-            <router-view v-if="item.name === mainTabsActiveName" />
-          </keep-alive>
-        </el-card>
-      </el-tab-pane>
-    </el-tabs>
+<!--      <el-tab-pane-->
+<!--        v-for="item in mainTabs"-->
+<!--        :key="item.name"-->
+<!--        :name="item.name">-->
+<!--        <el-card :body-style="siteContentViewHeight">-->
+<!--          <iframe-->
+<!--            v-if="item.type === 'iframe'"-->
+<!--            :src="item.iframeUrl"-->
+<!--            width="100%" height="100%" frameborder="0" scrolling="yes">-->
+<!--          </iframe>-->
+<!--          <keep-alive v-else>-->
+<!--            <router-view v-if="item.name === mainTabsActiveName" />-->
+<!--          </keep-alive>-->
+<!--        </el-card>-->
+<!--      </el-tab-pane>-->
+<!--    </el-tabs>-->
     <!-- 主入口标签页 e -->
-    <el-card v-else :body-style="siteContentViewHeight">
+    <el-card :body-style="siteContentViewHeight">
       <keep-alive>
         <router-view />
       </keep-alive>
@@ -69,7 +68,8 @@
       siteContentViewHeight () {
         var height = this.documentClientHeight - 50 - 30 - 2
         if (this.$route.meta.isTab) {
-          height -= 40
+          // height -= 40
+          height -= 0
           return isURL(this.$route.meta.iframeUrl) ? { height: height + 'px' } : { minHeight: height + 'px' }
         }
         return { minHeight: height + 'px' }
@@ -124,4 +124,19 @@
     }
   }
 </script>
+<style lang="scss">
+  .site-content > .el-tabs > .el-tabs__content {
+    padding: 0 1px 1px;
+  }
+  .site-content {
+    position: relative;
+    padding: 10px;
+  }
+  .el-tabs__header {
+    padding: 0;
+    position: relative;
+    margin: 0 0 0px;
+  }
 
+
+</style>

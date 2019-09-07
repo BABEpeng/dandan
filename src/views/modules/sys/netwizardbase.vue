@@ -1,7 +1,7 @@
 <template>
   <div class="add-dialog">
     <el-dialog
-      :title="!dataForm.id ? '添加传感器' : '修改传感器'"
+      :title="!dataForm.id ? '点位模版名称' : '测试模版名称'"
       :close-on-click-modal="false"
       :visible.sync="visible"
     >

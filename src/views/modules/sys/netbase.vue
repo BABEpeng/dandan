@@ -8,8 +8,8 @@
      </div>
     <el-main>
       <div class="main">
-        <div class="info">
-          <el-card :body-style="{ display: 'flex' }">
+        <div >
+          <el-card :body-style="{ display: 'flex',padding: '0px',border: '0px' }">
             <el-row :gutter="40">
               <el-col :span="8">
                 <div class="grid-content">
@@ -32,128 +32,127 @@
               </el-col>
             </el-row>
           </el-card>
-          <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="基础信息" name="first">
-              <div v-if="isFirst">
-                <span>{{'设备名称: ' + dataList.name }}</span>
-                <el-divider></el-divider>
-                <span>{{'设备型号: ' + dataList.number }}</span>
-                <el-divider></el-divider>
-                <span>{{'出场日期: ' + dataList.data }}</span>
-                <el-divider></el-divider>
-                <span>{{'生产厂家: ' + dataList.prod }}</span>
-                <el-divider></el-divider>
-                <span>{{'出场编号: ' + dataList.got }}</span>
-                <el-divider></el-divider>
-                <span>{{'安装位置: ' + dataList.pos }}</span>
-                <el-divider></el-divider>
-                <span>{{'负责人: ' + dataList.fuz }}</span>
-                <el-divider></el-divider>
-                <span>{{'联系方式: ' + dataList.tel }}</span>
-                <el-divider></el-divider>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="传感器" name="second">
-              <div v-if="isSecond">
-                <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
-                  <el-form-item>
-                    <el-input v-model="dataForm.paramKey" placeholder="传感器名称" clearable></el-input>
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button type="primary" @click="getDataList()">查询</el-button>
-                  </el-form-item>
-                  <el-form-item class="lay-dev">
-                    <el-button type="primary" @click="ortensiaHandle()">绑定传感器</el-button>
-<!--                    <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>-->
-<!--                    <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
-                  </el-form-item>
-                </el-form>
-                <el-table
-                  :data="dataLists"
-                  border
-                  v-loading="dataListLoading"
-                  @selection-change="selectionChangeHandle"
-                  style="width: 100%;">
-                  <el-table-column
-                    type="selection"
-                    header-align="center"
-                    align="center"
-                    width="50">
-                  </el-table-column>
-                  <el-table-column
-                    prop="number"
-                    header-align="center"
-                    align="center"
-                    width="50"
-                    label="从机ID">
-                  </el-table-column>
-                  <el-table-column
-                    prop="name"
-                    header-align="center"
-                    align="center"
-                    label="传感器名称">
-                  </el-table-column>
-                  <el-table-column
-                    prop="number"
-                    header-align="center"
-                    align="center"
-                    width="50"
-                    label="设备编号">
-                  </el-table-column>
+          <div>
+            <el-tabs v-model="activeName"  @tab-click="handleClick">
+              <el-tab-pane label="基础信息" name="first"  class ="netinfo">
+                <div v-if="isFirst">
+                  <span>{{'设备名称: ' + dataList.name }}</span>
+                  <el-divider></el-divider>
+                  <span>{{'设备型号: ' + dataList.number }}</span>
+                  <el-divider></el-divider>
+                  <span>{{'出场日期: ' + dataList.data }}</span>
+                  <el-divider></el-divider>
+                  <span>{{'生产厂家: ' + dataList.prod }}</span>
+                  <el-divider></el-divider>
+                  <span>{{'出场编号: ' + dataList.got }}</span>
+                  <el-divider></el-divider>
+                  <span>{{'安装位置: ' + dataList.pos }}</span>
+                  <el-divider></el-divider>
+                  <span>{{'负责人: ' + dataList.fuz }}</span>
+                  <el-divider></el-divider>
+                  <span>{{'联系方式: ' + dataList.tel }}</span>
+                  <el-divider></el-divider>
+                </div>
+              </el-tab-pane>
+              <el-tab-pane label="传感器" name="second" class ="netinfo">
+                <div v-if="isSecond">
+                  <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+                    <el-form-item>
+                      <el-input v-model="dataForm.paramKey" placeholder="传感器名称" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                      <el-button type="primary" @click="getDataList()">查询</el-button>
+                    </el-form-item>
+                    <el-form-item class="lay-dev">
+                      <el-button type="primary" @click="ortensiaHandle()">绑定传感器</el-button>
+                      <!--                    <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>-->
+                      <!--                    <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
+                    </el-form-item>
+                  </el-form>
+                  <el-table
+                    :data="dataLists"
+                    border
+                    v-loading="dataListLoading"
+                    @selection-change="selectionChangeHandle"
+                    style="width: 100%;">
+                    <el-table-column
+                      type="selection"
+                      header-align="center"
+                      align="center"
+                      width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="number"
+                      header-align="center"
+                      align="center"
+                      label="从机ID">
+                    </el-table-column>
+                    <el-table-column
+                      prop="name"
+                      header-align="center"
+                      align="center"
+                      label="传感器名称">
+                    </el-table-column>
+                    <el-table-column
+                      prop="number"
+                      header-align="center"
+                      align="center"
+                      label="设备编号">
+                    </el-table-column>
                     <el-table-column
                       prop="name"
                       header-align="center"
                       align="center"
                       label="点位模版">
-                  </el-table-column>
+                    </el-table-column>
                     <el-table-column
                       prop="numb"
                       header-align="center"
                       align="center"
-                      width="50"
                       label="点位数">
                     </el-table-column>
-                  <el-table-column
-                    prop="numType"
-                    header-align="center"
-                    align="center"
-                    label="位置">
-                  </el-table-column>
-                  <el-table-column
-                    prop="number"
-                    header-align="center"
-                    align="center"
-                    label="备注">
-                  </el-table-column>
-                  <el-table-column
-                    prop="numTypes"
-                    header-align="center"
-                    align="center"
-                    label="在线/离线">
-                  </el-table-column>
-                  <el-table-column
-                    prop="numb"
-                    header-align="center"
-                    align="center"
-                    width="50"
-                    label="状态">
-                  </el-table-column>
-                  <el-table-column
-                    fixed="right"
-                    header-align="center"
-                    align="center"
-                    label="操作">
-                    <template slot-scope="scope">
-                      <div class="fl">
-                        <el-button type="primary" size="small" @click="editorHandle(scope.row.id)">编辑</el-button>
-                        <el-button type="primary" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
-                      </div>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
-            </el-tab-pane>
-          </el-tabs>
+                    <el-table-column
+                      prop="numType"
+                      header-align="center"
+                      align="center"
+                      label="位置">
+                    </el-table-column>
+                    <el-table-column
+                      prop="number"
+                      header-align="center"
+                      align="center"
+                      label="备注">
+                    </el-table-column>
+                    <el-table-column
+                      prop="numTypes"
+                      header-align="center"
+                      align="center"
+                      label="在线/离线">
+                    </el-table-column>
+                    <el-table-column
+                      prop="numb"
+                      header-align="center"
+                      align="center"
+                      label="状态">
+                    </el-table-column>
+                    <el-table-column
+                      fixed="right"
+                      header-align="center"
+                      align="center"
+                      width="150"
+                      label="操作">
+                      <template slot-scope="scope">
+                        <div class="fl">
+                          <el-button type="primary" size="small" @click="editorHandle(scope.row.id)">编辑</el-button>
+                          <el-button type="primary" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+                        </div>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </div>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
         </div>
       </div>
     </el-main>
@@ -323,6 +322,7 @@
 <style lang="scss" scoped>
   .head{
     padding-left: 19px;
+    padding-top: 10px;
   }
   .header {
     height:14px;
@@ -351,5 +351,20 @@
   }
   .el-table {
     font-size: 12px;
+  }
+.el-card__body {
+   padding: 0px;
+  }
+  .el-card.is-always-shadow {
+     -webkit-box-shadow: 0 0px 0px 0;
+     box-shadow: 0 0 0px 0;
+  }
+  .el-card {
+    border: 0px solid #646464;
+  }
+  .netinfo {
+    overflow: hidden;
+    position: relative;
+    top: 17px;
   }
 </style>

@@ -126,5 +126,42 @@
   /*  background: #3795E8;*/
 
   /*}*/
-
+  .site-sidebar {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    bottom: 0;
+    z-index: 1020;
+    width: 177px;
+    overflow: hidden;
+  }
+  .site-sidebar__inner {
+    position: relative;
+    z-index: 1;
+    width: 177px;
+    height: 100%;
+    padding-bottom: 15px;
+    overflow-y: scroll;
+  }
+  .site-sidebar__menu.el-menu {
+    width: 177px;
+    border-right: 0;
+  }
+  .site-content__wrapper {
+    position: relative;
+    padding-top: 50px;
+    margin-left: 177px;
+    min-height: 100%;
+    /*background: #f1f4f5;*/
+  }
+  .site-navbar__body {
+    position: relative;
+    margin-left: 177px;
+    padding-right: 15px;
+    background-color: #061d36;
+  }
+  li {
+    line-height: normal;
+    padding: 0px;
+  }
 </style>

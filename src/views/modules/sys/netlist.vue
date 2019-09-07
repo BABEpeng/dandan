@@ -1,17 +1,25 @@
 <template>
   <div class="mod-device">
-    <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
-      <el-form-item>
-        <el-input v-model="dataForm.paramKey" placeholder="网关名称 / 网关编号" clearable></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button @click="getDataList()">查询</el-button>
-      </el-form-item>
-      <el-form-item class="lay-dev">
+    <div class="top_title">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item>网关管理</el-breadcrumb-item>
+        <el-breadcrumb-item>网关列表</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <div class="top_content">
+      <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+        <el-form-item>
+          <el-input v-model="dataForm.paramKey" placeholder="网关名称 / 网关编号" clearable></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="getDataList()">查询</el-button>
+        </el-form-item>
+        <el-form-item class="lay-dev">
           <el-button type="primary" @click="addOrUpdateHandle()">新增网关</el-button>
           <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
-      </el-form-item>
-    </el-form>
+        </el-form-item>
+      </el-form>
+    </div>
     <el-table
       :data="dataList"
       border
@@ -80,7 +88,8 @@
           <div class="fl">
             <el-button type="primary" size="small"  @click="$router.push({ name: 'netbase',params: {id: scope.row.id}})">编辑</el-button>
             <el-button type="primary" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
-            <el-button type="primary" size="small" @click="sensorHandle(scope.row.id)">传感器</el-button>
+            <el-button type="primary" size="small"  @click="$router.push({ name: 'netbase',params: {id: scope.row.id}})">传感器</el-button>
+<!--            <el-button type="primary" size="small" @click="sensorHandle(scope.row.id)">传感器</el-button>-->
           </div>
         </template>
       </el-table-column>
@@ -101,7 +110,7 @@
 </template>
 
 <script>
-  import AddOrUpdate from './device-add-or-update'
+  import AddOrUpdate from './net-add-or-update'
   export default {
     data () {
       return {
@@ -209,5 +218,20 @@
   }
   .fl{
     display: flex;
+  }
+  .top_title{
+    position: relative;
+    top: -11px;
+    /*background: #f1f4f5;*/
+  }
+  .top_content {
+    position: relative;
+    background: #f1f4f5;
+    padding: 18px 0px 0px;
+  }
+  .el-form--inline .el-form-item {
+    display: inline-block;
+    margin-right: -20px;
+    vertical-align: top;
   }
 </style>

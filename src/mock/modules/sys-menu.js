@@ -575,7 +575,7 @@ var navDataList = [
     ]
   },
   {
-    'menuId': 30,
+    'menuId': 60,
     'parentId': 0,
     'parentName': null,
     'name': '项目管理',
@@ -588,7 +588,7 @@ var navDataList = [
     'list': null
   },
   {
-    'menuId': 31,
+    'menuId': 61,
     'parentId': 0,
     'parentName': null,
     'name': '项目概况',
@@ -601,7 +601,7 @@ var navDataList = [
     'list': null
   },
   {
-    'menuId': 33,
+    'menuId': 62,
     'parentId': 0,
     'parentName': null,
     'name': '综合视图',
@@ -613,8 +613,8 @@ var navDataList = [
     'open': null,
     'list': [
       {
-        'menuId': 34,
-        'parentId': 33,
+        'menuId': 63,
+        'parentId': 62,
         'parentName': null,
         'name': '能源报表',
         'url': 'sys/energy',
@@ -626,8 +626,8 @@ var navDataList = [
         'list': null
       },
       {
-        'menuId': 35,
-        'parentId': 33,
+        'menuId': 64,
+        'parentId': 62,
         'parentName': null,
         'name': '设备视图',
         'url': 'sys/device',
@@ -639,8 +639,8 @@ var navDataList = [
         'list': null
       },
       {
-        'menuId': 36,
-        'parentId': 33,
+        'menuId': 65,
+        'parentId': 62,
         'parentName': null,
         'name': '工单视图',
         'url': 'sys/worker',
@@ -654,7 +654,7 @@ var navDataList = [
     ]
   },
   {
-    'menuId': 50,
+    'menuId': 66,
     'parentId': 0,
     'parentName': null,
     'name': '控制策略',
@@ -666,8 +666,8 @@ var navDataList = [
     'open': null,
     'list': [
       {
-        'menuId': 51,
-        'parentId': 50,
+        'menuId': 67,
+        'parentId': 66,
         'parentName': null,
         'name': '策略管理',
         'url': 'sys/strategic',
@@ -679,8 +679,8 @@ var navDataList = [
         'list': null
       },
       {
-        'menuId': 51,
-        'parentId': 50,
+        'menuId': 68,
+        'parentId': 66,
         'parentName': null,
         'name': '模式管理',
         'url': 'sys/model',
@@ -692,8 +692,8 @@ var navDataList = [
         'list': null
       },
       {
-        'menuId': 51,
-        'parentId': 50,
+        'menuId': 69,
+        'parentId': 66,
         'parentName': null,
         'name': '任务管理',
         'url': 'sys/task',
@@ -707,7 +707,7 @@ var navDataList = [
     ]
   },
   {
-    'menuId': 40,
+    'menuId': 70,
     'parentId': 0,
     'parentName': null,
     'name': '设备管理',
@@ -719,8 +719,8 @@ var navDataList = [
     'open': null,
     'list': [
       {
-        'menuId': 41,
-        'parentId': 40,
+        'menuId': 71,
+        'parentId': 70,
         'parentName': null,
         'name': '设备列表',
         'url': 'sys/device',
@@ -734,7 +734,7 @@ var navDataList = [
     ]
   },
   {
-    'menuId': 43,
+    'menuId': 72,
     'parentId': 0,
     'parentName': null,
     'name': '网关管理',
@@ -746,8 +746,8 @@ var navDataList = [
     'open': null,
     'list': [
       {
-        'menuId': 44,
-        'parentId': 43,
+        'menuId': 73,
+        'parentId': 72,
         'parentName': null,
         'name': '网关列表',
         'url': 'sys/netlist',
@@ -759,8 +759,8 @@ var navDataList = [
         'list': null
       },
       {
-        'menuId': 45,
-        'parentId': 43,
+        'menuId': 74,
+        'parentId': 72,
         'parentName': null,
         'name': '点位模板管理',
         'url': 'sys/netwizard',
@@ -774,7 +774,7 @@ var navDataList = [
     ]
   },
   {
-    'menuId': 37,
+    'menuId': 75,
     'parentId': 0,
     'parentName': null,
     'name': '组态',
@@ -786,8 +786,8 @@ var navDataList = [
     'open': null,
     'list': [
       {
-        'menuId': 38,
-        'parentId': 37,
+        'menuId': 76,
+        'parentId': 75,
         'parentName': null,
         'name': '组态管理',
         'url': 'sys/configuration',
@@ -799,8 +799,8 @@ var navDataList = [
         'list': null
       },
       {
-        'menuId': 39,
-        'parentId': 37,
+        'menuId': 77,
+        'parentId': 75,
         'parentName': null,
         'name': '组态创建',
         'url': 'sys/creation',
@@ -814,7 +814,7 @@ var navDataList = [
     ]
   },
   {
-    'menuId': 46,
+    'menuId': 78,
     'parentId': 0,
     'parentName': null,
     'name': '权限管理',
@@ -826,8 +826,8 @@ var navDataList = [
     'open': null,
     'list': [
       {
-        'menuId': 47,
-        'parentId': 46,
+        'menuId': 79,
+        'parentId': 78,
         'parentName': null,
         'name': '角色管理',
         'url': 'sys/PersonManage',
@@ -839,8 +839,8 @@ var navDataList = [
         'list': null
       },
       {
-        'menuId': 48,
-        'parentId': 46,
+        'menuId': 80,
+        'parentId': 78,
         'parentName': null,
         'name': '人员管理',
         'url': 'sys/RoleManage',
