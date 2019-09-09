@@ -14,6 +14,16 @@
           <icon-svg name="zhedie"></icon-svg>
         </el-menu-item>
       </el-menu>
+      <div class="project">
+<!--        <el-select size="mini" v-model="value" placeholder="请选择">-->
+<!--          <el-option-->
+<!--            v-for="item in options"-->
+<!--            :key="item.value"-->
+<!--            :label="item.label"-->
+<!--            :value="item.value">-->
+<!--          </el-option>-->
+<!--        </el-select>-->
+      </div>
       <el-menu
         class="site-navbar__menu site-navbar__menu--right"
         mode="horizontal">
@@ -59,7 +69,18 @@
   export default {
     data () {
       return {
-        updatePassowrdVisible: false
+        updatePassowrdVisible: false,
+          options: [{
+              value: '项目一',
+              label: '金捷利项目一'
+          }, {
+              value: '项目二',
+              label: '金捷利项目二'
+          }, {
+              value: '项目三',
+              label: '金捷利项目三'
+          }],
+          value: '项目一'
       }
     },
     components: {
@@ -141,5 +162,15 @@
     margin-left: 117px;
     padding-right: 15px;
     background-color: #fff;
+  }
+
+  /*.el-input__inner {*/
+  /*  background-color: #061d36;*/
+  /*  border: 1px solid #061d36;*/
+  /*}*/
+  .project{
+    height: 50px;
+    line-height: 50px;
+    float: left;
   }
 </style>

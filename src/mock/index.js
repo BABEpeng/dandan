@@ -11,6 +11,7 @@ import * as sysManger from './modules/sys-manger'
 import * as sysDevice from './modules/sys-device'
 import * as sysOrsensor from './modules/sys-orsensor'
 import * as sysNet from './modules/sys-net'
+import * as sysProject from './modules/sys-project'
 // 模拟feeds数据
 import * as sysFeeds from './modules/sys-feeds'
 import * as sysTest from './modules/sys-test'
@@ -25,6 +26,8 @@ fnCreate(sysLog, true)
 fnCreate(sysMenu, true)
 fnCreate(sysRole, true)
 fnCreate(sysUser, true)
+// 项目
+fnCreate(sysNet, true)
 // 项目管理
 fnCreate(sysManger, true)
 // 设备管理

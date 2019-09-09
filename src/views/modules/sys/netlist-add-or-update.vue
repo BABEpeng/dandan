@@ -180,6 +180,8 @@
   export default {
     data () {
       return {
+        activeName: '',
+        dataListLoading: false,
         dataForm: {
           paramKey: ''
         },
@@ -188,11 +190,9 @@
         pageIndex: 1,
         pageSize: 10,
         totalPage: 0,
-        dataListLoading: false,
         dataListSelections: [],
         addOrUpdateVisible: false,
         url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-        activeName: 'first',
         isFirst: true,
         isSecond: false,
         isThird: false,
@@ -209,8 +209,10 @@
       this.getDataList()
     },
     methods: {
+
       // 获取设备基础信息 模拟统一接口拿数据，后期分接口拿
       getDataList () {
+        this.activeName = this.$route.params.option
         this.dataListLoading = true
         this.$nextTick(() => {
           this.$http({

@@ -377,7 +377,7 @@ var dataList = [
     'list': null
   },
   {
-    'menuId': 31,
+    'menuId': 60,
     'parentId': 0,
     'parentName': null,
     'name': '项目管理',
@@ -390,8 +390,8 @@ var dataList = [
     'list': null
   },
   {
-    'menuId': 2,
-    'parentId': 1,
+    'menuId': 90,
+    'parentId': 60,
     'parentName': '项目管理',
     'name': '查看',
     'url': null,
@@ -403,8 +403,8 @@ var dataList = [
     'list': null
   },
   {
-    'menuId': 3,
-    'parentId': 1,
+    'menuId': 91,
+    'parentId': 60,
     'parentName': '项目管理',
     'name': '新增',
     'url': null,
@@ -416,8 +416,8 @@ var dataList = [
     'list': null
   },
   {
-    'menuId': 4,
-    'parentId': 1,
+    'menuId': 92,
+    'parentId': 60,
     'parentName': '项目管理',
     'name': '修改',
     'url': null,
@@ -429,8 +429,8 @@ var dataList = [
     'list': null
   },
   {
-    'menuId': 5,
-    'parentId': 1,
+    'menuId': 93,
+    'parentId': 60,
     'parentName': '项目管理',
     'name': '删除',
     'url': null,
