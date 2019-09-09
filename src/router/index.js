@@ -45,7 +45,7 @@ const mainRoutes = {
   path: '/',
   component: _import('main'),
   name: 'main',
-  redirect: { name: 'home' },
+  redirect: { name: 'project' },
   meta: { title: '主入口整体布局' },
   children: [
     // 通过meta对象设置路由展示方式
@@ -56,10 +56,11 @@ const mainRoutes = {
     // { path: '/theme', component: _import('common/theme'), name: 'theme', meta: { title: '主题' } },
     // { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } },
     // { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } }
-    { path: '/sys-manger', component: _import('modules/sys/manger'), name: 'home', meta: { title: '项目' } },
+    { path: '/sys-project', component: _import('modules/sys/project'), name: 'project', meta: { title: '项目' } },
     { path: '/sys-deviceb', component: _import('modules/sys/devicebase'), name: 'deviceb', meta: { title: '设备基础' } },
     { path: '/sys-netbase', component: _import('modules/sys/netlist-add-or-update'), name: 'netbase', meta: { title: '网关详情' } },
-    { path: '/sys-wizard', component: _import('modules/sys/netwizardbase'), name: 'wizard', meta: { title: '点位模版' } }
+    { path: '/sys-wizard', component: _import('modules/sys/netwizardbase'), name: 'wizard', meta: { title: '点位模版' } },
+    { path: '/sys-survey', component: _import('modules/sys/survey'), name: 'survey', meta: { title: '项目概况' } }
     // { path: '/sys-ortensia', component: _import('modules/sys/ortensiabase'), name: 'ortensia', meta: { title: '传感器' } },
     // { path: '/sys-trigger', component: _import('modules/sys/triggerbase'), name: 'trigger', meta: { title: '触发器' } }
   ],

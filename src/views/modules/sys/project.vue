@@ -1,6 +1,6 @@
 <template>
   <div class="mod-demo-manger">
-      <el-row>
+      <el-row :gutter="20">
         <div class="addButton">
             <el-form :inline="true" :model="dataForm">
               <el-form-item class="add">
@@ -8,27 +8,30 @@
               </el-form-item>
             </el-form>
         </div>
-        <el-col :span="6" v-for="(o, index) in dataList" :key="index" :offset="index > 0 ? 2 : 0">
-          <el-card :body-style="{ padding: '0px' }">
-            <h3>{{o.name}}</h3>
-            <img src="~@/assets/img/bg_login.png" class="image">
-            <div style="padding: 14px;">
-              <div class="bottom clearfix">
-                <span>地址：省市县省市县省市县省市</span>
-<!--                <el-button type="text" class="button">进入</el-button>-->
-              </div>
+        <el-col :span="6" v-for="(item, index) in dataList" :key="index">
+            <div  @click="$router.push({ name: 'survey', query: {id:index}})">
+              <el-card :body-style="{ padding: '0px' }">
+                <h3>{{item.name}}</h3>
+                <img src="~@/assets/img/bg_login.png" class="image">
+                <div style="padding: 14px;">
+                  <div class="bottom clearfix">
+                    <p class="description">描述：{{item.description}}</p>
+                    <p>地址：{{item.positionName}}</p>
+                    <!--                <el-button type="text" class="button">进入</el-button>-->
+                  </div>
+                </div>
+              </el-card>
             </div>
-          </el-card>
         </el-col>
       </el-row>
     <!-- 弹窗, 新增 / 修改 -->
-    <add-or-updats v-if="addOrUpdateVisible" ref="addOrUpdats" @refreshDataList="getDataList"></add-or-updats>
+    <add-or-update-project v-if="addOrUpdateVisible" ref="AddOrUpdateProject" @refreshDataList="getDataList"></add-or-update-project>
   </div>
 </template>
 
 <script>
-  import AddOrUpdats from './manger-add-or-update'
-  import { treeDataTranslate } from '@/utils'
+  import AddOrUpdateProject from './project-add-or-update'
+  // import { treeDataTranslate } from '@/utils'
   export default {
     data () {
       return {
@@ -39,21 +42,22 @@
       }
     },
     components: {
-      AddOrUpdats
+      AddOrUpdateProject
     },
     activated () {
       this.getDataList()
     },
     methods: {
-      // 获取数据列表
+      // 获取项目列表
       getDataList () {
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/sys/manger/list'),
+          url: this.$http.adornUrl('/device/get/program'),
           method: 'get',
           params: this.$http.adornParams()
         }).then(({data}) => {
-          this.dataList = treeDataTranslate(data, 'menuId')
+          this.dataList = data.data
+          // this.dataList = treeDataTranslate(data.data, 'menuId')
           this.dataListLoading = false
         })
       },
@@ -61,7 +65,7 @@
       addOrUpdateHandle (id) {
         this.addOrUpdateVisible = true
         this.$nextTick(() => {
-          this.$refs.addOrUpdats.init(id)
+          this.$refs.AddOrUpdateProject.init(id)
         })
       }
     }
@@ -123,5 +127,9 @@
     display: block;
     position: absolute;
     right: 0px;
+  }
+  .description {
+    width: 210px;
+    overflow-x: hidden;
   }
 </style>

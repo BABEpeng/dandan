@@ -4,14 +4,13 @@ import Mock from 'mockjs'
 var dataList = []
 for (let i = 0; i < Math.floor(Math.random() * 10 + 1); i++) {
   dataList.push(Mock.mock({
-    'userId': '@increment',
-    'username': '@name',
-    'email': '@email',
-    'mobile': /^1[0-9]{10}$/,
-    'status': 1,
-    'roleIdList': null,
-    'createUserId': 1,
-    'createTime': 'datetime'
+    'id': '@increment',
+    'name': '@name',
+    'description': 'this is a test program',
+    'positionName': '北京C区',
+    'positionCoordinate': '12N, 23S',
+    'owner': 'cb84bc5a-5d38-4711-8e28-8a4298da1050',
+    'createTimestamp': 'datetime'
   }))
 }
 
@@ -48,8 +47,6 @@ export function info () {
     }
   }
 }
-
-
 // 添加项目
 export function add () {
   return {

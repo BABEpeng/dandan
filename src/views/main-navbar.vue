@@ -69,18 +69,18 @@
   export default {
     data () {
       return {
-        updatePassowrdVisible: false,
-          options: [{
-              value: '项目一',
-              label: '金捷利项目一'
-          }, {
-              value: '项目二',
-              label: '金捷利项目二'
-          }, {
-              value: '项目三',
-              label: '金捷利项目三'
-          }],
-          value: '项目一'
+        updatePassowrdVisible: false
+          // options: [{
+          //     value: '项目一',
+          //     label: '金捷利项目一'
+          // }, {
+          //     value: '项目二',
+          //     label: '金捷利项目二'
+          // }, {
+          //     value: '项目三',
+          //     label: '金捷利项目三'
+          // }],
+          // value: '项目一'
       }
     },
     components: {

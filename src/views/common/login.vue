@@ -22,17 +22,18 @@
               <el-form-item prop="password">
                 <el-input v-model="dataForm.password" type="password" placeholder="密码"></el-input>
               </el-form-item>
-              <el-form-item prop="captcha">
-                <el-row :gutter="20">
-                  <el-col :span="14">
-                    <el-input v-model="dataForm.captcha" placeholder="验证码">
-                    </el-input>
-                  </el-col>
-                  <el-col :span="10" class="login-captcha">
-                    <img :src="captchaPath" @click="getCaptcha()" alt="">
-                  </el-col>
-                </el-row>
-              </el-form-item>
+
+<!--              <el-form-item prop="captcha">-->
+<!--                <el-row :gutter="20">-->
+<!--                  <el-col :span="14">-->
+<!--                    <el-input v-model="dataForm.captcha" placeholder="验证码">-->
+<!--                    </el-input>-->
+<!--                  </el-col>-->
+<!--                  <el-col :span="10" class="login-captcha">-->
+<!--                    <img :src="captchaPath" @click="getCaptcha()" alt="">-->
+<!--                  </el-col>-->
+<!--                </el-row>-->
+<!--              </el-form-item>-->
               <el-form-item>
                 <el-button class="login-btn-submit" type="primary" @click="dataFormSubmit()">登录</el-button>
               </el-form-item>
@@ -86,7 +87,8 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl('/sys/login'),
+              // url: this.$http.adornUrl('/sys/login'),
+              url: this.$http.adornUrl('/account/login'),
               method: 'post',
               data: this.$http.adornData({
                 'username': this.dataForm.userName,
@@ -95,12 +97,12 @@
                 // 'captcha': this.dataForm.captcha
               })
             }).then(({data}) => {
-              if (data && data.code === 0) {
+              if (data && data.code === 200) {
                 // this.$cookie.set('token', data.token)
-                sessionStorage.setItem('token', JSON.stringify(data.token))
-                this.$router.replace({ name: 'home' })
+                sessionStorage.setItem('token', JSON.stringify(data.data.token))
+                this.$router.replace({ name: 'project' })
               } else {
-                this.getCaptcha()
+                // this.getCaptcha()
                 this.$message.error(data.msg)
               }
             })
