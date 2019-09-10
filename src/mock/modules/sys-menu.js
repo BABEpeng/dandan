@@ -750,7 +750,7 @@ var navDataList = [
         'parentId': 72,
         'parentName': null,
         'name': '网关列表',
-        'url': 'sys/netlist',
+        'url': 'sys/gateway',
         'perms': null,
         'type': 1,
         'icon': '',

@@ -3,6 +3,14 @@ import Vuex from 'vuex'
 import cloneDeep from 'lodash/cloneDeep'
 import common from './modules/common'
 import user from './modules/user'
+// 项目数据源
+import projectData from './modules/projectData'
+// 网关数据源
+import gatewayData from './modules/gatewayData'
+// 传感器数据源
+import ortensiaData from './modules/ortensiaData'
+// 传感器模版数据源
+import ortensiaTemlData from './modules/ortensiaTemlData'
 
 // 模块扩展
 import feeds from './modules/feeds'
@@ -15,7 +23,11 @@ export default new Vuex.Store({
     common,
     user,
     feeds,
-    banner
+    banner,
+    projectData,
+    gatewayData,
+    ortensiaData,
+    ortensiaTemlData
   },
   state: {
     count: 1,

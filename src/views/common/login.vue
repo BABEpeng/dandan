@@ -1,47 +1,70 @@
 <template>
-  <div class="site-wrapper site-page--login">
-    <div class="site-content__wrapper">
-      <div class="site-content">
-        <div class="brand-info">
-          <h2 class="brand-info__text">logo</h2>
-          <p class="brand-info__intro"></p>
-        </div>
-        <div class="login-main">
-<!--          <div>-->
-<!--            <h2>{{this.$store.state.count}}</h2>-->
-<!--            <h2>{{this.$store.getters.getStateCount}}</h2>-->
-<!--            <button @click="addFun"></button>-->
-<!--            <button @click="reductionFun"></button>-->
-<!--          </div>-->
-          <div class = "login-contain">
-            <h3 class="login-title">管理员登录</h3>
-            <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
-              <el-form-item prop="userName">
-                <el-input v-model="dataForm.userName" placeholder="帐号"></el-input>
-              </el-form-item>
-              <el-form-item prop="password">
-                <el-input v-model="dataForm.password" type="password" placeholder="密码"></el-input>
-              </el-form-item>
+  <div>
+    <div class="site-wrapper site-page--login">
+      <div class="site-content__wrapper">
+        <div class="site-content">
+          <div class="brand-info">
+            <h2 class="brand-info__text">logo</h2>
+            <p class="brand-info__intro"></p>
+          </div>
+          <div class="login-main">
+            <!--          <div>-->
+            <!--            <h2>{{this.$store.state.count}}</h2>-->
+            <!--            <h2>{{this.$store.getters.getStateCount}}</h2>-->
+            <!--            <button @click="addFun"></button>-->
+            <!--            <button @click="reductionFun"></button>-->
+            <!--          </div>-->
+            <div class = "login-contain">
+              <h3 class="login-title">管理员登录</h3>
+              <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
+                <el-form-item prop="userName">
+                  <el-input v-model="dataForm.userName" placeholder="帐号"></el-input>
+                </el-form-item>
+                <el-form-item prop="password">
+                  <el-input v-model="dataForm.password" type="password" placeholder="密码"></el-input>
+                </el-form-item>
 
-<!--              <el-form-item prop="captcha">-->
-<!--                <el-row :gutter="20">-->
-<!--                  <el-col :span="14">-->
-<!--                    <el-input v-model="dataForm.captcha" placeholder="验证码">-->
-<!--                    </el-input>-->
-<!--                  </el-col>-->
-<!--                  <el-col :span="10" class="login-captcha">-->
-<!--                    <img :src="captchaPath" @click="getCaptcha()" alt="">-->
-<!--                  </el-col>-->
-<!--                </el-row>-->
-<!--              </el-form-item>-->
-              <el-form-item>
-                <el-button class="login-btn-submit" type="primary" @click="dataFormSubmit()">登录</el-button>
-              </el-form-item>
-            </el-form>
+                <!--              <el-form-item prop="captcha">-->
+                <!--                <el-row :gutter="20">-->
+                <!--                  <el-col :span="14">-->
+                <!--                    <el-input v-model="dataForm.captcha" placeholder="验证码">-->
+                <!--                    </el-input>-->
+                <!--                  </el-col>-->
+                <!--                  <el-col :span="10" class="login-captcha">-->
+                <!--                    <img :src="captchaPath" @click="getCaptcha()" alt="">-->
+                <!--                  </el-col>-->
+                <!--                </el-row>-->
+                <!--              </el-form-item>-->
+                <el-form-item>
+                  <el-button class="login-btn-submit" type="primary" @click="dataFormSubmit()">登录</el-button>
+                </el-form-item>
+              </el-form>
+            </div>
           </div>
         </div>
       </div>
     </div>
+<!--    <div class="particles">-->
+<!--      <vue-particles-->
+<!--        color="#dedede"-->
+<!--        :particleOpacity="0.7"-->
+<!--        :particlesNumber="80"-->
+<!--        shapeType="circle"-->
+<!--        :particleSize="4"-->
+<!--        linesColor="#dedede"-->
+<!--        :linesWidth="1"-->
+<!--        :lineLinked="true"-->
+<!--        :lineOpacity="0.4"-->
+<!--        :linesDistance="150"-->
+<!--        :moveSpeed="3"-->
+<!--        :hoverEffect="true"-->
+<!--        hoverMode="grab"-->
+<!--        :clickEffect="true"-->
+<!--        clickMode="push"-->
+<!--        class="lizi"-->
+<!--      >-->
+<!--      </vue-particles>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -87,7 +110,6 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              // url: this.$http.adornUrl('/sys/login'),
               url: this.$http.adornUrl('/account/login'),
               method: 'post',
               data: this.$http.adornData({
@@ -98,9 +120,16 @@
               })
             }).then(({data}) => {
               if (data && data.code === 200) {
-                // this.$cookie.set('token', data.token)
                 sessionStorage.setItem('token', JSON.stringify(data.data.token))
-                this.$router.replace({ name: 'project' })
+                this.$message({
+                  message: '登录成功',
+                  type: 'success',
+                  duration: 1500,
+                  onClose: () => {
+                    this.visible = false
+                    this.$router.replace({ name: 'project' })
+                  }
+                })
               } else {
                 // this.getCaptcha()
                 this.$message.error(data.msg)
@@ -115,6 +144,7 @@
         // this.captchaPath = this.$http.adornUrl(`/captcha.jpg?uuid=${this.dataForm.uuid}`)
       }
     }
+
   }
 </script>
 
@@ -142,6 +172,15 @@
       -webkit-animation: bounce-down 1.5s linear infinite;
       animation: bounce-down 1.5s linear infinite;
 
+    }
+    .lizi {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 500;
+      position: absolute;
     }
     .site-content__wrapper {
       position: absolute;
@@ -183,6 +222,7 @@
       width: 470px;
       min-height: 100%;
       background-color: #2082D9;
+      z-index: 1000;
     }
     .login-title {
       font-size: 16px;
@@ -242,4 +282,15 @@
   50%, 100% {transform: translateY(0);}
   75% {transform: translateY(10px);}
  }
+
+  #container {
+    height: 500px;
+    width: 100%;
+    position: absolute;
+    top:0px;
+    left:0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 2000;
+  }
 </style>

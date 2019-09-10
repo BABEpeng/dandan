@@ -1,29 +1,29 @@
 <template>
   <div class="mod-demo-manger">
-      <el-row :gutter="20">
-        <div class="addButton">
-            <el-form :inline="true" :model="dataForm">
-              <el-form-item class="add">
-                  <el-button v-if="isAuth('sys:manger:save')" type="primary" @click="addOrUpdateHandle()">新增项目</el-button>
-              </el-form-item>
-            </el-form>
-        </div>
-        <el-col :span="6" v-for="(item, index) in dataList" :key="index">
-            <div  @click="$router.push({ name: 'survey', query: {id:index}})">
-              <el-card :body-style="{ padding: '0px' }">
-                <h3>{{item.name}}</h3>
-                <img src="~@/assets/img/bg_login.png" class="image">
-                <div style="padding: 14px;">
-                  <div class="bottom clearfix">
-                    <p class="description">描述：{{item.description}}</p>
-                    <p>地址：{{item.positionName}}</p>
-                    <!--                <el-button type="text" class="button">进入</el-button>-->
-                  </div>
-                </div>
-              </el-card>
+    <el-row :gutter="20">
+      <div class="addButton">
+        <el-form :inline="true" :model="dataForm">
+          <el-form-item class="add">
+            <el-button v-if="isAuth('sys:manger:save')" type="primary" @click="addOrUpdateHandle()">新增项目</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <el-col :span="6" v-for="(item, index) in dataList" :key="index">
+        <div  @click="$router.push({ name: 'survey', query: {id:index}})">
+          <el-card :body-style="{ padding: '0px' }">
+            <h3>{{item.name}}</h3>
+            <img src="~@/assets/img/bg_login.png" class="image">
+            <div style="padding: 14px;">
+              <div class="bottom clearfix">
+                <!--                    <p class="description">描述：{{item.description}}</p>-->
+                <p>地址：{{item.positionName}}</p>
+                <!--                <el-button type="text" class="button">进入</el-button>-->
+              </div>
             </div>
-        </el-col>
-      </el-row>
+          </el-card>
+        </div>
+      </el-col>
+    </el-row>
     <!-- 弹窗, 新增 / 修改 -->
     <add-or-update-project v-if="addOrUpdateVisible" ref="AddOrUpdateProject" @refreshDataList="getDataList"></add-or-update-project>
   </div>
@@ -32,11 +32,13 @@
 <script>
   import AddOrUpdateProject from './project-add-or-update'
   // import { treeDataTranslate } from '@/utils'
+  import Vuex from 'vuex'
+  let { mapState, mapMutations, mapActions } = Vuex
   export default {
     data () {
       return {
         dataForm: {},
-        dataList: [],
+        // dataList: [],
         dataListLoading: false,
         addOrUpdateVisible: false
       }
@@ -47,6 +49,15 @@
     activated () {
       this.getDataList()
     },
+    computed: {
+      // projectData: {
+      //   get () { return this.$store.state.common.mainTabs },
+      //   set (val) { this.$store.commit('common/updateMainTabs', val) }
+      // }
+      ...mapState({
+        dataList: state => state.projectData.data
+      })
+    },
     methods: {
       // 获取项目列表
       getDataList () {
@@ -56,7 +67,8 @@
           method: 'get',
           params: this.$http.adornParams()
         }).then(({data}) => {
-          this.dataList = data.data
+          // this.dataList = data.data
+          this.saveProjectFuc(data.data)
           // this.dataList = treeDataTranslate(data.data, 'menuId')
           this.dataListLoading = false
         })
@@ -67,7 +79,9 @@
         this.$nextTick(() => {
           this.$refs.AddOrUpdateProject.init(id)
         })
-      }
+      },
+      ...mapMutations(['saveProject']),
+      ...mapActions(['saveProjectFuc'])
     }
   }
 </script>

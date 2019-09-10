@@ -12,6 +12,8 @@ import httpRequest from '@/utils/httpRequest' // api: https://github.com/axios/a
 import { isAuth } from '@/utils'
 import BaiduMap from 'vue-baidu-map'
 import cloneDeep from 'lodash/cloneDeep'
+// import VueParticles from 'vue-particles'
+// Vue.use(VueParticles)
 Vue.use(VueCookie)
 Vue.config.productionTip = false
 Vue.use(BaiduMap, {

@@ -40,7 +40,40 @@ export function list () {
         'pageSize': 10,
         'totalPage': 1,
         'currPage': 1,
-        'list': dataList
+        'list': [
+          {
+            'id': 'ecb49ab3-b239-4cde-ab26-3a2b821a3498',
+            'gatewayProgramId': '07662bd5-25cd-47be-90f0-7c06d018238f',
+            'gatewayNo': '网关编号001',
+            'gatewayName': '网关图片地址',
+            'gatewayIcon': null,
+            'gatewayProtocol': 'modbus',
+            'gatewayPos': '这是一个网关位置',
+            'gatewayStatus': null,
+            'gatewayIsOnline': null,
+            'gatewayDescription': '这是网关描述',
+            'gatewayOperator': '110f24f8-0e6a-4254-978e-c39edfe5776c',
+            'gatewayAddTimestamp': 1567667716176,
+            'gatewayRegisterModel': null,
+            'gatewayRegisterCode': 'C9B07bac462bdf347e1cfb0465838e5163420000'
+          },
+          {
+            'id': '796bbf15-d2d4-4da7-beb2-6af59ded1794',
+            'gatewayProgramId': '07662bd5-25cd-47be-90f0-7c06d018238f',
+            'gatewayNo': '网关编号001',
+            'gatewayName': '网关图片地址',
+            'gatewayIcon': null,
+            'gatewayProtocol': 'modbus',
+            'gatewayPos': '这是一个网关位置',
+            'gatewayStatus': null,
+            'gatewayIsOnline': null,
+            'gatewayDescription': '这是网关描述',
+            'gatewayOperator': '110f24f8-0e6a-4254-978e-c39edfe5776c',
+            'gatewayAddTimestamp': 1567667857487,
+            'gatewayRegisterModel': null,
+            'gatewayRegisterCode': 'C9B00516e5f3ba08e6c85c06b869cee28d310000'
+          }
+        ]
       }
     }
   }

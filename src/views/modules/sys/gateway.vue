@@ -37,7 +37,7 @@
         header-align="center"
         align="center"
         width="80"
-        label="设备图片">
+        label="示意图片">
         <template   slot-scope="scope">
           <img :src="scope.row.img"  min-width="70" height="70" />
         </template>
@@ -46,31 +46,43 @@
         prop="name"
         header-align="center"
         align="center"
-        label="设备名称">
+        label="网关名称">
       </el-table-column>
       <el-table-column
         prop="id"
         header-align="center"
         align="center"
-        label="设备编号">
+        label="网关编号">
       </el-table-column>
       <el-table-column
-        prop="pos"
+        prop="id"
         header-align="center"
         align="center"
-        label="设备位置">
+        label="注册码">
       </el-table-column>
       <el-table-column
         prop="name"
         header-align="center"
         align="center"
-        label="设备型号">
+        label="数据协议">
+      </el-table-column>
+      <el-table-column
+        prop="pos"
+        header-align="center"
+        align="center"
+        label="网关位置">
       </el-table-column>
       <el-table-column
         prop="state"
         header-align="center"
         align="center"
-        label="设备状态">
+        label="在线/离线">
+      </el-table-column>
+      <el-table-column
+        prop="state"
+        header-align="center"
+        align="center"
+        label="状态">
       </el-table-column>
       <el-table-column
         prop="onTime"
@@ -86,10 +98,9 @@
         label="操作">
         <template slot-scope="scope">
           <div class="fl">
-            <el-button type="primary" size="small"  @click="$router.push({ name: 'netbase',params: {id: scope.row.id,option:'first'}})">编辑</el-button>
-            <el-button type="primary" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
-            <el-button type="primary" size="small"  @click="$router.push({ name: 'netbase',params: {id: scope.row.id,option:'second'}})">传感器</el-button>
-<!--            <el-button type="primary" size="small" @click="sensorHandle(scope.row.id)">传感器</el-button>-->
+            <el-button type="primary" size="small"  @click="$router.push({ name: 'deviceb',params: {id: scope.row.id}})">编辑</el-button>
+            <el-button type="primary" size="small" @click="sensorHandle(scope.row.id)">传感器</el-button>
+            <el-button type="primary" size="small" @click="triggerHandle(scope.row.id)">触发器</el-button>
           </div>
         </template>
       </el-table-column>
@@ -110,7 +121,7 @@
 </template>
 
 <script>
-  import AddOrUpdate from './net-add-or-update'
+  import AddOrUpdate from './gateway-add-or-update'
   export default {
     data () {
       return {
@@ -134,13 +145,14 @@
       this.getDataList()
     },
     methods: {
-      // 获取数据列表
+      // 获取网关数据列表
       getDataList () {
         this.dataListLoading = true
         this.$http({
           url: this.$http.adornUrl('/sys/net/list'),
           method: 'get',
           params: this.$http.adornParams({
+            // 页码，每页条数
             'page': this.pageIndex,
             'limit': this.pageSize,
             'paramKey': this.dataForm.paramKey
