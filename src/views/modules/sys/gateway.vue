@@ -129,7 +129,6 @@
     </el-pagination>
     <!-- 弹窗, 绑定传感器 -->
     <gate-way-add-or-update v-if="addOrUpdateVisible" ref="gatewayAddOrUpdate" @refreshData="getDataList"></gate-way-add-or-update>
-
   </div>
 </template>
 
@@ -267,6 +266,7 @@
       ...mapMutations(['saveGateway']),
       ...mapActions(['saveGatewayFuc'])
     }
+
   }
 </script>
 <style lang="scss">
