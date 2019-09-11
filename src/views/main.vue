@@ -82,8 +82,8 @@
         }).then(({data}) => {
           if (data && data.code === 200) {
             this.loading = false
-            this.userId = data.id
-            this.userName = data.username
+            this.userId = data.data.id
+            this.userName = data.data.username
           }
         })
       }

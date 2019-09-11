@@ -9,6 +9,7 @@ export default {
       state.id = id
     },
     updateName (state, name) {
+      console.log(name)
       state.name = name
     }
   }

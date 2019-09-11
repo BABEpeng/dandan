@@ -8,9 +8,9 @@ import projectData from './modules/projectData'
 // 网关数据源
 import gatewayData from './modules/gatewayData'
 // 传感器数据源
-import ortensiaData from './modules/ortensiaData'
+// import ortensiaData from './modules/ortensiaData'
 // 传感器模版数据源
-import ortensiaTemlData from './modules/ortensiaTemlData'
+// import ortensiaTemlData from './modules/ortensiaTemlData'
 
 // 模块扩展
 import feeds from './modules/feeds'
@@ -25,9 +25,9 @@ export default new Vuex.Store({
     feeds,
     banner,
     projectData,
-    gatewayData,
-    ortensiaData,
-    ortensiaTemlData
+    gatewayData
+    // ortensiaData,
+    // ortensiaTemlData
   },
   state: {
     count: 1,

@@ -1,372 +1,206 @@
 <template>
-  <div class="mod-devicebase">
-     <div class="head">
-       <el-breadcrumb separator="/">
-         <el-breadcrumb-item>网关管理</el-breadcrumb-item>
-         <el-breadcrumb-item>网关添加</el-breadcrumb-item>
-       </el-breadcrumb>
-     </div>
-    <el-main>
-      <div class="main">
-        <div >
-          <el-card :body-style="{ display: 'flex',padding: '0px',border: '0px' }">
-            <el-row :gutter="40">
-              <el-col :span="8">
-                <div class="grid-content">
-                <div class="block">
-                  <el-image
-                    style="width: 100px; height: 100px"
-                    :src= dataList.img
-                  ></el-image>
-                </div>
-              </div>
-              </el-col>
-              <el-col :span="16">
-                <div class="grid-content">
-                  <div class = "info">
-                    <p>{{'网关名称: ' + dataList.name }}</p>
-                    <p>{{'网关注册码: ' + dataList.id + '复制'}}</p>
-                    <p>{{'网关运行状态: ' + dataList.state }}</p>
-                  </div>
-                </div>
-              </el-col>
-            </el-row>
-          </el-card>
-          <div>
-            <el-tabs v-model="activeName"  @tab-click="handleClick">
-              <el-tab-pane label="基础信息" name="first"  class ="netinfo">
-                <div v-if="isFirst">
-                  <span>{{'设备名称: ' + dataList.name }}</span>
-                  <el-divider></el-divider>
-                  <span>{{'设备型号: ' + dataList.number }}</span>
-                  <el-divider></el-divider>
-                  <span>{{'出场日期: ' + dataList.data }}</span>
-                  <el-divider></el-divider>
-                  <span>{{'生产厂家: ' + dataList.prod }}</span>
-                  <el-divider></el-divider>
-                  <span>{{'出场编号: ' + dataList.got }}</span>
-                  <el-divider></el-divider>
-                  <span>{{'安装位置: ' + dataList.pos }}</span>
-                  <el-divider></el-divider>
-                  <span>{{'负责人: ' + dataList.fuz }}</span>
-                  <el-divider></el-divider>
-                  <span>{{'联系方式: ' + dataList.tel }}</span>
-                  <el-divider></el-divider>
-                </div>
-              </el-tab-pane>
-              <el-tab-pane label="传感器" name="second" class ="netinfo">
-                <div v-if="isSecond">
-                  <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
-                    <el-form-item>
-                      <el-input v-model="dataForm.paramKey" placeholder="传感器名称" clearable></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                      <el-button type="primary" @click="getDataList()">查询</el-button>
-                    </el-form-item>
-                    <el-form-item class="lay-dev">
-                      <el-button type="primary" @click="ortensiaHandle()">绑定传感器</el-button>
-                      <!--                    <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>-->
-                      <!--                    <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
-                    </el-form-item>
-                  </el-form>
-                  <el-table
-                    :data="dataLists"
-                    border
-                    v-loading="dataListLoading"
-                    @selection-change="selectionChangeHandle"
-                    style="width: 100%;">
-                    <el-table-column
-                      type="selection"
-                      header-align="center"
-                      align="center"
-                      width="50">
-                    </el-table-column>
-                    <el-table-column
-                      prop="number"
-                      header-align="center"
-                      align="center"
-                      label="从机ID">
-                    </el-table-column>
-                    <el-table-column
-                      prop="name"
-                      header-align="center"
-                      align="center"
-                      label="传感器名称">
-                    </el-table-column>
-                    <el-table-column
-                      prop="number"
-                      header-align="center"
-                      align="center"
-                      label="设备编号">
-                    </el-table-column>
-                    <el-table-column
-                      prop="name"
-                      header-align="center"
-                      align="center"
-                      label="点位模版">
-                    </el-table-column>
-                    <el-table-column
-                      prop="numb"
-                      header-align="center"
-                      align="center"
-                      label="点位数">
-                    </el-table-column>
-                    <el-table-column
-                      prop="numType"
-                      header-align="center"
-                      align="center"
-                      label="位置">
-                    </el-table-column>
-                    <el-table-column
-                      prop="number"
-                      header-align="center"
-                      align="center"
-                      label="备注">
-                    </el-table-column>
-                    <el-table-column
-                      prop="numTypes"
-                      header-align="center"
-                      align="center"
-                      label="在线/离线">
-                    </el-table-column>
-                    <el-table-column
-                      prop="numb"
-                      header-align="center"
-                      align="center"
-                      label="状态">
-                    </el-table-column>
-                    <el-table-column
-                      fixed="right"
-                      header-align="center"
-                      align="center"
-                      width="150"
-                      label="操作">
-                      <template slot-scope="scope">
-                        <div class="fl">
-                          <el-button type="primary" size="small" @click="editorHandle(scope.row.id)">编辑</el-button>
-                          <el-button type="primary" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
-                        </div>
-                      </template>
-                    </el-table-column>
-                  </el-table>
-                </div>
-              </el-tab-pane>
-            </el-tabs>
-          </div>
-        </div>
-      </div>
-    </el-main>
-    <el-pagination
-      @size-change="sizeChangeHandle"
-      @current-change="currentChangeHandle"
-      :current-page="pageIndex"
-      :page-sizes="[10, 20, 50, 100]"
-      :page-size="pageSize"
-      :total="totalPage"
-      layout="total, sizes, prev, pager, next, jumper">
-    </el-pagination>
-    <!-- 弹窗,新增传感器 -->
-    <add-or-update v-if="addOrUpdateVisible" ref="addOrtensia" @refreshDataList="getDataList"></add-or-update>
-    <!--    编辑-->
-    <add-or-updatess v-if="addOrUpdateVisible" ref="addOrtensiass" @refreshDataList="getDataList"></add-or-updatess>
+  <div>
+    <el-dialog
+      :title="!dataForm.id ? '网关添加' : '修改网关'"
+      :close-on-click-modal="false"
+      :visible.sync="visible"
+      >
+      <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
+        <el-form-item label="网关名称" prop="name">
+          <el-input v-model="dataForm.name" placeholder="输入名称"></el-input>
+        </el-form-item>
+        <el-form-item label="网关编号" prop="no">
+          <el-input v-model="dataForm.no" placeholder="输入编号"></el-input>
+        </el-form-item>
+<!--        <el-form-item label="注册码" prop="protocol">-->
+<!--          <el-input v-model="dataForm.protocol" placeholder="注册码"></el-input>-->
+<!--        </el-form-item>-->
+        <el-form-item label="数据协议" prop="protocol" placeholder="输入协议类型">
+          <el-radio-group v-model="dataForm.protocol">
+             <el-radio v-for="(type, index) in dataForm.typeList" :label="index" :key="index">{{ type }}</el-radio>
+          </el-radio-group>
+        </el-form-item>
+<!--        <el-form-item label="轮询时间" prop="remark">-->
+<!--          <el-input v-model="dataForm.remark" placeholder="60s"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="网关状态" size="mini" prop="status">-->
+<!--          <el-radio-group v-model="dataForm.status">-->
+<!--            <el-radio :label="0">禁用</el-radio>-->
+<!--            <el-radio :label="1">正常</el-radio>-->
+<!--          </el-radio-group>-->
+<!--        </el-form-item>-->
+        <el-form-item label="网关位置" prop="remark">
+          <el-input v-model="dataForm.position" placeholder="输入位置"></el-input>
+        </el-form-item>
+        <el-form-item label="网关图片" prop="icon">
+          <el-input v-model="dataForm.icon" placeholder="路径/ddd/ddd"></el-input>
+        </el-form-item>
+        <el-form-item label="备注" prop="description">
+          <el-input v-model="dataForm.description" placeholder="输入备注"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="dataFormSubmit()">完成网关添加</el-button>
+      <el-button type="primary" @click="ortensiaHandle()">继续添加传感器</el-button>
+    </span>
+    </el-dialog>
+    <!-- 弹窗, 新增 / 修改 -->
+    <add-or-update v-if="addOrUpdateVisible" ref="addOrtensia" @refreshOrtensiaData="getDataList"></add-or-update>
   </div>
 </template>
 
 <script>
   import AddOrUpdate from './ortensia-add-or-update'
-  import AddOrUpdates from './ortensias-add-or-update'
-  import AddOrUpdatess from './ortensiass-add-or-update'
-
+  import Vuex from 'vuex'
+  let { mapState } = Vuex
   export default {
     data () {
       return {
-        activeName: '',
-        dataListLoading: false,
+        visible: false,
         dataForm: {
-          paramKey: ''
+          no: '',
+          name: '',
+          icon: '路径/ddd/ddd',
+          protocol: '',
+          position: '',
+          description: '',
+          remark: '',
+          status: 0,
+          typeList: ['modbus协议', '协议一', '协议二']
         },
-        dataList: [],
-        dataLists: [],
-        pageIndex: 1,
-        pageSize: 10,
-        totalPage: 0,
-        dataListSelections: [],
-        addOrUpdateVisible: false,
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-        isFirst: true,
-        isSecond: false,
-        isThird: false,
-        isFour: false,
-        isFive: false
+        dataRule: {
+          name: [
+            {required: true, message: '网关名称不能为空', trigger: 'blur'}
+          ],
+          no: [
+            {required: true, message: '网关编号不能为空', trigger: 'blur'}
+          ],
+          protocol: [
+            {required: true, message: '网关协议不能为空', trigger: 'blur'}
+          ],
+          position: [
+            {required: true, message: '网关位置不能为空', trigger: 'blur'}
+          ],
+          description: [
+            {required: true, message: '网关备注不能为空', trigger: 'blur'}
+          ]
+        },
+        dataListLoading: false,
+        addOrUpdateVisible: false
       }
     },
     components: {
-      AddOrUpdate,
-      AddOrUpdates,
-      AddOrUpdatess
+      AddOrUpdate
     },
     activated () {
-      this.getDataList()
+      // this.getDataList()
+    },
+    computed: {
+      ...mapState({
+        programId: state => state.projectData.item.id
+      })
     },
     methods: {
-
-      // 获取设备基础信息 模拟统一接口拿数据，后期分接口拿
-      getDataList () {
-        this.activeName = this.$route.params.option
-        this.dataListLoading = true
+      init (id) {
+        this.dataForm.id = id || 0
+        this.visible = true
         this.$nextTick(() => {
-          this.$http({
-            url: this.$http.adornUrl('/sys/device/info'),
-            method: 'get',
-            params: this.$http.adornParams({
-              'page': this.pageIndex,
-              'limit': this.pageSize,
-              'paramKey': this.dataForm.paramKey,
-              'id': this.$route.params
+          this.$refs['dataForm'].resetFields()
+          // 修改逻辑
+          if (this.dataForm.id) {
+            this.$http({
+              url: this.$http.adornUrl(`/sys/device/info/${this.dataForm.id}`),
+              method: 'get',
+              params: this.$http.adornParams()
+            }).then(({data}) => {
+              if (data && data.code === 0) {
+                this.dataForm.paramKey = data.config.paramKey
+                this.dataForm.paramValue = data.config.paramValue
+                this.dataForm.remark = data.config.remark
+              }
             })
-          }).then(({data}) => {
-            if (data && data.code === 0) {
-              this.dataList = data.config
-              // this.totalPage = data.totalCount
-              this.dataLists = data.info
-            } else {
-              this.dataList = []
-              this.dataLists = []
-              // this.totalPage = 0
-            }
-            this.dataListLoading = false
-          })
+          }
         })
       },
-      // 每页数
-      sizeChangeHandle (val) {
-        this.pageSize = val
-        this.pageIndex = 1
-        this.getDataList()
-      },
-      // 当前页
-      currentChangeHandle (val) {
-        this.pageIndex = val
-        this.getDataList()
-      },
-      // 多选
-      selectionChangeHandle (val) {
-        this.dataListSelections = val
-      },
-      // 删除
-      deleteHandle (id) {
-        var ids = id ? [id] : this.dataListSelections.map(item => {
-          return item.id
-        })
-        this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$http({
-            url: this.$http.adornUrl('/sys/ortensia/delete'),
-            method: 'post',
-            data: this.$http.adornData(ids, false)
-          }).then(({data}) => {
-            if (data && data.code === 0) {
-              this.$message({
-                message: '操作成功',
-                type: 'success',
-                duration: 1500,
-                onClose: () => {
-                  this.getDataList()
-                }
+      // 表单提交
+      dataFormSubmit () {
+        this.$refs['dataForm'].validate((valid) => {
+          if (valid) {
+            this.$http({
+              url: this.$http.adornUrl(`/device/add/gateway`),
+              method: 'post',
+              data: this.$http.adornData({
+                'programId': this.programId,
+                'no': this.dataForm.no,
+                'name': this.dataForm.name,
+                'protocol': this.dataForm.protocol,
+                'icon': this.dataForm.icon,
+                'position': this.dataForm.position,
+                'description': this.dataForm.description
               })
-            } else {
-              this.$message.error(data.msg)
-            }
-          })
-        }).catch(() => {})
+            }).then(({data}) => {
+              if (data && data.code === 200) {
+                this.$message({
+                  message: '操作成功',
+                  type: 'success',
+                  duration: 1500,
+                  onClose: () => {
+                    this.visible = false
+                    this.$emit('refreshData')
+                  }
+                })
+              } else {
+                this.$message.error(data.msg)
+              }
+            })
+          }
+        })
       },
-      handleClick (tab, event) {
-        if (tab.name === 'first') {
-          this.isFirst = true
-          this.isSecond = false
-          this.isThird = false
-          this.isFour = false
-          this.isFive = false
-          // 接口数据模拟
-          // setTimeout(() => {
-          //   this.getDataList()
-          // }, 1)
-        } else if (tab.name === 'second') {
-          this.isFirst = false
-          this.isSecond = true
-          this.isThird = false
-          this.isFour = false
-          this.isFive = false
-          // 接口数据模拟
-          this.getDataList()
-        }
+      // 获取传感器列表
+      getDataList () {
+        this.dataListLoading = true
+        this.$http({
+          url: this.$http.adornUrl('/sys/ortensia/list'),
+          method: 'get',
+          params: this.$http.adornParams()
+        }).then(({data}) => {
+          if (data && data.code === 0) {
+            this.dataList = data.page.list
+          } else {
+            this.dataList = []
+            this.totalPage = 0
+          }
+          this.dataListLoading = false
+        })
       },
-      // 传感器绑定
+      // 传感器设置
       ortensiaHandle (id) {
         this.addOrUpdateVisible = true
+        this.visible = false
         this.$nextTick(() => {
           this.$refs.addOrtensia.init(id)
-        })
-      },
-      // 传感器编辑
-      editorHandle (id) {
-        this.addOrUpdateVisible = true
-        this.$nextTick(() => {
-          this.$refs.addOrtensiass.init(id)
         })
       }
     }
   }
 </script>
-<style lang="scss" scoped>
-  .head{
-    padding-left: 19px;
+<style lang="scss">
+  .el-dialog__header {
+    padding: 20px;
+    padding-bottom: 10px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #ebeef5;
+    box-sizing: border-box;
+  }
+  .el-icon-close:before {
+    content: "关闭";
+  }
+
+  .el-dialog__footer {
+    padding: 20px;
     padding-top: 10px;
-  }
-  .header {
-    height:14px;
-  }
-  .lay-dev {
-    position: absolute;
-    right: 30px;
-  }
-  .fl{
-    display: flex;
-  }
-  .text {
-    font-size: 14px;
-  }
-
-  .item {
-    /*padding: 1px 0;*/
-  }
-
-
-  .box-card {
-    display: flex;
-  }
-  .el-divider--horizontal {
-    margin: 13px 0;
-  }
-  .el-table {
-    font-size: 12px;
-  }
-.el-card__body {
-   padding: 0px;
-  }
-  .el-card.is-always-shadow {
-     -webkit-box-shadow: 0 0px 0px 0;
-     box-shadow: 0 0 0px 0;
-  }
-  .el-card {
-    border: 0px solid #646464;
-  }
-  .netinfo {
-    overflow: hidden;
-    position: relative;
-    top: 17px;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
   }
 </style>

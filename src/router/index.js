@@ -58,7 +58,7 @@ const mainRoutes = {
     // { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } }
     { path: '/sys-project', component: _import('modules/sys/project'), name: 'project', meta: { title: '项目' } },
     { path: '/sys-deviceb', component: _import('modules/sys/devicebase'), name: 'deviceb', meta: { title: '设备基础' } },
-    { path: '/sys-netbase', component: _import('modules/sys/gateway-add-or-update'), name: 'gateway', meta: { title: '网关详情' } },
+    { path: '/sys-gateways', component: _import('modules/sys/gateway-details'), name: 'gateways', meta: { title: '网关详情' } },
     { path: '/sys-wizard', component: _import('modules/sys/netwizardbase'), name: 'wizard', meta: { title: '点位模版' } },
     { path: '/sys-survey', component: _import('modules/sys/survey'), name: 'survey', meta: { title: '项目概况' } }
     // { path: '/sys-ortensia', component: _import('modules/sys/ortensiabase'), name: 'ortensia', meta: { title: '传感器' } },

@@ -34,19 +34,19 @@ export function list () {
     type: 'get',
     data: {
       'msg': 'success',
-      'code': 0,
-      'page': {
-        'totalCount': dataList.length,
+      'code': 200,
+      'data': {
+        'totalCount': 2,
         'pageSize': 10,
-        'totalPage': 1,
-        'currPage': 1,
-        'list': [
+        'pageTotal': 2,
+        'currPage': 0,
+        'data': [
           {
             'id': 'ecb49ab3-b239-4cde-ab26-3a2b821a3498',
             'gatewayProgramId': '07662bd5-25cd-47be-90f0-7c06d018238f',
             'gatewayNo': '网关编号001',
-            'gatewayName': '网关图片地址',
-            'gatewayIcon': null,
+            'gatewayName': '网关名称1',
+            'gatewayIcon': '',
             'gatewayProtocol': 'modbus',
             'gatewayPos': '这是一个网关位置',
             'gatewayStatus': null,
@@ -61,7 +61,7 @@ export function list () {
             'id': '796bbf15-d2d4-4da7-beb2-6af59ded1794',
             'gatewayProgramId': '07662bd5-25cd-47be-90f0-7c06d018238f',
             'gatewayNo': '网关编号001',
-            'gatewayName': '网关图片地址',
+            'gatewayName': '网关名称2',
             'gatewayIcon': null,
             'gatewayProtocol': 'modbus',
             'gatewayPos': '这是一个网关位置',

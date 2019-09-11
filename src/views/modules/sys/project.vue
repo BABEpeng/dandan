@@ -9,7 +9,7 @@
         </el-form>
       </div>
       <el-col :span="6" v-for="(item, index) in dataList" :key="index">
-        <div  @click="$router.push({ name: 'survey', query: {id:index}})">
+        <div @click="saveProjectCli(item, index)">
           <el-card :body-style="{ padding: '0px' }">
             <h3>{{item.name}}</h3>
             <img src="~@/assets/img/bg_login.png" class="image">
@@ -59,6 +59,11 @@
       })
     },
     methods: {
+      saveProjectCli (item, index) {
+        this.saveProjectItemFuc(item)
+        // eslint-disable-next-line standard/object-curly-even-spacing
+        this.$router.push({ name: 'survey', query: {id: index}})
+      },
       // 获取项目列表
       getDataList () {
         this.dataListLoading = true
@@ -67,6 +72,7 @@
           method: 'get',
           params: this.$http.adornParams()
         }).then(({data}) => {
+          console.log(data)
           // this.dataList = data.data
           this.saveProjectFuc(data.data)
           // this.dataList = treeDataTranslate(data.data, 'menuId')
@@ -81,7 +87,7 @@
         })
       },
       ...mapMutations(['saveProject']),
-      ...mapActions(['saveProjectFuc'])
+      ...mapActions(['saveProjectFuc', 'saveProjectItemFuc'])
     }
   }
 </script>

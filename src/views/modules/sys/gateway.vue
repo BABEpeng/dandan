@@ -15,7 +15,7 @@
           <el-button @click="getDataList()">查询</el-button>
         </el-form-item>
         <el-form-item class="lay-dev">
-          <el-button type="primary" @click="addOrUpdateHandle()">新增网关</el-button>
+          <el-button type="primary" @click="gatewayAddOrUpdateHandle()">新增</el-button>
           <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
         </el-form-item>
       </el-form>
@@ -25,6 +25,8 @@
       border
       v-loading="dataListLoading"
       @selection-change="selectionChangeHandle"
+      :header-cell-style="{color:'#333',fontFamily:'MicrosoftYaHeiUI',fontSize:'12px',fontWeight:900}"
+      :row-style="{fontSize:'12px',color:'#666',fontFamily:'MicrosoftYaHeiUI'}"
       style="width: 100%;">
       <el-table-column
         type="selection"
@@ -33,13 +35,13 @@
         width="50">
       </el-table-column>
       <el-table-column
-        prop="img"
+        prop="icon"
         header-align="center"
         align="center"
         width="80"
         label="示意图片">
         <template   slot-scope="scope">
-          <img :src="scope.row.img"  min-width="70" height="70" />
+          <img :src="scope.row.gatewayIcon"  min-width="70" height="70" />
         </template>
       </el-table-column>
       <el-table-column
@@ -49,45 +51,55 @@
         label="网关名称">
       </el-table-column>
       <el-table-column
-        prop="id"
+        prop="no"
         header-align="center"
         align="center"
         label="网关编号">
       </el-table-column>
       <el-table-column
-        prop="id"
+        prop="registerCode"
         header-align="center"
         align="center"
         label="注册码">
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="protocol"
         header-align="center"
         align="center"
         label="数据协议">
       </el-table-column>
       <el-table-column
-        prop="pos"
+        prop="position"
         header-align="center"
         align="center"
         label="网关位置">
       </el-table-column>
       <el-table-column
-        prop="state"
+        prop="isOnline"
         header-align="center"
         align="center"
         label="在线/离线">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.gatewayIsOnline === true" size="small">在线</el-tag>
+          <el-tag v-else size="small" type="danger">离线</el-tag>
+        </template>
       </el-table-column>
       <el-table-column
-        prop="state"
+        prop="gatewayStatus"
         header-align="center"
         align="center"
+        width="70"
         label="状态">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.gatewayStatus === null" size="small">启用</el-tag>
+          <el-tag v-else size="small" type="danger">暂停</el-tag>
+        </template>
       </el-table-column>
       <el-table-column
-        prop="onTime"
+        prop="gatewayAddTimestamp"
         header-align="center"
         align="center"
+        :formatter="formatDate"
         label="最后上线时间">
       </el-table-column>
       <el-table-column
@@ -98,9 +110,9 @@
         label="操作">
         <template slot-scope="scope">
           <div class="fl">
-            <el-button type="primary" size="small"  @click="$router.push({ name: 'deviceb',params: {id: scope.row.id}})">编辑</el-button>
-            <el-button type="primary" size="small" @click="sensorHandle(scope.row.id)">传感器</el-button>
-            <el-button type="primary" size="small" @click="triggerHandle(scope.row.id)">触发器</el-button>
+            <el-button type="primary" size="small"  @click="$router.push({ name: 'gateways',params: {id: scope.row.id,option:'first'}})">编辑</el-button>
+            <el-button type="primary" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+            <el-button type="primary" size="small"  @click="$router.push({ name: 'gateways',params: {id: scope.row.id,option:'second'}})">传感器</el-button>
           </div>
         </template>
       </el-table-column>
@@ -115,54 +127,85 @@
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 绑定传感器 -->
-    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <gate-way-add-or-update v-if="addOrUpdateVisible" ref="gatewayAddOrUpdate" @refreshData="getDataList"></gate-way-add-or-update>
 
   </div>
 </template>
 
 <script>
-  import AddOrUpdate from './gateway-add-or-update'
+  import GateWayAddOrUpdate from './gateway-add-or-update'
+  import moment from 'moment'
+  import Vuex from 'vuex'
+  let { mapState, mapMutations, mapActions } = Vuex
   export default {
     data () {
       return {
         dataForm: {
           paramKey: ''
         },
-        dataList: [],
-        pageIndex: 1,
+        pageIndex: 0,
         pageSize: 10,
         totalPage: 0,
         dataListLoading: false,
         dataListSelections: [],
         addOrUpdateVisible: false
-
       }
     },
     components: {
-      AddOrUpdate
+      GateWayAddOrUpdate
     },
     activated () {
       this.getDataList()
     },
+    mounted () {
+      console.log(this.dataList)
+    },
+    computed: {
+      ...mapState({
+        dataList: state => state.gatewayData.data,
+        programId: state => state.projectData.item.id
+      })
+    },
     methods: {
+      formatDate (value) {
+        this.value1 = new Date(value.gatewayAddTimestamp)
+        let dateValue = moment(this.value1).format('YYYY-MM-DD HH:mm:ss')
+        return dateValue
+      },
+      formatData: function (row, column) {
+        return row.gatewayIsOnline === null ? '在线' : row.gatewayIsOnline === '' ? '离线' : '未知'
+      },
+      formatData2: function (row, column) {
+        return row.gatewayIsOnline === null ? '启用' : row.gatewayIsOnline === '' ? '停止' : '未知'
+      },
+      tabRowClassName ({row, rowIndex}) {
+        let index = rowIndex + 1
+        // eslint-disable-next-line eqeqeq
+        if (index % 2 == 0) {
+          return 'warning-row'
+        }
+      },
       // 获取网关数据列表
       getDataList () {
+        console.log(this.programId)
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/sys/net/list'),
-          method: 'get',
-          params: this.$http.adornParams({
+          url: this.$http.adornUrl('/device/list/gateway'),
+          method: 'post',
+          data: this.$http.adornData({
             // 页码，每页条数
+            'programId': this.programId,
             'page': this.pageIndex,
-            'limit': this.pageSize,
-            'paramKey': this.dataForm.paramKey
+            'pageSize': this.pageSize,
+            'feature': ''
           })
         }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.dataList = data.page.list
-            this.totalPage = data.page.totalCount
+          if (data && data.code === 200) {
+            console.log(data)
+            this.saveGatewayFuc(data.data.data)
+            this.totalPage = data.pageTotal
           } else {
-            this.dataList = []
+            this.saveGatewayFuc([])
             this.totalPage = 0
           }
           this.dataListLoading = false
@@ -184,10 +227,10 @@
         this.dataListSelections = val
       },
       // 新增 / 修改
-      addOrUpdateHandle (id) {
+      gatewayAddOrUpdateHandle (id) {
         this.addOrUpdateVisible = true
         this.$nextTick(() => {
-          this.$refs.addOrUpdate.init(id)
+          this.$refs.gatewayAddOrUpdate.init(id)
         })
       },
       // 删除
@@ -219,7 +262,9 @@
             }
           })
         }).catch(() => {})
-      }
+      },
+      ...mapMutations(['saveGateway']),
+      ...mapActions(['saveGatewayFuc'])
     }
   }
 </script>
@@ -240,10 +285,11 @@
     position: relative;
     background: #f1f4f5;
     padding: 18px 0px 0px;
+    > .el-form--inline .el-form-item {
+      display: inline-block;
+      margin-right: 0px;
+      vertical-align: top;
+    }
   }
-  .el-form--inline .el-form-item {
-    display: inline-block;
-    margin-right: -20px;
-    vertical-align: top;
-  }
+
 </style>

@@ -23,6 +23,8 @@
     <el-table
       :data="dataList"
       border
+      :header-cell-style="{color:'#333',fontFamily:'MicrosoftYaHeiUI',fontSize:'12px',fontWeight:900}"
+      :row-style="{fontSize:'12px',color:'#666',fontFamily:'MicrosoftYaHeiUI'}"
       v-loading="dataListLoading"
       @selection-change="selectionChangeHandle"
       style="width: 100%;">
