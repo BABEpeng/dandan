@@ -192,7 +192,7 @@
         dataListSelections: [],
         addOrUpdateVisible: false,
         url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-        activeName: 'first',
+        activeName: '',
         isFirst: true,
         isSecond: false,
         isThird: false,
@@ -206,9 +206,14 @@
       AddOrUpdatess
     },
     activated () {
+      this.computedTest()
       this.getDataList()
     },
     methods: {
+      computedTest () {
+        this.activeName = this.$route.params.option
+        return this.activeName
+      },
       // 获取设备基础信息 模拟统一接口拿数据，后期分接口拿
       getDataList () {
         this.dataListLoading = true
@@ -285,9 +290,6 @@
         if (tab.name === 'first') {
           this.isFirst = true
           this.isSecond = false
-          this.isThird = false
-          this.isFour = false
-          this.isFive = false
           // 接口数据模拟
           // setTimeout(() => {
           //   this.getDataList()
@@ -295,11 +297,10 @@
         } else if (tab.name === 'second') {
           this.isFirst = false
           this.isSecond = true
-          this.isThird = false
-          this.isFour = false
-          this.isFive = false
-          // 接口数据模拟
-          this.getDataList()
+          this.$nextTick(() => {
+            // 接口数据模拟
+            this.getDataList()
+          })
         }
       },
       // 传感器绑定

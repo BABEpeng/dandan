@@ -41,7 +41,7 @@
         width="80"
         label="示意图片">
         <template   slot-scope="scope">
-          <img :src="scope.row.gatewayIcon"  min-width="70" height="70" />
+          <img :src="scope.row.Icon"  min-width="70" height="70" />
         </template>
       </el-table-column>
       <el-table-column
@@ -96,9 +96,10 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="gatewayAddTimestamp"
+        prop="addTimestamp"
         header-align="center"
         align="center"
+        width="90"
         :formatter="formatDate"
         label="最后上线时间">
       </el-table-column>
@@ -168,7 +169,7 @@
     },
     methods: {
       formatDate (value) {
-        this.value1 = new Date(value.gatewayAddTimestamp)
+        this.value1 = new Date(value.addTimestamp)
         let dateValue = moment(this.value1).format('YYYY-MM-DD HH:mm:ss')
         return dateValue
       },
@@ -197,7 +198,7 @@
             'programId': this.programId,
             'page': this.pageIndex,
             'pageSize': this.pageSize,
-            'feature': ''
+            'feature': this.dataForm.paramKey
           })
         }).then(({data}) => {
           if (data && data.code === 200) {
