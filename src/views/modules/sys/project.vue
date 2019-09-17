@@ -72,9 +72,10 @@
           method: 'get',
           params: this.$http.adornParams()
         }).then(({data}) => {
-          console.log(data)
-          // this.dataList = data.data
+            // 线上环境
           this.saveProjectFuc(data.data)
+          // mock模拟
+          // this.saveProjectFuc(data.data.data)
           // this.dataList = treeDataTranslate(data.data, 'menuId')
           this.dataListLoading = false
         })

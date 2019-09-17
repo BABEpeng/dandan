@@ -23,7 +23,7 @@ export function list () {
     type: 'get',
     data: {
       'msg': 'success',
-      'code': 0,
+      'code': 200,
       'page': {
         'totalCount': dataList.length,
         'pageSize': 10,
@@ -39,12 +39,12 @@ export function list () {
 export function info () {
   return {
     // isOpen: false,
-    url: '/sys/user/info',
+    url: '/account/get/account/info',
     type: 'get',
     data: {
       'msg': 'success',
-      'code': 0,
-      'user': dataList[0]
+      'code': 200,
+      data: dataList[0]
     }
   }
 }
@@ -57,7 +57,7 @@ export function updatePassword () {
     type: 'post',
     data: {
       'msg': 'success',
-      'code': 0
+      'code': 200
     }
   }
 }
@@ -70,7 +70,7 @@ export function add () {
     type: 'post',
     data: {
       'msg': 'success',
-      'code': 0
+      'code': 200
     }
   }
 }
@@ -83,7 +83,7 @@ export function update () {
     type: 'post',
     data: {
       'msg': 'success',
-      'code': 0
+      'code': 200
     }
   }
 }
@@ -96,7 +96,7 @@ export function del () {
     type: 'post',
     data: {
       'msg': 'success',
-      'code': 0
+      'code': 200
     }
   }
 }

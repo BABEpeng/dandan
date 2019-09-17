@@ -46,12 +46,12 @@
         align="center"
         label="点位模版名称">
       </el-table-column>
-      <el-table-column
-        prop="pos"
-        header-align="center"
-        align="center"
-        label="数据点数">
-      </el-table-column>
+<!--      <el-table-column-->
+<!--        prop="pos"-->
+<!--        header-align="center"-->
+<!--        align="center"-->
+<!--        label="数据点数">-->
+<!--      </el-table-column>-->
       <el-table-column
         prop="name"
         header-align="center"
@@ -59,9 +59,10 @@
         label="操作者">
       </el-table-column>
       <el-table-column
-        prop="onTime"
+        prop="addTimestamp"
         header-align="center"
         align="center"
+        :formatter="formatDate"
         label="最后更新时间">
       </el-table-column>
       <el-table-column
@@ -89,22 +90,24 @@
     </el-pagination>
     <!-- 弹窗, 新增点位模版 -->
     <net-wizard-add v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></net-wizard-add>
-    <net-wizard-update v-if="addOrUpdateVisible" ref="NetWizardUpdate" @refreshDataList="getDataList"></net-wizard-update>
+    <net-wizard-update v-if="addOrUpdateVisible" ref="NetWizardUpdate" @refreshData3="getDataList"></net-wizard-update>
 
   </div>
 </template>
 
 <script>
-  import NetWizardAdd from './netwizard-add'
+  import NetWizardAdd from './sensortemplate-add-update'
   import NetWizardUpdate from './netwizardbase'
+  import moment from 'moment'
+  import Vuex from 'vuex'
+  let { mapState, mapMutations, mapActions } = Vuex
   export default {
     data () {
       return {
         dataForm: {
           paramKey: ''
         },
-        dataList: [],
-        pageIndex: 1,
+        pageIndex: 0,
         pageSize: 10,
         totalPage: 0,
         dataListLoading: false,
@@ -120,24 +123,38 @@
     activated () {
       this.getDataList()
     },
+    computed: {
+      ...mapState({
+        dataList: state => state.sensorTemplateData.data,
+        programId: state => state.projectData.item.id
+      })
+    },
     methods: {
-      // 获取数据列表
+      formatDate (value) {
+        this.value1 = new Date(value.addTimestamp)
+        let dateValue = moment(this.value1).format('YYYY-MM-DD HH:mm:ss')
+        return dateValue
+      },
+      // 获取点位模版数据列表
       getDataList () {
+        console.log(this.programId)
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/sys/net/list'),
-          method: 'get',
-          params: this.$http.adornParams({
+          url: this.$http.adornUrl('/device/query/program/template'),
+          method: 'post',
+          data: this.$http.adornData({
+            // 页码，每页条数
+            'programId': this.programId,
             'page': this.pageIndex,
-            'limit': this.pageSize,
-            'paramKey': this.dataForm.paramKey
+            'pageSize': this.pageSize,
+            'feature': this.dataForm.paramKey
           })
         }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.dataList = data.page.list
-            this.totalPage = data.page.totalCount
+          if (data && data.code === 200) {
+            this.sensorTemplateFuc(data.data.data)
+            this.totalPage = data.data.pageTotal
           } else {
-            this.dataList = []
+            this.sensorTemplateFuc([])
             this.totalPage = 0
           }
           this.dataListLoading = false
@@ -201,7 +218,9 @@
             }
           })
         }).catch(() => {})
-      }
+      },
+      ...mapMutations(['saveSensorTemplate']),
+      ...mapActions(['sensorTemplateFuc'])
     }
   }
 </script>

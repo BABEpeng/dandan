@@ -50,7 +50,7 @@
 </template>
 
 <script>
-  import AddOrUpdate from './ortensia-add-or-update'
+  import AddOrUpdate from './ortensiaa-add-or-update'
   import Vuex from 'vuex'
   let { mapState } = Vuex
   export default {
@@ -71,19 +71,19 @@
         dataRule: {
           name: [
             {required: true, message: '网关名称不能为空', trigger: 'blur'}
-          ],
-          no: [
-            {required: true, message: '网关编号不能为空', trigger: 'blur'}
-          ],
-          protocol: [
-            {required: true, message: '网关协议不能为空', trigger: 'blur'}
-          ],
-          position: [
-            {required: true, message: '网关位置不能为空', trigger: 'blur'}
-          ],
-          description: [
-            {required: true, message: '网关备注不能为空', trigger: 'blur'}
           ]
+          // no: [
+          //   {required: true, message: '网关编号不能为空', trigger: 'blur'}
+          // ],
+          // protocol: [
+          //   {required: true, message: '网关协议不能为空', trigger: 'blur'}
+          // ],
+          // position: [
+          //   {required: true, message: '网关位置不能为空', trigger: 'blur'}
+          // ],
+          // description: [
+          //   {required: true, message: '网关备注不能为空', trigger: 'blur'}
+          // ]
         },
         dataListLoading: false,
         addOrUpdateVisible: false
@@ -173,7 +173,7 @@
           this.dataListLoading = false
         })
       },
-      // 传感器设置
+      // 传感器添加
       ortensiaHandle (id) {
         this.addOrUpdateVisible = true
         this.visible = false

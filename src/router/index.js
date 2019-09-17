@@ -16,7 +16,9 @@ const _import = require('./import-' + process.env.NODE_ENV)
 // 全局路由(无需嵌套上左右整体布局)
 const globalRoutes = [
   { path: '/404', component: _import('common/404'), name: '404', meta: { title: '404未找到' } },
-  { path: '/login', component: _import('common/login'), name: 'login', meta: { title: '登录' } },
+  // { path: '/login', component: _import('common/login'), name: 'login', meta: { title: '登录' } },
+  // eslint-disable-next-line standard/object-curly-even-spacing
+  { path: '/login', component: () => import('@/views/login/index'), name: 'login', meta: { title: '登录' }},
   // eslint-disable-next-line standard/object-curly-even-spacing
   { path: '/header', name: 'header', component: () => import('../components/header/header')},
   // eslint-disable-next-line standard/object-curly-even-spacing
@@ -56,10 +58,10 @@ const mainRoutes = {
     // { path: '/theme', component: _import('common/theme'), name: 'theme', meta: { title: '主题' } },
     // { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } },
     // { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } }
-    { path: '/sys-project', component: _import('modules/sys/project'), name: 'project', meta: { title: '项目' } },
+    { path: '/project', component: _import('modules/sys/project'), name: 'project', meta: { title: '项目' } },
     { path: '/sys-deviceb', component: _import('modules/sys/devicebase'), name: 'deviceb', meta: { title: '设备基础' } },
     { path: '/sys-gateways', component: _import('modules/sys/gateway-details-base'), name: 'gateways', meta: { title: '网关详情基础' } },
-    { path: '/sys-gateways', component: _import('modules/sys/gateway-details-ortensia'), name: 'gate', meta: { title: '网关详情传感器' } },
+    // { path: '/sys-gateways', component: _import('modules/sys/gateway-details-ortensia'), name: 'gate', meta: { title: '网关详情传感器' } },
     { path: '/sys-wizard', component: _import('modules/sys/netwizardbase'), name: 'wizard', meta: { title: '点位模版' } },
     { path: '/sys-survey', component: _import('modules/sys/survey'), name: 'survey', meta: { title: '项目概况' } }
     // { path: '/sys-ortensia', component: _import('modules/sys/ortensiabase'), name: 'ortensia', meta: { title: '传感器' } },

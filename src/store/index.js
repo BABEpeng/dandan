@@ -7,6 +7,10 @@ import user from './modules/user'
 import projectData from './modules/projectData'
 // 网关数据源
 import gatewayData from './modules/gatewayData'
+// 设备数据源
+import equipmentData from './modules/equipmentData'
+// 点位模版数据源
+import sensorTemplateData from './modules/sensortemplateData'
 // 传感器数据源
 // import ortensiaData from './modules/ortensiaData'
 // 传感器模版数据源
@@ -25,7 +29,9 @@ export default new Vuex.Store({
     feeds,
     banner,
     projectData,
-    gatewayData
+    gatewayData,
+    equipmentData,
+    sensorTemplateData
     // ortensiaData,
     // ortensiaTemlData
   },

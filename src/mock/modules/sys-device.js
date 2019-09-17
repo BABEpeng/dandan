@@ -1,28 +1,23 @@
 import Mock from 'mockjs'
-import vip from '../../assets/img/device.png'
+// import vip from '../../assets/img/device.png'
 // 生成数据列表
 var dataList = []
 for (let i = 0; i < Math.floor(Math.random() * 10 + 1); i++) {
   dataList.push(Mock.mock({
-    'name': '@name',
-    'number': '@increment',
-    'data': '2019',
-    'prod': '北京***',
-    'got': '@last',
-    'pos': 'F5',
-    'fuz': '孙先生',
-    'tel': '010-000000',
-    'img': vip,
     'id': '@increment',
-    'paramKey': '@first',
-    'paramValue': '@last',
-    'remark': '@csentence',
-    'state': '启用/停用',
-    'onTime': '@datetime',
-    'numType': '数值型',
-    'numTypes': '2字节无符号整数',
-    'write': '读/写',
-    'numb': '1'
+    'deviceProgramId': '@increment',
+    'deviceNo': '@increment',
+    'deviceName': '@name',
+    'deviceIcon': '这是设备图片地址',
+    'deviceModel': '@first',
+    'deviceStatus': null,
+    'devicePos': '这是设备位置',
+    'deviceLastTimestamp': null,
+    'deviceDescription': 'this is a test Device',
+    'deviceOperator': '@csentence',
+    'deviceAddTimestamp': 1567671134624,
+    'deviceProductionDate': '这是设备生产日期',
+    'deviceManufacturer': '这是设备生成厂家'
   }))
 }
 
@@ -30,17 +25,17 @@ for (let i = 0; i < Math.floor(Math.random() * 10 + 1); i++) {
 export function list () {
   return {
     // isOpen: false,
-    url: '/sys/device/list',
-    type: 'get',
+    url: '/device/list/device',
+    type: 'post',
     data: {
       'msg': 'success',
-      'code': 0,
-      'page': {
+      'code': 200,
+      'data': {
         'totalCount': dataList.length,
         'pageSize': 10,
         'totalPage': 1,
         'currPage': 1,
-        'list': dataList
+        'data': dataList
       }
     }
   }

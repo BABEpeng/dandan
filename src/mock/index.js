@@ -31,11 +31,11 @@ fnCreate(sysRole, true)
 fnCreate(sysUser, true)
 
 // 项目管理
-fnCreate(sysProject, true)
+fnCreate(sysProject, false)
 
 fnCreate(sysNet, true)
 // 设备管理
-fnCreate(sysDevice, true)
+fnCreate(sysDevice, false)
 // 传感器
 fnCreate(sysOrsensor, true)
 // 网关

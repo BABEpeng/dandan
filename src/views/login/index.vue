@@ -1,17 +1,14 @@
 <template>
   <div>
     <div class="login-container">
-          <div class="brand-info">
-            <h2 class="brand-info__text">logo</h2>
-            <p class="brand-info__intro"></p>
-          </div>
 
-            <!--          <div>-->
-            <!--            <h2>{{this.$store.state.count}}</h2>-->
-            <!--            <h2>{{this.$store.getters.getStateCount}}</h2>-->
-            <!--            <button @click="addFun"></button>-->
-            <!--            <button @click="reductionFun"></button>-->
-            <!--          </div>-->
+<!--      store测试-->
+<!--      <div>-->
+<!--        <h2>{{this.$store.state.count}}</h2>-->
+<!--        <h2>{{this.$store.getters.getStateCount}}</h2>-->
+<!--        <button @click="addFun"></button>-->
+<!--        <button @click="reductionFun"></button>-->
+<!--      </div>-->
 
       <el-form :model="dataForm" :rules="dataRule" ref="dataForm" class="login-form" auto-complete="on" label-position="left"
                @keyup.enter.native="dataFormSubmit()" status-icon>
@@ -22,10 +19,21 @@
            <span class="svg-container">
              <icon-svg name="user"></icon-svg>
            </span>
-          <el-input v-model="dataForm.userName" placeholder="帐号"></el-input>
+          <el-input
+            v-model="dataForm.userName"
+            placeholder="帐号"
+          />
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="dataForm.password" type="password" placeholder="密码"></el-input>
+           <span class="svg-container">
+             <icon-svg name="password"></icon-svg>
+           </span>
+          <el-input
+            v-model="dataForm.password"
+            type="password"
+            placeholder="密码"
+            ref="password"
+          />
         </el-form-item>
 
         <!--              <el-form-item prop="captcha">-->
@@ -40,8 +48,12 @@
         <!--                </el-row>-->
         <!--              </el-form-item>-->
         <el-form-item>
-          <el-button class="login-btn-submit" type="primary" @click="dataFormSubmit()">登录</el-button>
+          <el-button class="login-btn-submit"  :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"@click="dataFormSubmit()">登录</el-button>
         </el-form-item>
+<!--        <div class="tips">-->
+<!--          <span>忘记密码</span>-->
+<!--          <span>注册会员</span>-->
+<!--        </div>-->
       </el-form>
 
     </div>
@@ -72,6 +84,7 @@
 <script>
   import { getUUID } from '@/utils'
   export default {
+    name: 'Login',
     data () {
       return {
         dataForm: {
@@ -91,7 +104,9 @@
           //   { required: true, message: '验证码不能为空', trigger: 'blur' }
           // ]
         },
-        captchaPath: ''
+        captchaPath: '',
+        loading: false,
+        passwordType: 'password'
       }
     },
     created () {
@@ -110,6 +125,7 @@
       dataFormSubmit () {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
+            this.loading = true
             this.$http({
               url: this.$http.adornUrl('/account/login'),
               method: 'post',
@@ -122,13 +138,15 @@
             }).then(({data}) => {
               if (data && data.code === 200) {
                 sessionStorage.setItem('token', JSON.stringify(data.data.token))
+                // this.$store.dispatch('user/login', JSON.stringify(data.data.token))
                 this.$message({
                   message: '登录成功',
                   type: 'success',
                   duration: 1500,
                   onClose: () => {
                     this.visible = false
-                    this.$router.replace({ name: 'project' })
+                    this.loading = false
+                    this.$router.replace({ name: 'main' })
                   }
                 })
               } else {
@@ -145,7 +163,6 @@
         // this.captchaPath = this.$http.adornUrl(`/captcha.jpg?uuid=${this.dataForm.uuid}`)
       }
     }
-
   }
 </script>
 
@@ -175,10 +192,22 @@
     }
 
     .el-form-item {
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      background: rgba(0, 0, 0, 0);
       border-radius: 5px;
       color: #454545;
+    }
+    .el-button {
+      background-color: #2082D9;
+    }
+    .el-form-item__error {
+      color: #F56C6C;
+      font-size: 12px;
+      line-height: 1;
+      padding-top: 4px;
+      position: absolute;
+      top: 100%;
+      left: 50px;
     }
   }
 </style>
@@ -189,32 +218,36 @@
     width: 100%;
     overflow: hidden;
     background-color: #2082D9;
-    /*&:before {*/
-    /*  position: fixed;*/
-    /*  top: 0;*/
-    /*  left: 0;*/
-    /*  z-index: 0;*/
-    /*  width: 60%;*/
-    /*  height: 100%;*/
-    /*  content: "";*/
-    /*  background: url(~@/assets/img/bg.png) no-repeat;*/
-    /*  background-size:100% 100%;*/
-    /*  !*-webkit-animation: bounce-up 1.4s linear infinite;*!*/
-    /*  !*animation: bounce-up 1.4s linear infinite;*!*/
-    /*  -webkit-animation: bounce-down 1.5s linear infinite;*/
-    /*  animation: bounce-down 1.5s linear infinite;*/
+    position: fixed;
+    &:before {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 60%;
+      height: 100%;
+      content: "";
+      background: url(~@/assets/img/bg.png) no-repeat;
+      background-size:100% 100%;
+      /*-webkit-animation: bounce-up 1.4s linear infinite;*/
+      /*animation: bounce-up 1.4s linear infinite;*/
+      -webkit-animation: bounce-down 1.5s linear infinite;
+      animation: bounce-down 1.5s linear infinite;
 
-    /*}*/
+    }
 
     .login-form {
       position: relative;
       max-width: 100%;
       /*padding: 160px 35px 0;*/
-      margin: 200px auto 150px;
+      margin: 0 auto;
       overflow: hidden;
       background: #FFFFFF;
-      width: 470px;
+      width: 370px;
       padding: 10px;
+      top: 200px;
+      left: 276px;
+      z-index: 300;
     }
 
     .svg-container {
@@ -223,33 +256,6 @@
       vertical-align: middle;
       width: 30px;
       display: inline-block;
-    }
-
-    .lizi {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      z-index: 500;
-      position: absolute;
-    }
-
-    .brand-info {
-      margin: 220px 100px 0 90px;
-      color: #fff;
-    }
-    .brand-info__text {
-      margin:  0 0 22px 0;
-      font-size: 18px;
-      font-weight: 400;
-      text-transform : uppercase;
-    }
-    .brand-info__intro {
-      margin: 10px 0;
-      font-size: 16px;
-      line-height: 1.58;
-      opacity: .6;
     }
 
     .title-container {
@@ -274,37 +280,6 @@
     }
   }
 
-   .el-form-item.is-success .el-input__inner, .el-form-item.is-success .el-input__inner:focus, .el-form-item.is-success .el-textarea__inner, .el-form-item.is-success .el-textarea__inner:focus {
-     border-color:#D3D3D3;
-   }
-  .el-form-item.is-success .el-input__validateIcon {
-    color: #B7B7B7;
-  }
-  .el-button--primary {
-    color: #FFFFFF;
-    background-color: #1A74C3;
-    border-color: #D3D3D3;
-  }
-  .el-button--primary:hover {
-    color: #FFFFFF;
-    background-color: #3795E8;
-    border-color: #3795E8;
-  }
-  .site-wrapper.site-page--login .login-title {
-    color: #646464;
-  }
-  .site-wrapper.site-page--login .brand-info {
-    margin: 38px 100px 0 219px;
-    color: #fff;
-  }
-
-
-/*  @keyframes bounce-up {
-  25% {transform: translateY(10px);}
-  50%, 100% {transform: translateY(0);}
-  75% {transform: translateY(-10px);}
-  }
- .animate-bounce-up{-webkit-animation: bounce-up 1.4s linear infinite;animation: bounce-up 1.4s linear infinite;}*/
 
  @keyframes bounce-down {
   25% {transform: translateY(-10px);}
@@ -312,14 +287,10 @@
   75% {transform: translateY(10px);}
  }
 
-  #container {
-    height: 500px;
-    width: 100%;
-    position: absolute;
-    top:0px;
-    left:0px;
-    right: 0px;
-    bottom: 0px;
-    z-index: 2000;
+  .particles {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    padding-top: 100px;
   }
 </style>

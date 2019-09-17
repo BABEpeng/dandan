@@ -1,195 +1,155 @@
 <template>
   <div class="add-dialog">
     <el-dialog
-      :title="!dataForm.id ? '添加传感器' : '修改传感器'"
+      :title="!dataForm.id ? '新增设备>绑定传感器' : '修改传感器'"
       :close-on-click-modal="false"
       :visible.sync="visible"
     >
-      <div class="add-ortensia">
-        <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>
-      </div>
-      <el-form :model="dataForm" ref="dataForm" @keyup.enter.native="dataFormSubmit()">
-        <el-table
-          :data="dataList"
-          border
-          v-loading="dataListLoading"
-          @selection-change="selectionChangeHandle"
-          style="width: 100%;">
-          <el-table-column
-            type="selection"
-            header-align="center"
-            align="center"
-            width="50">
-          </el-table-column>
-          <!--      <el-table-column-->
-          <!--        prop="img"-->
-          <!--        header-align="center"-->
-          <!--        align="center"-->
-          <!--        width="80"-->
-          <!--        label="图标">-->
-          <!--        <template   slot-scope="scope">-->
-          <!--          <img :src="scope.row.img"  min-width="70" height="70" />-->
-          <!--        </template>-->
-          <!--      </el-table-column>-->
-          <el-table-column
-            prop="id"
-            header-align="center"
-            align="center"
-            width="110"
-            label="从机ID">
-            <template slot-scope="scope">
-              <el-form-item label-width="10px" label="" prop="paramKey">
-                <el-input  size="mini" v-model="dataForm.paramKey" placeholder="1"></el-input>
-              </el-form-item>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="name"
-            header-align="center"
-            align="center"
-            width="110"
-            label="名称">
-            <template slot-scope="scope">
-              <el-form-item label-width="10px" label="" prop="paramKey1">
-                <el-input size="mini" v-model="dataForm.paramKey1" placeholder="传感器名称"></el-input>
-              </el-form-item>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="number"
-            header-align="center"
-            align="center"
-            width="110"
-            label="传感器编号">
-            <template slot-scope="scope">
-              <el-form-item label-width="10px" label="" prop="paramKey2">
-                <el-input size="mini" v-model="dataForm.paramKey2" placeholder="键入编号"></el-input>
-              </el-form-item>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="pos"
-            header-align="center"
-            align="center"
-            width="110"
-            label="位置">
-            <template slot-scope="scope">
-              <el-form-item label-width="10px" label="" prop="paramKey3">
-                <el-input size="mini" v-model="dataForm.paramKey3" placeholder="位置信息"></el-input>
-              </el-form-item>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="name"
-            header-align="center"
-            align="center"
-            label="备注">
-            <template slot-scope="scope">
-              <el-form-item label-width="10px" label="" prop="paramKey4">
-                <el-input size="mini" v-model="dataForm.paramKey4" placeholder="备注信息"></el-input>
-              </el-form-item>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="name"
-            header-align="center"
-            align="center"
-            width="200px"
-            label="点位模版">
-            <template slot-scope="scope">
-              <el-form-item label-width="30px" label="" prop="state">
-                <el-autocomplete
-                  popper-class="my-autocomplete"
-                  v-model="dataForm.state"
-                  :fetch-suggestions="querySearch"
-                  placeholder="点位模版选择"
-                  @select="handleSelect">
-                  <!--                <i-->
-                  <!--                  class="el-icon-edit el-input__icon"-->
-                  <!--                  slot="suffix"-->
-                  <!--                  @click="handleIconClick">-->
-                  <!--                </i>-->
-                  <template slot-scope="{ item }">
-                    <div class="name">{{ item.value }}</div>
-                  </template>
-                </el-autocomplete>
-              </el-form-item>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="state"
-            header-align="center"
-            align="center"
-            label="状态">
-            <template slot-scope="scope">
-              <el-form-item label-width="10px" label="" prop="states"
-              >
-                <el-switch
-                  v-model="dataForm.states"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949">
-                </el-switch>
-              </el-form-item>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="state"
-            header-align="center"
-            align="center"
-            label="在线/离线">
-          </el-table-column>
-          <el-table-column
-            prop="numb"
-            header-align="center"
-            align="center"
-            label="轮询时间">
-          </el-table-column>
-          <el-table-column
-            fixed="right"
-            header-align="center"
-            align="center"
-            label="操作">
-            <template slot-scope="scope">
-              <div class="fl">
-                <el-button type="primary" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
+      <el-form :model="dataForm" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
+        <el-form-item label="网关选择:">
+          <template>
+            <el-select v-model="value" placeholder="请选择" @change="getGateOrtenInfo(value)">
+              <el-option
+                v-for="item in this.gatewayId"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+              </el-option>
+            </el-select>
+          </template>
+        </el-form-item>
       </el-form>
+<!--      <el-form :model="dataForm" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">-->
+<!--        <el-form-item label="网关选择">-->
+<!--          <el-select v-model="" placeholder="网关名称">-->
+<!--            <el-option label="网关一" value="超级网关" />-->
+<!--            <el-option label="网关二" value="普通网关" />-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--        <el-table-->
+<!--          :data="dataList"-->
+<!--          size="mini"-->
+<!--          v-loading="dataListLoading"-->
+<!--          :header-cell-style="{color:'#333',fontFamily:'MicrosoftYaHeiUI',fontSize:'12px',fontWeight:900}"-->
+<!--          :row-style="{fontSize:'12px',color:'#666',fontFamily:'MicrosoftYaHeiUI'}"-->
+<!--          @selection-change="selectionChangeHandle"-->
+<!--          style="width: 100%;">-->
+<!--          <el-table-column-->
+<!--            type="selection"-->
+<!--            header-align="center"-->
+<!--            align="center"-->
+<!--            width="50">-->
+<!--          </el-table-column>-->
+<!--          <el-table-column  align="center" label="从机ID">-->
+<!--            <template slot-scope="scope">-->
+<!--              <el-form-item label-width="10px" label="" prop="">-->
+<!--                {{cope.row.slaveId}}-->
+<!--              </el-form-item>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
+<!--          <el-table-column prop="name" align="center" label="名称">-->
+<!--            <template slot-scope="scope">-->
+<!--              <el-form-item label-width="10px" label="" prop="">-->
+<!--                {{scope.row.name}}-->
+<!--              </el-form-item>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
+<!--          <el-table-column align="center" label="传感器编号">-->
+<!--            <template slot-scope="scope">-->
+<!--              <el-form-item label-width="10px" label="" prop="">-->
+<!--                {{scope.row.no}}-->
+<!--              </el-form-item>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
+<!--          <el-table-column align="center" label="位置">-->
+<!--            <template slot-scope="scope">-->
+<!--              <el-form-item label-width="10px" label="" prop="">-->
+<!--                {{scope.row.position}}-->
+<!--              </el-form-item>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
+<!--          <el-table-column align="center" label="备注">-->
+<!--            <template slot-scope="scope">-->
+<!--              <el-form-item label-width="10px" label="" prop="">-->
+<!--                {{scope.row.description}}-->
+<!--              </el-form-item>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
+<!--          <el-table-column align="center" width="110" label="点位模版">-->
+<!--            <template slot-scope="scope">-->
+<!--              <el-form-item  label-width="10px" prop="">-->
+<!--                {{scope.row.templateName}}-->
+<!--              </el-form-item>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
+<!--          <el-table-column align="center" label="状态">-->
+<!--            <template slot-scope="scope">-->
+<!--              <el-form-item label-width="10px" label="" prop="">-->
+<!--                <el-switch-->
+<!--                  v-model="scope.row.delivery"-->
+<!--                  active-color="#13ce66"-->
+<!--                  inactive-color="#ff4949">-->
+<!--                </el-switch>-->
+<!--              </el-form-item>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
+<!--          <el-table-column align="center" label="在线/离线">-->
+<!--            <template slot-scope="scope">-->
+<!--              <el-form-item label-width="10px" label="" prop="">-->
+<!--                <el-tag v-if="scope.row.IsOnline === true" size="small">在线</el-tag>-->
+<!--                <el-tag v-else size="small" type="danger">离线</el-tag>-->
+<!--              </el-form-item>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
+<!--          <el-table-column align="center" width="100" label="轮询时间" :formatter="formatDate">-->
+<!--            <template slot-scope="scope">-->
+<!--              {{ scope.row.addTimestamp }}-->
+<!--            </template>-->
+<!--          </el-table-column>-->
+<!--          <el-table-column align="center" label="绑定状态">-->
+<!--            <template slot-scope="scope">-->
+<!--              <el-form-item label-width="10px" label="" prop="">-->
+<!--                <el-tag v-if="scope.row.IsOnline === true" size="small">已绑定</el-tag>-->
+<!--                <el-tag v-else size="small" type="danger">未绑定</el-tag>-->
+<!--              </el-form-item>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
+<!--        </el-table>-->
+<!--      </el-form>-->
       <span slot="footer" class="dialog-footer">
-       <el-button @click="visible = false">取消</el-button>
-       <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
-    </span>
+      <el-button type="primary" @click="visible = false">取消</el-button>
+      <el-button type="primary" @click="dataFormSubmit()">完成设备添加</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
+  import moment from 'moment'
+  import Vuex from 'vuex'
+  let { mapState } = Vuex
   export default {
     data () {
       return {
         visible: false,
         dataForm: {
           id: 0,
-          paramKey: '',
-          paramValue: '',
-          remark: '',
-          restaurants: [],
-          state: '',
-          states: 'false'
+          delivery: false,
+          IsOnline: null,
+          state: ''
         },
         dataRule: {
-          paramKey: [
-            { required: true, message: '网管名称不能为空', trigger: 'blur' }
-          ],
-          paramValue: [
-            { required: true, message: '', trigger: 'blur' }
-          ]
+          rules: {
+            sensorName: [
+              { required: true, message: '路由器名称不能为空', trigger: 'blur' }
+            ]
+          }
         },
         dataListLoading: false,
         dataListSelections: [],
-        dataList: []
+        dataList: [],
+        value: '',
+        GateOrtenInfo: []
       }
     },
     created () {
@@ -216,7 +176,44 @@
         this.dataListLoading = false
       })
     },
+    computed: {
+      ...mapState({
+        gatewayId: state => state.gatewayData.data,
+        programId: state => state.projectData.item.id
+      })
+    },
     methods: {
+      formatDate (value) {
+        this.value1 = new Date(value.wheelLoop)
+        let dateValue = moment(this.value1).format('YYYY-MM-DD HH:mm:ss')
+        return dateValue
+      },
+      getGateOrtenInfo (value) {
+        console.log(this.programId)
+        if (!this.GateOrtenInfo.length) {
+          this.dataListLoading = true
+          this.$http({
+            url: this.$http.adornUrl('/device/list/gateway'),
+            method: 'post',
+            data: this.$http.adornData({
+              // 页码，每页条数
+              'programId': this.programId,
+              'gatewayId': value,
+              'page': this.pageIndex,
+              'pageSize': this.pageSize,
+              'isBind': false
+            })
+          }).then(({data}) => {
+            console.log(data)
+            if (data && data.code === 200) {
+              this.totalPage = data.pageTotal
+            } else {
+              this.totalPage = 0
+            }
+            this.dataListLoading = false
+          })
+        }
+      },
       init (id) {
         this.dataForm.id = id || 0
         this.visible = true
@@ -323,7 +320,7 @@
       querySearch (queryString, cb) {
         var restaurants = this.restaurants
         var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
-      // 调用 callback 返回建议列表的数据
+        // 调用 callback 返回建议列表的数据
         cb(results)
       },
       createFilter (queryString) {
@@ -350,8 +347,14 @@
 </script>
 <style lang="scss">
 
+  .add-dialog .el-dialog__footer {
+    text-align: center;
+  }
+  .add-dialog .el-form-item__content{
+    margin-left: 0px;
+  }
   .add-dialog .el-dialog {
-    width: 70%;
+    width: 80%;
   }
   .add-dialog .add-ortensia {
     top: 10px;

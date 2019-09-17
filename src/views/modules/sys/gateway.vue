@@ -15,7 +15,7 @@
           <el-button @click="getDataList()">查询</el-button>
         </el-form-item>
         <el-form-item class="lay-dev">
-          <el-button type="primary" @click="gatewayAddOrUpdateHandle()">新增</el-button>
+          <el-button type="primary" @click="gatewayAddOrUpdateHandle()">新增网关</el-button>
           <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
         </el-form-item>
       </el-form>
@@ -187,7 +187,6 @@
       },
       // 获取网关数据列表
       getDataList () {
-        console.log(this.programId)
         this.dataListLoading = true
         this.$http({
           url: this.$http.adornUrl('/device/list/gateway'),
@@ -201,7 +200,6 @@
           })
         }).then(({data}) => {
           if (data && data.code === 200) {
-            console.log(data)
             this.saveGatewayFuc(data.data.data)
             this.totalPage = data.pageTotal
           } else {

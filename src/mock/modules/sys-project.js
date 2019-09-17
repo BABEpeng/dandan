@@ -18,17 +18,17 @@ for (let i = 0; i < Math.floor(Math.random() * 10 + 1); i++) {
 export function list () {
   return {
     // isOpen: false,
-    url: '/sys/project/list',
+    url: '/device/get/program',
     type: 'get',
     data: {
       'msg': 'success',
-      'code': 0,
-      'page': {
+      'code': 200,
+      'data': {
         'totalCount': dataList.length,
         'pageSize': 10,
         'totalPage': 1,
         'currPage': 1,
-        'list': dataList
+        'data': dataList
       }
     }
   }
@@ -42,7 +42,7 @@ export function info () {
     type: 'get',
     data: {
       'msg': 'success',
-      'code': 0,
+      'code': 200,
       'user': dataList[0]
     }
   }
@@ -55,7 +55,7 @@ export function add () {
     type: 'post',
     data: {
       'msg': 'success',
-      'code': 0
+      'code': 200
     }
   }
 }
@@ -68,7 +68,7 @@ export function update () {
     type: 'post',
     data: {
       'msg': 'success',
-      'code': 0
+      'code': 200
     }
   }
 }
@@ -81,7 +81,7 @@ export function del () {
     type: 'post',
     data: {
       'msg': 'success',
-      'code': 0
+      'code': 200
     }
   }
 }

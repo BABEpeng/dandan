@@ -1,4 +1,4 @@
-const gatewayData = {
+const equipmentData = {
   state: {
     data: []
   },
@@ -8,16 +8,15 @@ const gatewayData = {
   //   }
   // },
   mutations: {
-    saveGateway (state, data) {
-      // console.log(data)
+    saveEquipmentway (state, data) {
       state.data = data
     }
   },
   actions: {
-    saveGatewayFuc (context, data) {
-      context.commit('saveGateway', data)
+    saveEquipmentFuc (context, data) {
+      context.commit('saveEquipmentway', data)
     }
   }
 }
 
-export default gatewayData
+export default equipmentData

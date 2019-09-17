@@ -8,7 +8,7 @@
         <el-button @click="getDataList()">查询</el-button>
       </el-form-item>
       <el-form-item class="lay-dev">
-        <el-button type="primary" @click="addOrUpdateHandle()">新增网关</el-button>
+        <el-button type="primary" @click="addOrUpdateHandle()">新增设备</el-button>
         <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
@@ -16,6 +16,8 @@
       :data="dataList"
       border
       v-loading="dataListLoading"
+      :header-cell-style="{color:'#333',fontFamily:'MicrosoftYaHeiUI',fontSize:'12px',fontWeight:900}"
+      :row-style="{fontSize:'12px',color:'#666',fontFamily:'MicrosoftYaHeiUI'}"
       @selection-change="selectionChangeHandle"
       style="width: 100%;">
       <el-table-column
@@ -47,7 +49,7 @@
         label="设备编号">
       </el-table-column>
       <el-table-column
-        prop="pos"
+        prop="position"
         header-align="center"
         align="center"
         label="设备位置">
@@ -59,15 +61,20 @@
         label="设备型号">
       </el-table-column>
       <el-table-column
-        prop="state"
+        prop="status"
         header-align="center"
         align="center"
         label="设备状态">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.status === !null" size="small">启用</el-tag>
+          <el-tag v-else size="small" type="danger">暂停</el-tag>
+        </template>
       </el-table-column>
       <el-table-column
-        prop="onTime"
+        prop="lastTimestamp"
         header-align="center"
         align="center"
+        :formatter="formatDate"
         label="最后上线时间">
       </el-table-column>
       <el-table-column
@@ -95,21 +102,23 @@
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 绑定传感器 -->
-    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <add-equipment v-if="addOrUpdateVisible" ref="AddEquipment" @refreshData2="getDataList"></add-equipment>
 
   </div>
 </template>
 
 <script>
-  import AddOrUpdate from './device-add-or-update'
+  import AddEquipment from './equipment-add-or-update'
+  import moment from 'moment'
+  import Vuex from 'vuex'
+  let { mapState, mapMutations, mapActions } = Vuex
   export default {
     data () {
       return {
         dataForm: {
           paramKey: ''
         },
-        dataList: [],
-        pageIndex: 1,
+        pageIndex: 0,
         pageSize: 10,
         totalPage: 0,
         dataListLoading: false,
@@ -119,29 +128,42 @@
       }
     },
     components: {
-      AddOrUpdate
+      AddEquipment
     },
     activated () {
       this.getDataList()
     },
+    computed: {
+      ...mapState({
+        dataList: state => state.equipmentData.data,
+        programId: state => state.projectData.item.id
+      })
+    },
     methods: {
-      // 获取数据列表
+      formatDate (value) {
+        this.value1 = new Date(value.lastTimestamp)
+        let dateValue = moment(this.value1).format('YYYY-MM-DD HH:mm:ss')
+        return dateValue
+      },
+      // 获取设备数据列表
       getDataList () {
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/sys/device/list'),
-          method: 'get',
-          params: this.$http.adornParams({
+          url: this.$http.adornUrl('/device/list/device'),
+          method: 'post',
+          data: this.$http.adornData({
+            // 页码，每页条数
+            'programId': this.programId,
             'page': this.pageIndex,
-            'limit': this.pageSize,
-            'paramKey': this.dataForm.paramKey
+            'pageSize': this.pageSize,
+            'feature': this.dataForm.paramKey
           })
         }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.dataList = data.page.list
-            this.totalPage = data.page.totalCount
+          if (data && data.code === 200) {
+            this.saveEquipmentFuc(data.data.data)
+            this.totalPage = data.pageTotal
           } else {
-            this.dataList = []
+            this.saveEquipmentFuc([])
             this.totalPage = 0
           }
           this.dataListLoading = false
@@ -166,7 +188,7 @@
       addOrUpdateHandle (id) {
         this.addOrUpdateVisible = true
         this.$nextTick(() => {
-          this.$refs.addOrUpdate.init(id)
+          this.$refs.AddEquipment.init(id)
         })
       },
       // 删除
@@ -198,7 +220,9 @@
             }
           })
         }).catch(() => {})
-      }
+      },
+      ...mapMutations(['saveEquipmentway']),
+      ...mapActions(['saveEquipmentFuc'])
     }
   }
 </script>
@@ -210,4 +234,15 @@
   .fl{
     display: flex;
   }
+  .top_content {
+    position: relative;
+    background: #f1f4f5;
+    padding: 18px 0px 0px;
+    > .el-form--inline .el-form-item {
+      display: inline-block;
+      margin-right: 0px;
+      vertical-align: top;
+    }
+  }
+
 </style>

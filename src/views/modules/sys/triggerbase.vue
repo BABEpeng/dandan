@@ -100,7 +100,7 @@
 </template>
 
 <script>
-  import AddOrUpdate from './device-add-or-update'
+  import AddOrUpdate from './equipment-add-or-update'
   export default {
     data () {
       return {

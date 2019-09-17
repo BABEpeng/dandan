@@ -4,13 +4,16 @@ import Mock from 'mockjs'
 export function login () {
   return {
     // isOpen: false,
-    url: '/sys/login',
+    url: '/account/login/',
     type: 'post',
     data: {
       'msg': 'success',
-      'code': 0,
+      'code': 200,
       'expire': Mock.Random.natural(60 * 60 * 1, 60 * 60 * 12),
-      'token': Mock.Random.string('abcdefghijklmnopqrstuvwxyz0123456789', 32)
+      data: {
+        'token': Mock.Random.string('abcdefghijklmnopqrstuvwxyz0123456789', 32)
+      }
+
     }
   }
 }
@@ -23,7 +26,7 @@ export function logout () {
     type: 'post',
     data: {
       'msg': 'success',
-      'code': 0
+      'code': 200
     }
   }
 }
