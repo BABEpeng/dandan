@@ -1,6 +1,7 @@
 const gatewayData = {
   state: {
-    data: []
+    data: [],
+    gatewayId: ''
   },
   // getters: {
   //   data (state) {
@@ -9,13 +10,18 @@ const gatewayData = {
   // },
   mutations: {
     saveGateway (state, data) {
-      // console.log(data)
       state.data = data
+    },
+    addGatewayId (state, data) {
+      state.gatewayId = data
     }
   },
   actions: {
     saveGatewayFuc (context, data) {
       context.commit('saveGateway', data)
+    },
+    addGatewayIdFuc (context, data) {
+      context.commit('addGatewayId', data)
     }
   }
 }

@@ -74,6 +74,9 @@
         }).then(({data}) => {
             // 线上环境
           this.saveProjectFuc(data.data)
+          // this.saveProjectItemFuc(data.data.data.map(function (currentValue) {
+          //   return currentValue
+          // }))
           // mock模拟
           // this.saveProjectFuc(data.data.data)
           // this.dataList = treeDataTranslate(data.data, 'menuId')

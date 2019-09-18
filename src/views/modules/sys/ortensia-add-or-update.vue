@@ -183,37 +183,6 @@
       })
     },
     methods: {
-      formatDate (value) {
-        this.value1 = new Date(value.wheelLoop)
-        let dateValue = moment(this.value1).format('YYYY-MM-DD HH:mm:ss')
-        return dateValue
-      },
-      getGateOrtenInfo (value) {
-        console.log(this.programId)
-        if (!this.GateOrtenInfo.length) {
-          this.dataListLoading = true
-          this.$http({
-            url: this.$http.adornUrl('/device/list/gateway'),
-            method: 'post',
-            data: this.$http.adornData({
-              // 页码，每页条数
-              'programId': this.programId,
-              'gatewayId': value,
-              'page': this.pageIndex,
-              'pageSize': this.pageSize,
-              'isBind': false
-            })
-          }).then(({data}) => {
-            console.log(data)
-            if (data && data.code === 200) {
-              this.totalPage = data.pageTotal
-            } else {
-              this.totalPage = 0
-            }
-            this.dataListLoading = false
-          })
-        }
-      },
       init (id) {
         this.dataForm.id = id || 0
         this.visible = true
@@ -341,6 +310,36 @@
       },
       handleIconClick (ev) {
         console.log(ev)
+      },
+      formatDate (value) {
+        this.value1 = new Date(value.wheelLoop)
+        let dateValue = moment(this.value1).format('YYYY-MM-DD HH:mm:ss')
+        return dateValue
+      },
+      getGateOrtenInfo (value) {
+        if (!this.GateOrtenInfo.length) {
+          this.dataListLoading = true
+          this.$http({
+            url: this.$http.adornUrl('/device/list/gateway'),
+            method: 'post',
+            data: this.$http.adornData({
+              // 页码，每页条数
+              'programId': this.programId,
+              'gatewayId': value,
+              'page': this.pageIndex,
+              'pageSize': this.pageSize,
+              'isBind': false
+            })
+          }).then(({data}) => {
+            console.log(data)
+            if (data && data.code === 200) {
+              this.totalPage = data.pageTotal
+            } else {
+              this.totalPage = 0
+            }
+            this.dataListLoading = false
+          })
+        }
       }
     }
   }

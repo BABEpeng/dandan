@@ -41,7 +41,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="dataFormSubmit()">完成网关添加</el-button>
-      <el-button type="primary" @click="ortensiaHandle()">继续添加传感器</el-button>
+      <el-button v-if="buttonVisible" type="primary" @click="ortensiaHandle()">继续添加传感器</el-button>
     </span>
     </el-dialog>
     <!-- 弹窗, 新增 / 修改 -->
@@ -52,21 +52,21 @@
 <script>
   import AddOrUpdate from './ortensiaa-add-or-update'
   import Vuex from 'vuex'
-  let { mapState } = Vuex
+  let { mapState, mapMutations, mapActions } = Vuex
   export default {
     data () {
       return {
         visible: false,
         dataForm: {
-          no: '',
           name: '',
+          no: '',
+          typeList: ['modbus协议', '协议一', '协议二'],
+          position: '',
           icon: '路径/ddd/ddd',
           protocol: '',
-          position: '',
           description: '',
           remark: '',
-          status: 0,
-          typeList: ['modbus协议', '协议一', '协议二']
+          status: 0
         },
         dataRule: {
           name: [
@@ -86,7 +86,8 @@
           // ]
         },
         dataListLoading: false,
-        addOrUpdateVisible: false
+        addOrUpdateVisible: false,
+        buttonVisible: false
       }
     },
     components: {
@@ -140,6 +141,8 @@
               })
             }).then(({data}) => {
               if (data && data.code === 200) {
+                this.addGatewayIdFuc(data.data.id)
+                this.buttonVisible = data.data.id
                 this.$message({
                   message: '操作成功',
                   type: 'success',
@@ -150,6 +153,7 @@
                   }
                 })
               } else {
+                this.addGatewayIdFuc('')
                 this.$message.error(data.msg)
               }
             })
@@ -171,6 +175,7 @@
             this.totalPage = 0
           }
           this.dataListLoading = false
+          this.buttonVisible = false
         })
       },
       // 传感器添加
@@ -180,7 +185,9 @@
         this.$nextTick(() => {
           this.$refs.addOrtensia.init(id)
         })
-      }
+      },
+      ...mapMutations(['addGatewayId']),
+      ...mapActions(['addGatewayIdFuc'])
     }
   }
 </script>

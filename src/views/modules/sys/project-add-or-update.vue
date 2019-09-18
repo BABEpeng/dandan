@@ -87,7 +87,6 @@
                 'positionCoordinate': this.dataForm.positionCoordinate
               })
             }).then(({data}) => {
-              console.log(data)
               if (data && data.code === 200) {
                 this.$message({
                   message: '操作成功',

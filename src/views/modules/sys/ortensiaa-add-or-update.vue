@@ -26,7 +26,7 @@
               </el-form-item>
             </template>
           </el-table-column>
-          <el-table-column  align="center" label="名称">
+          <el-table-column  align="center" label="传感器名称">
             <template slot-scope="scope">
               <el-form-item :prop=" 'tableData.' + scope.$index + '.name' " :rules="dataRule.rules.name">
                 <el-input v-model="scope.row.name" placeholder="名称"></el-input>
@@ -57,8 +57,9 @@
           <el-table-column  width="180" align="center" label="点位模版">
             <template slot-scope="scope">
               <el-form-item :prop=" 'tableData.' + scope.$index + '.templateName' " :rules="dataRule.rules.templateName">
-                <el-select v-model="scope.row.templateName" placeholder="请选择">
-                  <el-option v-for="item in valueControlOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+<!--                <el-select v-model="scope.row.templateName"  @change="selectGet" @focus="getTemplateInfo(programId)" placeholder="请选择">-->
+                <el-select v-model="scope.row.valueTem"  @change="selectGet" placeholder="请选择">
+                  <el-option v-for="item in valueControlOptions"  :key="item.value" :label="item.label" :value="item.value"></el-option>
                 </el-select>
               </el-form-item>
             </template>
@@ -83,7 +84,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="visible = false">取消</el-button>
-      <el-button type="primary" @click="dataFormSubmit()">完成设备添加</el-button>
+      <el-button type="primary" @click="dataFormSubmit()">完成</el-button>
       </span>
     </el-dialog>
   </div>
@@ -91,29 +92,32 @@
 
 <script>
   import moment from 'moment'
+  import Vuex from 'vuex'
+  let { mapState } = Vuex
   export default {
     data () {
       return {
         visible: false,
         dataForm: {
-          tableData: [],
-          id: 0,
-          state: ''
+          tableData: [
+            {
+              slaveId: '',
+              name: '',
+              no: '',
+              position: '',
+              description: '',
+              lableTem: '',
+              valueTem: '',
+              wheelLoop: '',
+              templateId: '',
+              gatewayId: ''
+            }
+          ]
         },
-        valueControlOptions: [
-          {
-            value: 0,
-            label: '大气压力点位模版'
-          },
-          {
-            value: 1,
-            label: 'PM2.5点位模版'
-          },
-          {
-            value: 2,
-            label: '电流点位模版'
-          }
-        ],
+        valueControlOptions: [],
+        pageIndex: 0,
+        pageSize: 10,
+        totalPage: 0,
         dataRule: {
           rules: {
             slaveId: [{ required: true, message: '从机ID不能为空', trigger: 'blur' }],
@@ -121,7 +125,7 @@
             no: [{ required: true, message: '编号不能为空', trigger: 'blur' }],
             position: [{ required: true, message: '位置不能为空', trigger: 'blur' }],
             description: [{ required: true, message: '备注不能为空', trigger: 'blur' }],
-            // templateName: [{ required: true, message: '模版不能为空', trigger: 'blur' }],
+            valueTem: [{ required: true, message: '模版不能为空', trigger: 'blur' }],
             wheelLoop: [{ required: true, message: '轮询不能为空', trigger: 'blur' }]
           }
         },
@@ -135,6 +139,7 @@
     },
     mounted () {
       this.restaurants = this.loadAll()
+      this.getTemplateInfo(this.programId)
     },
     // 获取传感器列表
     getDataList () {
@@ -144,7 +149,6 @@
         method: 'get',
         params: this.$http.adornParams()
       }).then(({data}) => {
-        console.log(data)
         if (data && data.code === 0) {
           this.dataList = data.page.list
         } else {
@@ -154,41 +158,31 @@
         this.dataListLoading = false
       })
     },
+    computed: {
+      ...mapState({
+        programId: state => state.projectData.item.id,
+        gatewayId: state => state.gatewayData.gatewayId
+      })
+    },
     methods: {
-      addOrUpdateHandle () {
-        this.dataForm.tableData.push({
-          slaveId: '',
-          name: '',
-          no: '',
-          position: '',
-          description: '',
-          templateName: '',
-          wheelLoop: ''
-        })
-      },
-      formatDate (value) {
-        this.value1 = new Date(value.wheelLoop)
-        let dateValue = moment(this.value1).format('YYYY-MM-DD HH:mm:ss')
-        return dateValue
-      },
       init (id) {
-        this.dataForm.id = id || 0
         this.visible = true
         this.$nextTick(() => {
-          this.$refs['dataForm'].resetFields()
-          if (this.dataForm.id) {
-            this.$http({
-              url: this.$http.adornUrl(`/sys/ortensia/info/${this.dataForm.id}`),
-              method: 'get',
-              params: this.$http.adornParams()
-            }).then(({data}) => {
-              if (data && data.code === 0) {
-                this.dataForm.paramKey = data.config.paramKey
-                this.dataForm.paramValue = data.config.paramValue
-                this.dataForm.remark = data.config.remark
-              }
-            })
-          }
+          this.dataForm.tableData[0].gatewayId = id
+          // this.$refs['dataForm'].resetFields()
+          // if (this.dataForm.id) {
+          //   this.$http({
+          //     url: this.$http.adornUrl(`/sys/ortensia/info/${this.dataForm.id}`),
+          //     method: 'get',
+          //     params: this.$http.adornParams()
+          //   }).then(({data}) => {
+          //     if (data && data.code === 0) {
+          //       this.dataForm.paramKey = data.config.paramKey
+          //       this.dataForm.paramValue = data.config.paramValue
+          //       this.dataForm.remark = data.config.remark
+          //     }
+          //   })
+          // }
         })
       },
       // 获取数据列表
@@ -213,30 +207,39 @@
       dataFormSubmit () {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
-            console.log(this.dataForm.tableData)
-            this.$http({
-              url: this.$http.adornUrl(`/sys/ortensia/${!this.dataForm.id ? 'save' : 'update'}`),
-              method: 'post',
-              data: this.$http.adornData({
-                'id': this.dataForm.id || undefined,
-                'paramKey': this.dataForm.paramKey,
-                'paramValue': this.dataForm.paramValue,
-                'remark': this.dataForm.remark
-              })
-            }).then(({data}) => {
-              if (data && data.code === 0) {
-                this.$message({
-                  message: '操作成功',
-                  type: 'success',
-                  duration: 1500,
-                  onClose: () => {
-                    this.visible = false
-                    this.$emit('refreshOrtensiaData')
-                  }
+            console.log(this.gatewayId)
+            this.$nextTick(() => {
+              this.$http({
+                url: this.$http.adornUrl(`/device/add/sensor`),
+                method: 'post',
+                data: this.$http.adornData({
+                  'slaveId': this.dataForm.tableData[0].slaveId,
+                  'name': this.dataForm.tableData[0].name,
+                  'no': this.dataForm.tableData[0].no,
+                  'position': this.dataForm.tableData[0].position,
+                  'description': this.dataForm.tableData[0].description,
+                  // 'templateId': this.dataForm.tableData[0].templateName,
+                  'templateName': this.dataForm.tableData[0].lableTem,
+                  'templateId': this.dataForm.tableData[0].valueTem,
+                  'wheelLoop': this.dataForm.tableData[0].wheelLoop,
+                  'gatewayId': this.gatewayId,
+                  'programId': this.programId
                 })
-              } else {
-                this.$message.error(data.msg)
-              }
+              }).then(({data}) => {
+                if (data && data.code === 200) {
+                  this.$message({
+                    message: '操作成功',
+                    type: 'success',
+                    duration: 1500,
+                    onClose: () => {
+                      this.visible = false
+                      this.$emit('refreshOrtensiaData')
+                    }
+                  })
+                } else {
+                  this.$message.error(data.msg)
+                }
+              })
             })
           }
         })
@@ -302,6 +305,58 @@
       },
       del (index) {
         this.dataForm.tableData.splice(index, 1)
+      },
+      addOrUpdateHandle () {
+        this.dataForm.tableData.push({
+          slaveId: '',
+          name: '',
+          no: '',
+          position: '',
+          description: '',
+          templateName: '',
+          wheelLoop: ''
+        })
+        this.getTemplateInfo(this.programId)
+      },
+      formatDate (value) {
+        this.value1 = new Date(value.wheelLoop)
+        let dateValue = moment(this.value1).format('YYYY-MM-DD HH:mm:ss')
+        return dateValue
+      },
+      getTemplateInfo (value) {
+        this.dataListLoading = true
+        this.$http({
+          url: this.$http.adornUrl('/device/query/program/template'),
+          method: 'post',
+          data: this.$http.adornData({
+              // 页码，每页条数
+            'programId': value,
+            'page': this.pageIndex,
+            'pageSize': this.pageSize,
+            'feature': ''
+          })
+        }).then(({data}) => {
+          if (data && data.code === 200) {
+            data.data.data.map(item1 => {
+              this.valueControlOptions.push({
+                label: item1.name,
+                value: item1.id
+              })
+            })
+            this.totalPage = data.pageTotal
+          } else {
+            this.totalPage = 0
+          }
+          this.dataListLoading = false
+        })
+      },
+      selectGet (id) {
+        let obj = {}
+        obj = this.valueControlOptions.find((item) => {
+          return item.value === id
+        })
+        this.dataForm.tableData[0].lableTem = obj.label
+        this.dataForm.tableData[0].valueTem = obj.value
       }
     }
   }
