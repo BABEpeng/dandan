@@ -57,8 +57,8 @@
           <el-table-column  width="180" align="center" label="点位模版">
             <template slot-scope="scope">
               <el-form-item :prop=" 'tableData.' + scope.$index + '.templateName' " :rules="dataRule.rules.templateName">
-                <el-select v-model="scope.row.templateId"  @focus="getTemplateInfo(programId)" placeholder="请选择">
-<!--                <el-select v-model="scope.row.valueTem"  @change="selectGet" placeholder="请选择">-->
+<!--                <el-select v-model="scope.row.templateName"  @change="selectGet" @focus="getTemplateInfo(programId)" placeholder="请选择">-->
+                <el-select v-model="scope.row.valueTem"  @change="selectGet" placeholder="请选择">
                   <el-option v-for="item in valueControlOptions"  :key="item.value" :label="item.label" :value="item.value"></el-option>
                 </el-select>
               </el-form-item>
@@ -92,14 +92,27 @@
 
 <script>
   import moment from 'moment'
-  // import Vuex from 'vuex'
-  // let { mapState } = Vuex
+  import Vuex from 'vuex'
+  let { mapState } = Vuex
   export default {
     data () {
       return {
         visible: false,
         dataForm: {
-          tableData: []
+          tableData: [
+            {
+              slaveId: '',
+              name: '',
+              no: '',
+              position: '',
+              description: '',
+              lableTem: '',
+              valueTem: '',
+              wheelLoop: '',
+              templateId: '',
+              gatewayId: ''
+            }
+          ]
         },
         valueControlOptions: [],
         pageIndex: 0,
@@ -118,16 +131,15 @@
         },
         dataListLoading: false,
         dataListSelections: [],
-        dataList: [],
-        gatewayId: '',
-        programId: ''
+        dataList: []
       }
     },
     created () {
       this.getDataList()
     },
-    activated () {
-      // this.getTemplateInfo(this.programId)
+    mounted () {
+      this.restaurants = this.loadAll()
+      this.getTemplateInfo(this.programId)
     },
     // 获取传感器列表
     getDataList () {
@@ -147,17 +159,16 @@
       })
     },
     computed: {
-      // ...mapState({
-      //   programId: state => state.projectData.item.id
-      // })
+      ...mapState({
+        programId: state => state.projectData.item.id,
+        gatewayId: state => state.gatewayData.gatewayId
+      })
     },
     methods: {
       init (id) {
-        console.log(id)
         this.visible = true
-        this.gatewayId = id.gatewayId
-        this.programId = id.programId
-          // this.dataForm.tableData[0].gatewayId = id
+        this.$nextTick(() => {
+          this.dataForm.tableData[0].gatewayId = id
           // this.$refs['dataForm'].resetFields()
           // if (this.dataForm.id) {
           //   this.$http({
@@ -172,6 +183,7 @@
           //     }
           //   })
           // }
+        })
       },
       // 获取数据列表
       getDataList () {
@@ -193,14 +205,26 @@
       },
       // 表单提交
       dataFormSubmit () {
-        console.log(JSON.stringify(this.dataForm.tableData))
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
+            console.log(this.gatewayId)
             this.$nextTick(() => {
               this.$http({
-                url: this.$http.adornUrl(`/device/add/sensors`),
+                url: this.$http.adornUrl(`/device/add/sensor`),
                 method: 'post',
-                data: this.$http.adornData(this.dataForm.tableData)
+                data: this.$http.adornData({
+                  'slaveId': this.dataForm.tableData[0].slaveId,
+                  'name': this.dataForm.tableData[0].name,
+                  'no': this.dataForm.tableData[0].no,
+                  'position': this.dataForm.tableData[0].position,
+                  'description': this.dataForm.tableData[0].description,
+                  // 'templateId': this.dataForm.tableData[0].templateName,
+                  'templateName': this.dataForm.tableData[0].lableTem,
+                  'templateId': this.dataForm.tableData[0].valueTem,
+                  'wheelLoop': this.dataForm.tableData[0].wheelLoop,
+                  'gatewayId': this.gatewayId,
+                  'programId': this.programId
+                })
               }).then(({data}) => {
                 if (data && data.code === 200) {
                   this.$message({
@@ -265,7 +289,14 @@
           return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
         }
       },
-
+      loadAll () {
+        return [
+          // eslint-disable-next-line standard/object-curly-even-spacing
+          { 'value': '大气压力_点位模版'},
+          { 'value': 'PM2.5_点位模版' },
+          { 'value': '电流_点位模版' }
+        ]
+      },
       handleSelect (item) {
         console.log(item)
       },
@@ -282,12 +313,13 @@
           no: '',
           position: '',
           description: '',
-          templateId: '',
+          lableTem: '',
+          valueTem: '',
           wheelLoop: '',
-          gatewayId: this.gatewayId,
-          programId: this.programId
+          templateId: '',
+          gatewayId: ''
         })
-        // this.getTemplateInfo(this.programId)
+        this.getTemplateInfo(this.programId)
       },
       formatDate (value) {
         this.value1 = new Date(value.wheelLoop)

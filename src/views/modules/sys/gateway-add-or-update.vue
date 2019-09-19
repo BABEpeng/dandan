@@ -41,19 +41,20 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="dataFormSubmit()">完成网关添加</el-button>
-      <el-button v-if="buttonVisible" type="primary" @click="ortensiaHandle()">继续添加传感器</el-button>
+      <el-button v-if="buttonVisible" type="primary" @click.native="ortensiaHandle({programId:programId,gatewayId:gatewayId})">继续添加传感器</el-button>
     </span>
     </el-dialog>
     <!-- 弹窗, 新增 / 修改 -->
-    <add-or-update v-if="addOrUpdateVisible" ref="addOrtensia" @refreshOrtensiaData="getDataList"></add-or-update>
+    <add-or-update v-if="addOrUpdateVisible"  ref="addOrtensia" @refreshOrtensiaData="getDataList"></add-or-update>
   </div>
 </template>
 
 <script>
   import AddOrUpdate from './ortensiaa-add-or-update'
-  import Vuex from 'vuex'
-  let { mapState, mapMutations, mapActions } = Vuex
+  // import Vuex from 'vuex'
+  // let { mapState, mapMutations, mapActions } = Vuex
   export default {
+    props: ['gatewayData'],
     data () {
       return {
         visible: false,
@@ -87,7 +88,9 @@
         },
         dataListLoading: false,
         addOrUpdateVisible: false,
-        buttonVisible: false
+        buttonVisible: false,
+        gatewayId: '',
+        programId: ''
       }
     },
     components: {
@@ -96,32 +99,35 @@
     activated () {
       // this.getDataList()
     },
+    mounted () {
+    },
     computed: {
-      ...mapState({
-        programId: state => state.projectData.item.id
-      })
+      // ...mapState({
+      //   programId: state => state.projectData.item.id
+      // })
     },
     methods: {
       init (id) {
-        this.dataForm.id = id || 0
+        // this.dataForm.id = id || 0
+        this.programId = id
         this.visible = true
-        this.$nextTick(() => {
-          this.$refs['dataForm'].resetFields()
-          // 修改逻辑
-          if (this.dataForm.id) {
-            this.$http({
-              url: this.$http.adornUrl(`/sys/device/info/${this.dataForm.id}`),
-              method: 'get',
-              params: this.$http.adornParams()
-            }).then(({data}) => {
-              if (data && data.code === 0) {
-                this.dataForm.paramKey = data.config.paramKey
-                this.dataForm.paramValue = data.config.paramValue
-                this.dataForm.remark = data.config.remark
-              }
-            })
-          }
-        })
+        // this.$nextTick(() => {
+        //   this.$refs['dataForm'].resetFields()
+        //   // 修改逻辑
+        //   if (this.dataForm.id) {
+        //     this.$http({
+        //       url: this.$http.adornUrl(`/sys/device/info/${this.dataForm.id}`),
+        //       method: 'get',
+        //       params: this.$http.adornParams()
+        //     }).then(({data}) => {
+        //       if (data && data.code === 0) {
+        //         this.dataForm.paramKey = data.config.paramKey
+        //         this.dataForm.paramValue = data.config.paramValue
+        //         this.dataForm.remark = data.config.remark
+        //       }
+        //     })
+        //   }
+        // })
       },
       // 表单提交
       dataFormSubmit () {
@@ -141,7 +147,9 @@
               })
             }).then(({data}) => {
               if (data && data.code === 200) {
-                this.addGatewayIdFuc(data.data.id)
+                // this.addGatewayIdFuc(data.data.id)
+                this.programId = data.data.programId
+                this.gatewayId = data.data.id
                 this.buttonVisible = data.data.id
                 this.$message({
                   message: '操作成功',
@@ -149,11 +157,11 @@
                   duration: 1500,
                   onClose: () => {
                     this.visible = false
-                    this.$emit('refreshData')
+                    this.$emit('refreshData', data.data)
                   }
                 })
               } else {
-                this.addGatewayIdFuc('')
+                // this.addGatewayIdFuc('')
                 this.$message.error(data.msg)
               }
             })
@@ -185,9 +193,9 @@
         this.$nextTick(() => {
           this.$refs.addOrtensia.init(id)
         })
-      },
-      ...mapMutations(['addGatewayId']),
-      ...mapActions(['addGatewayIdFuc'])
+      }
+      // ...mapMutations(['addGatewayId']),
+      // ...mapActions(['addGatewayIdFuc'])
     }
   }
 </script>

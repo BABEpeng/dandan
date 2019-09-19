@@ -15,7 +15,7 @@
           <el-button @click="getDataList()">查询</el-button>
         </el-form-item>
         <el-form-item class="lay-dev">
-          <el-button type="primary" @click="gatewayAddOrUpdateHandle()">新增网关</el-button>
+          <el-button type="primary" @click="gatewayAddOrUpdateHandle(programId)">新增网关</el-button>
           <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
         </el-form-item>
       </el-form>
@@ -128,12 +128,13 @@
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 绑定传感器 -->
-    <gate-way-add-or-update v-if="addOrUpdateVisible" ref="gatewayAddOrUpdate" @refreshData="getDataList"></gate-way-add-or-update>
+    <gate-way-add-or-update v-if="addOrUpdateVisible" v-bind:gatewayData="gatewayData" ref="gatewayAddOrUpdate" @refreshData="getDataList"></gate-way-add-or-update>
   </div>
 </template>
 
 <script>
   import GateWayAddOrUpdate from './gateway-add-or-update'
+  import AddOrUpdate from './ortensiaa-add-or-update'
   import moment from 'moment'
   import Vuex from 'vuex'
   let { mapState, mapMutations, mapActions } = Vuex
@@ -148,17 +149,19 @@
         totalPage: 0,
         dataListLoading: false,
         dataListSelections: [],
-        addOrUpdateVisible: false
+        addOrUpdateVisible: false,
+        gatewayData: ''
       }
     },
     components: {
-      GateWayAddOrUpdate
+      GateWayAddOrUpdate,
+      AddOrUpdate
     },
     activated () {
       this.getDataList()
     },
     mounted () {
-      console.log(this.dataList)
+      console.log(this.gatewayData)
     },
     computed: {
       ...mapState({
@@ -186,7 +189,7 @@
         }
       },
       // 获取网关数据列表
-      getDataList () {
+      getDataList (data) {
         this.dataListLoading = true
         this.$http({
           url: this.$http.adornUrl('/device/list/gateway'),
@@ -201,7 +204,9 @@
         }).then(({data}) => {
           if (data && data.code === 200) {
             this.saveGatewayFuc(data.data.data)
-            this.totalPage = data.pageTotal
+            this.totalPage = data.data.total
+            this.pageIndex = data.data.page
+            this.gatewayData = data
           } else {
             this.saveGatewayFuc([])
             this.totalPage = 0
