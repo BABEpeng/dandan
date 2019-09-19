@@ -22,7 +22,7 @@
           <el-table-column  align="center" label="从机ID">
             <template slot-scope="scope">
               <el-form-item :prop=" 'tableData.' + scope.$index + '.slaveId' " :rules="dataRule.rules.slaveId">
-                <el-input v-model="scope.row.slaveId" placeholder="ID"></el-input>
+                <el-input @keyup.native="UpNumber" @keydown.native="UpNumber" type="number" v-model= scope.row.slaveId placeholder="ID"></el-input>
               </el-form-item>
             </template>
           </el-table-column>
@@ -126,7 +126,7 @@
     created () {
       this.getDataList()
     },
-    activated () {
+    mounted () {
       // this.getTemplateInfo(this.programId)
     },
     // 获取传感器列表
@@ -193,14 +193,20 @@
       },
       // 表单提交
       dataFormSubmit () {
-        console.log(JSON.stringify(this.dataForm.tableData))
+        // let dataTable = []
+        // this.dataForm.tableData.map(item => {
+        //   item.slaveId = parseInt(item.slaveId)
+        //   item.wheelLoop = parseInt(item.wheelLoop)
+        //   dataTable.push(item)
+        //   return item
+        // })
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$nextTick(() => {
               this.$http({
                 url: this.$http.adornUrl(`/device/add/sensors`),
                 method: 'post',
-                data: this.$http.adornData(this.dataForm.tableData)
+                data: this.$http.adornDatas(this.dataForm.tableData)
               }).then(({data}) => {
                 if (data && data.code === 200) {
                   this.$message({
@@ -277,13 +283,13 @@
       },
       addOrUpdateHandle () {
         this.dataForm.tableData.push({
-          slaveId: '',
+          slaveId: 0,
           name: '',
           no: '',
           position: '',
           description: '',
           templateId: '',
-          wheelLoop: '',
+          wheelLoop: 0,
           gatewayId: this.gatewayId,
           programId: this.programId
         })
@@ -328,6 +334,10 @@
         })
         this.dataForm.tableData[0].lableTem = obj.label
         this.dataForm.tableData[0].valueTem = obj.value
+      },
+      //  只可输入数字
+      UpNumber (e) {
+        e.target.value = e.target.value.replace(/[^\d]/g, '')
       }
     }
   }

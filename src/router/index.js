@@ -60,7 +60,7 @@ const mainRoutes = {
     // { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } }
     { path: '/project', component: _import('modules/sys/project'), name: 'project', meta: { title: '项目' } },
     { path: '/sys-deviceb', component: _import('modules/sys/devicebase'), name: 'deviceb', meta: { title: '设备基础' } },
-    { path: '/sys-gateways', component: _import('modules/sys/gateway-details-base'), name: 'gateways', meta: { title: '网关详情基础' } },
+    { path: '/sys-gateways/:id/:option/:programId', component: _import('modules/sys/gateway-ortensia-details'), name: 'gateways', meta: { title: '网关详情基础' } },
     // { path: '/sys-gateways', component: _import('modules/sys/gateway-details-ortensia'), name: 'gate', meta: { title: '网关详情传感器' } },
     { path: '/sys-wizard', component: _import('modules/sys/netwizardbase'), name: 'wizard', meta: { title: '点位模版' } },
     { path: '/sys-survey', component: _import('modules/sys/survey'), name: 'survey', meta: { title: '项目概况' } }
@@ -84,7 +84,7 @@ const mainRoutes = {
 // }
 
 const router = new Router({
-  mode: 'hash',
+  mode: 'history',
   scrollBehavior: () => ({ y: 0 }),
   isAddDynamicMenuRoutes: false, // 是否已经添加动态(菜单)路由
   routes: globalRoutes.concat(mainRoutes).concat(websiteRoutes)

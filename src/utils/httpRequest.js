@@ -90,14 +90,11 @@ http.adornData = (data = {}, openDefultdata = true, contentType = 'json') => {
  *  json: 'application/json; charset=utf-8'
  *  form: 'application/x-www-form-urlencoded; charset=utf-8'
  */
-http.adornDatas = (data = [], openDefultdata = true, contentType = 'json') => {
+http.adornDatas = (data = [], openDefultdata = false, contentType = 'json') => {
   var defaults = {
     't': new Date().getTime()
   }
-  data.map(item => {
-    data = openDefultdata ? merge(defaults, item) : item
-  })
+  data = openDefultdata ? merge(defaults, data) : data
   return contentType === 'json' ? JSON.stringify(data) : qs.stringify(data)
 }
-
 export default http

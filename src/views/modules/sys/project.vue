@@ -4,7 +4,7 @@
       <div class="addButton">
         <el-form :inline="true" :model="dataForm">
           <el-form-item class="add">
-            <el-button v-if="isAuth('sys:manger:save')" type="primary" @click="addOrUpdateHandle()">新增项目</el-button>
+            <el-button type="primary" @click="addOrUpdateHandle()">新增项目</el-button>
           </el-form-item>
         </el-form>
       </div>

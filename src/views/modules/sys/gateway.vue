@@ -113,7 +113,7 @@
           <div class="fl">
             <el-button type="primary" size="small"  @click="$router.push({ name: 'gateways',params: {id: scope.row.id,option:'first'}})">编辑</el-button>
             <el-button type="primary" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
-            <el-button type="primary" size="small"  @click="$router.push({ name: 'gateways',params: {id: scope.row.id,option:'second'}})">传感器</el-button>
+            <el-button type="primary" size="small"  @click="$router.push({ name: 'gateways',params: {id: scope.row.id,option:'second',programId:programId}})">传感器</el-button>
           </div>
         </template>
       </el-table-column>
