@@ -85,9 +85,9 @@
         label="操作">
         <template slot-scope="scope">
           <div class="fl">
-            <el-button type="primary" size="small" :disabled="1"  @click="$router.push({ name: 'deviceb',params: {id: scope.row.id}})">编辑</el-button>
-            <el-button type="primary" size="small" :disabled="1" @click="sensorHandle(scope.row.id)">传感器</el-button>
-            <el-button type="primary" size="small" :disabled="1"@click="triggerHandle(scope.row.id)">触发器</el-button>
+            <el-button type="primary" size="small" :disabled= true  @click="$router.push({ name: 'deviceb',params: {id: scope.row.id}})">编辑</el-button>
+            <el-button type="primary" size="small" :disabled= true @click="sensorHandle(scope.row.id)">传感器</el-button>
+            <el-button type="primary" size="small" :disabled= true @click="triggerHandle(scope.row.id)">触发器</el-button>
           </div>
         </template>
       </el-table-column>
