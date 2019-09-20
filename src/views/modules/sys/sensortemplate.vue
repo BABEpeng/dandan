@@ -89,8 +89,8 @@
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 新增点位模版 -->
-    <net-wizard-add v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></net-wizard-add>
-    <net-wizard-update v-if="addOrUpdateVisible" ref="NetWizardUpdate" @refreshData3="getDataList"></net-wizard-update>
+    <net-wizard-add v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshSensorData="getDataList"></net-wizard-add>
+<!--    <net-wizard-update v-if="addOrUpdateVisible" ref="NetWizardUpdate" @refreshData="getDataList"></net-wizard-update>-->
 
   </div>
 </template>
@@ -99,8 +99,8 @@
   import NetWizardAdd from './sensortemplate-add-update'
   import NetWizardUpdate from './netwizardbase'
   import moment from 'moment'
-  import Vuex from 'vuex'
-  let { mapState, mapMutations, mapActions } = Vuex
+  // import Vuex from 'vuex'
+  // let { mapState, mapMutations, mapActions } = Vuex
   export default {
     data () {
       return {
@@ -112,8 +112,9 @@
         totalPage: 0,
         dataListLoading: false,
         dataListSelections: [],
-        addOrUpdateVisible: false
-
+        addOrUpdateVisible: false,
+        programId: '',
+        dataList: []
       }
     },
     components: {
@@ -123,11 +124,14 @@
     activated () {
       this.getDataList()
     },
+    mounted () {
+      this.programId = JSON.parse(sessionStorage.getItem('projectId'))
+    },
     computed: {
-      ...mapState({
-        dataList: state => state.sensorTemplateData.data,
-        programId: state => state.projectData.item.id
-      })
+      // ...mapState({
+      //   dataList: state => state.sensorTemplateData.data,
+      //   programId: state => state.projectData.item.id
+      // })
     },
     methods: {
       formatDate (value) {
@@ -137,7 +141,6 @@
       },
       // 获取点位模版数据列表
       getDataList () {
-        console.log(this.programId)
         this.dataListLoading = true
         this.$http({
           url: this.$http.adornUrl('/device/query/program/template'),
@@ -150,11 +153,14 @@
             'feature': this.dataForm.paramKey
           })
         }).then(({data}) => {
+          console.log(data)
           if (data && data.code === 200) {
-            this.sensorTemplateFuc(data.data.data)
-            this.totalPage = data.data.pageTotal
+            // this.sensorTemplateFuc(data.data.data)
+            this.dataList = data.data.data
+            this.totalPage = data.data.total
+            this.pageIndex = data.data.page
           } else {
-            this.sensorTemplateFuc([])
+            // this.sensorTemplateFuc([])
             this.totalPage = 0
           }
           this.dataListLoading = false
@@ -218,9 +224,9 @@
             }
           })
         }).catch(() => {})
-      },
-      ...mapMutations(['saveSensorTemplate']),
-      ...mapActions(['sensorTemplateFuc'])
+      }
+      // ...mapMutations(['saveSensorTemplate']),
+      // ...mapActions(['sensorTemplateFuc'])
     }
   }
 </script>

@@ -78,16 +78,20 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`device/add/program`),
+              url: this.$http.adornUrl(`/device/add/program`),
               method: 'post',
               data: this.$http.adornData({
-                'name': this.dataForm.name || undefined,
+                'name': this.dataForm.name,
                 'description': this.dataForm.description,
                 'positionName': this.dataForm.positionName,
                 'positionCoordinate': this.dataForm.positionCoordinate
               })
             }).then(({data}) => {
               if (data && data.code === 200) {
+                // this.addGatewayIdFuc(data.data.id)
+                this.programId = data.data.programId
+                this.gatewayId = data.data.id
+                this.buttonVisible = data.data.id
                 this.$message({
                   message: '操作成功',
                   type: 'success',

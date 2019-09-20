@@ -98,7 +98,7 @@
                   duration: 1500,
                   onClose: () => {
                     this.visible = false
-                    this.$emit('refreshData3')
+                    this.$emit('refreshSensorData')
                   }
                 })
               } else {

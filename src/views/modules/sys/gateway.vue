@@ -136,21 +136,23 @@
   import GateWayAddOrUpdate from './gateway-add-or-update'
   import AddOrUpdate from './ortensiaa-add-or-update'
   import moment from 'moment'
-  import Vuex from 'vuex'
-  let { mapState, mapMutations, mapActions } = Vuex
+  // import Vuex from 'vuex'
+  // let { mapMutations, mapActions } = Vuex
   export default {
     data () {
       return {
         dataForm: {
           paramKey: ''
         },
+        dataList: [],
         pageIndex: 0,
         pageSize: 10,
         totalPage: 0,
         dataListLoading: false,
         dataListSelections: [],
         addOrUpdateVisible: false,
-        gatewayData: ''
+        gatewayData: '',
+        programId: ''
       }
     },
     components: {
@@ -161,13 +163,13 @@
       this.getDataList()
     },
     mounted () {
-      console.log(this.gatewayData)
+      this.programId = JSON.parse(sessionStorage.getItem('projectId'))
     },
     computed: {
-      ...mapState({
-        dataList: state => state.gatewayData.data,
-        programId: state => state.projectData.item.id
-      })
+      // ...mapState({
+      //   dataList: state => state.gatewayData.data,
+      //   programId: state => state.projectData.item.id
+      // })
     },
     methods: {
       formatDate (value) {
@@ -202,8 +204,10 @@
             'feature': this.dataForm.paramKey
           })
         }).then(({data}) => {
+          console.log(data)
           if (data && data.code === 200) {
-            this.saveGatewayFuc(data.data.data)
+            this.dataList = data.data.data
+            // this.saveGatewayFuc(data.data.data)
             this.totalPage = data.data.total
             this.pageIndex = data.data.page
             this.gatewayData = data
@@ -265,9 +269,9 @@
             }
           })
         }).catch(() => {})
-      },
-      ...mapMutations(['saveGateway']),
-      ...mapActions(['saveGatewayFuc'])
+      }
+      // ...mapMutations(['saveGateway']),
+      // ...mapActions(['saveGatewayFuc'])
     }
 
   }

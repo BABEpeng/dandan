@@ -32,15 +32,16 @@
 <script>
   import AddOrUpdateProject from './project-add-or-update'
   // import { treeDataTranslate } from '@/utils'
-  import Vuex from 'vuex'
-  let { mapState, mapMutations, mapActions } = Vuex
+  // import Vuex from 'vuex'
+  // let { mapState, mapMutations, mapActions } = Vuex
   export default {
     data () {
       return {
         dataForm: {},
         // dataList: [],
         dataListLoading: false,
-        addOrUpdateVisible: false
+        addOrUpdateVisible: false,
+        dataList: []
       }
     },
     components: {
@@ -54,13 +55,15 @@
       //   get () { return this.$store.state.common.mainTabs },
       //   set (val) { this.$store.commit('common/updateMainTabs', val) }
       // }
-      ...mapState({
-        dataList: state => state.projectData.data
-      })
+      // ...mapState({
+      //   dataList: state => state.projectData.data
+      // })
     },
     methods: {
       saveProjectCli (item, index) {
-        this.saveProjectItemFuc(item)
+        // this.saveProjectItemFuc(item)
+        // 本地存储当前项目
+        sessionStorage.setItem('projectId', JSON.stringify(item.id))
         // eslint-disable-next-line standard/object-curly-even-spacing
         this.$router.push({ name: 'survey', query: {id: index}})
       },
@@ -72,8 +75,10 @@
           method: 'get',
           params: this.$http.adornParams()
         }).then(({data}) => {
+          console.log(data)
             // 线上环境
-          this.saveProjectFuc(data.data)
+          this.dataList = data.data
+          // this.saveProjectFuc(data.data)
           // this.saveProjectItemFuc(data.data.data.map(function (currentValue) {
           //   return currentValue
           // }))
@@ -89,9 +94,9 @@
         this.$nextTick(() => {
           this.$refs.AddOrUpdateProject.init(id)
         })
-      },
-      ...mapMutations(['saveProject']),
-      ...mapActions(['saveProjectFuc', 'saveProjectItemFuc'])
+      }
+      // ...mapMutations(['saveProject']),
+      // ...mapActions(['saveProjectFuc', 'saveProjectItemFuc'])
     }
   }
 </script>

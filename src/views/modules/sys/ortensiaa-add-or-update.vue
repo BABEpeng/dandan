@@ -56,7 +56,7 @@
           </el-table-column>
           <el-table-column  width="180" align="center" label="点位模版">
             <template slot-scope="scope">
-              <el-form-item :prop=" 'tableData.' + scope.$index + '.templateName' " :rules="dataRule.rules.templateName">
+              <el-form-item :prop=" 'tableData.' + scope.$index + '.templateId' " :rules="dataRule.rules.templateId">
                 <el-select v-model="scope.row.templateId"  @focus="getTemplateInfo(programId)" placeholder="请选择">
 <!--                <el-select v-model="scope.row.valueTem"  @change="selectGet" placeholder="请选择">-->
                   <el-option v-for="item in valueControlOptions"  :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -124,11 +124,9 @@
       }
     },
     created () {
-      this.getDataList()
+      // this.getDataList()
     },
-    mounted () {
-      // this.getTemplateInfo(this.programId)
-    },
+
     // 获取传感器列表
     getDataList () {
       this.dataListLoading = true
@@ -153,7 +151,6 @@
     },
     methods: {
       init (id) {
-        console.log(id)
         this.visible = true
         this.gatewayId = id.gatewayId
         this.programId = id.programId
@@ -293,7 +290,8 @@
           gatewayId: this.gatewayId,
           programId: this.programId
         })
-        // this.getTemplateInfo(this.programId)
+        this.templateId = ''
+        this.getTemplateInfo(this.programId)
       },
       formatDate (value) {
         this.value1 = new Date(value.wheelLoop)

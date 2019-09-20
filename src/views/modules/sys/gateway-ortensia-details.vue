@@ -59,15 +59,15 @@
                   <div v-if="activeName=='second'">
                   <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
                     <el-form-item>
-                      <el-input v-model="dataForm.paramKey" placeholder="传感器名称" clearable></el-input>
+                      <el-input v-model="dataForm.paramKey" placeholder="输入传感器名称" clearable></el-input>
                     </el-form-item>
                     <el-form-item>
                       <el-button type="primary" @click="getDataList()">查询</el-button>
                     </el-form-item>
                     <el-form-item class="lay-dev">
-                      <el-button type="primary" @click="ortensiaHandle()">绑定传感器</el-button>
-                      <!--                    <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>-->
-                      <!--                    <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
+                      <el-button type="primary" @click="ortensiaHandle()">新增传感器</el-button>
+                      <!--<el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>-->
+                      <!--<el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
                     </el-form-item>
                   </el-form>
                   <el-table
@@ -166,7 +166,7 @@
       :total="totalPage"
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
-    <!-- 弹窗,新增传感器 -->
+    <!-- 新增传感器 -->
     <add-or-update v-if="addOrUpdateVisible" ref="addOrtensia" @refreshDataList="getDataList"></add-or-update>
     <!--    编辑-->
     <add-or-updatess v-if="addOrUpdateVisible" ref="addOrtensiass" @refreshDataList="getDataList"></add-or-updatess>
@@ -182,7 +182,8 @@
     data () {
       return {
         dataForm: {
-          paramKey: ''
+          paramKey: '',
+          currentGatewayId: ''
         },
         dataList: [],
         pageIndex: 0,
@@ -195,10 +196,7 @@
         activeName: this.$route.params.option,
         programId: this.$route.params.programId,
         isFirst: true,
-        isSecond: false,
-        isThird: false,
-        isFour: false,
-        isFive: false
+        isSecond: false
       }
     },
     components: {
@@ -211,9 +209,48 @@
     },
     activated () {
       // this.activeName = this.$route.params.option
+      // this.init(this.$route.params.id)
       this.getDataList()
     },
     methods: {
+      // 初始化头部信息
+      // init (id) {
+      //   this.currentGatewayId = id
+      //   this.$http({
+      //     url: this.$http.adornUrl('/sys/menu/select'),
+      //     method: 'get',
+      //     params: this.$http.adornParams()
+      //   }).then(({data}) => {
+      //     this.menuList = treeDataTranslate(data.menuList, 'menuId')
+      //   }).then(() => {
+      //     this.visible = true
+      //     this.$nextTick(() => {
+      //       this.$refs['dataForm'].resetFields()
+      //     })
+      //   }).then(() => {
+      //     if (!this.dataForm.id) {
+      //       // 新增
+      //       this.menuListTreeSetCurrentNode()
+      //     } else {
+      //       // 修改
+      //       this.$http({
+      //         url: this.$http.adornUrl(`/sys/menu/info/${this.dataForm.id}`),
+      //         method: 'get',
+      //         params: this.$http.adornParams()
+      //       }).then(({data}) => {
+      //         this.dataForm.id = data.menu.menuId
+      //         this.dataForm.type = data.menu.type
+      //         this.dataForm.name = data.menu.name
+      //         this.dataForm.parentId = data.menu.parentId
+      //         this.dataForm.url = data.menu.url
+      //         this.dataForm.perms = data.menu.perms
+      //         this.dataForm.orderNum = data.menu.orderNum
+      //         this.dataForm.icon = data.menu.icon
+      //         this.menuListTreeSetCurrentNode()
+      //       })
+      //     }
+      //   })
+      // },
       // 默认根据项目ID查询传感器列表信息
       getDataList () {
         this.dataListLoading = true
@@ -302,7 +339,7 @@
           })
         }
       },
-      // 传感器绑定
+      // 新增加传感器
       ortensiaHandle (id) {
         this.addOrUpdateVisible = true
         this.$nextTick(() => {
@@ -341,8 +378,6 @@
   .item {
     /*padding: 1px 0;*/
   }
-
-
   .box-card {
     display: flex;
   }

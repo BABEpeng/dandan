@@ -41,7 +41,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="dataFormSubmit()">完成网关添加</el-button>
-      <el-button v-if="buttonVisible" type="primary" @click.native="ortensiaHandle({programId:programId,gatewayId:gatewayId})">继续添加传感器</el-button>
+      <el-button v-if="buttonVisible" type="primary" @click="ortensiaHandle({programId:programId,gatewayId:gatewayId})">继续添加传感器</el-button>
     </span>
     </el-dialog>
     <!-- 弹窗, 新增 / 修改 -->

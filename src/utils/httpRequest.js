@@ -37,7 +37,8 @@ http.interceptors.request.use(config => {
  * 响应拦截
  */
 http.interceptors.response.use(response => {
-  if (response.data && response.data.code === 401) { // 401, token失效
+  // eslint-disable-next-line no-mixed-operators
+  if (response.data && response.data.code === 401 || response.data.code === 30001) {
     clearLoginInfo()
     router.push({ name: 'login' })
   }
