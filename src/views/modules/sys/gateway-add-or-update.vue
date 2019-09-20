@@ -50,7 +50,7 @@
 </template>
 
 <script>
-  import AddOrUpdate from './ortensiaa-add-or-update'
+  import AddOrUpdate from './gateway-ortensia-add'
   // import Vuex from 'vuex'
   // let { mapState, mapMutations, mapActions } = Vuex
   export default {
@@ -64,7 +64,7 @@
           typeList: ['modbus协议', '协议一', '协议二'],
           position: '',
           icon: '路径/ddd/ddd',
-          protocol: '',
+          protocol: 0,
           description: '',
           remark: '',
           status: 0

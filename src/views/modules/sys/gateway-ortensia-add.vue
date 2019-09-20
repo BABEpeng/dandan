@@ -311,6 +311,7 @@
             'feature': ''
           })
         }).then(({data}) => {
+          console.log(data)
           if (data && data.code === 200) {
             data.data.data.map(item1 => {
               this.valueControlOptions.push({

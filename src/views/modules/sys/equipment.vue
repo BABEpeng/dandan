@@ -85,9 +85,9 @@
         label="操作">
         <template slot-scope="scope">
           <div class="fl">
-            <el-button type="primary" size="small"  @click="$router.push({ name: 'deviceb',params: {id: scope.row.id}})">编辑</el-button>
-            <el-button type="primary" size="small" @click="sensorHandle(scope.row.id)">传感器</el-button>
-            <el-button type="primary" size="small" @click="triggerHandle(scope.row.id)">触发器</el-button>
+            <el-button type="primary" size="small" :disabled="1"  @click="$router.push({ name: 'deviceb',params: {id: scope.row.id}})">编辑</el-button>
+            <el-button type="primary" size="small" :disabled="1" @click="sensorHandle(scope.row.id)">传感器</el-button>
+            <el-button type="primary" size="small" :disabled="1"@click="triggerHandle(scope.row.id)">触发器</el-button>
           </div>
         </template>
       </el-table-column>
@@ -110,14 +110,16 @@
 <script>
   import AddEquipment from './equipment-add-or-update'
   import moment from 'moment'
-  import Vuex from 'vuex'
-  let { mapState, mapMutations, mapActions } = Vuex
+  // import Vuex from 'vuex'
+  // let { mapState, mapMutations, mapActions } = Vuex
   export default {
     data () {
       return {
         dataForm: {
           paramKey: ''
         },
+        programId: '',
+        dataList: [],
         pageIndex: 0,
         pageSize: 10,
         totalPage: 0,
@@ -133,11 +135,14 @@
     activated () {
       this.getDataList()
     },
+    mounted () {
+      this.programId = JSON.parse(sessionStorage.getItem('projectId'))
+    },
     computed: {
-      ...mapState({
-        dataList: state => state.equipmentData.data,
-        programId: state => state.projectData.item.id
-      })
+      // ...mapState({
+      //   dataList: state => state.equipmentData.data,
+      //   programId: state => state.projectData.item.id
+      // })
     },
     methods: {
       formatDate (value) {
@@ -160,10 +165,12 @@
           })
         }).then(({data}) => {
           if (data && data.code === 200) {
-            this.saveEquipmentFuc(data.data.data)
-            this.totalPage = data.pageTotal
+            // this.saveEquipmentFuc(data.data.data)
+            this.dataList = data.data.data
+            this.dataList = data.data.data
+            this.totalPage = data.data.total
           } else {
-            this.saveEquipmentFuc([])
+            // this.saveEquipmentFuc([])
             this.totalPage = 0
           }
           this.dataListLoading = false
@@ -220,9 +227,9 @@
             }
           })
         }).catch(() => {})
-      },
-      ...mapMutations(['saveEquipmentway']),
-      ...mapActions(['saveEquipmentFuc'])
+      }
+      // ...mapMutations(['saveEquipmentway']),
+      // ...mapActions(['saveEquipmentFuc'])
     }
   }
 </script>

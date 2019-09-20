@@ -27,12 +27,13 @@
 
 <script>
   import AddOrUpdate from './ortensia-add-or-update'
-  import Vuex from 'vuex'
-  let { mapState } = Vuex
+  // import Vuex from 'vuex'
+  // let { mapState } = Vuex
   export default {
     data () {
       return {
         visible: false,
+        programId: '',
         dataForm: {
           id: 0,
           no: '',
@@ -59,10 +60,13 @@
     activated () {
       // this.getDataList()
     },
+    mounted () {
+      this.programId = JSON.parse(sessionStorage.getItem('projectId'))
+    },
     computed: {
-      ...mapState({
-        programId: state => state.projectData.item.id
-      })
+      // ...mapState({
+      //   programId: state => state.projectData.item.id
+      // })
     },
     methods: {
       init (id) {

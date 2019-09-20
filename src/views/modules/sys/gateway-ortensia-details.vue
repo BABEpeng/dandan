@@ -37,21 +37,21 @@
               <el-tabs v-model="activeName"  @tab-click="handleClick">
               <el-tab-pane label="基础信息" name="first"  class ="netinfo">
                 <div v-if="activeName=='first'">
-                  <span>{{'设备名称: ' + dataList.name }}</span>
+                  <span>{{'网关名称: ' + dataList.name }}</span>
                   <el-divider></el-divider>
-                  <span>{{'设备型号: ' + dataList.number }}</span>
+                  <span>{{'网关编号: ' + dataList.number }}</span>
                   <el-divider></el-divider>
-                  <span>{{'出场日期: ' + dataList.data }}</span>
+                  <span>{{'注册码: ' + dataList.data }}</span>
                   <el-divider></el-divider>
-                  <span>{{'生产厂家: ' + dataList.prod }}</span>
+                  <span>{{'数据协议: ' + dataList.prod }}</span>
                   <el-divider></el-divider>
-                  <span>{{'出场编号: ' + dataList.got }}</span>
+                  <span>{{'网关状态: ' + dataList.got }}</span>
                   <el-divider></el-divider>
-                  <span>{{'安装位置: ' + dataList.pos }}</span>
+                  <span>{{'网关位置: ' + dataList.pos }}</span>
                   <el-divider></el-divider>
-                  <span>{{'负责人: ' + dataList.fuz }}</span>
+                  <span>{{'图片: ' + dataList.fuz }}</span>
                   <el-divider></el-divider>
-                  <span>{{'联系方式: ' + dataList.tel }}</span>
+                  <span>{{'备注: ' + dataList.tel }}</span>
                   <el-divider></el-divider>
                 </div>
               </el-tab-pane>

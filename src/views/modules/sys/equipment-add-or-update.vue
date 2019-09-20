@@ -33,7 +33,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="dataFormSubmit()">完成设备添加</el-button>
-      <el-button type="primary" @click="dataFormSubmit2()">继续绑定传感器</el-button>
+      <el-button type="primary" :disabled="1" @click="dataFormSubmit2()">继续绑定传感器</el-button>
       </span>
     </el-dialog>
     <!-- 弹窗, 新增 / 修改 -->
