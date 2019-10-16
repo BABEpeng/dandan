@@ -28,7 +28,7 @@ fnCreate(sysConfig, true)
 fnCreate(sysLog, true)
 fnCreate(sysMenu, true)
 fnCreate(sysRole, true)
-fnCreate(sysUser, true)
+fnCreate(sysUser, false)
 
 // 项目管理
 fnCreate(sysProject, false)

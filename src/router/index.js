@@ -54,18 +54,13 @@ const mainRoutes = {
     // 1. isTab: 是否通过tab展示内容, true: 是, false: 否
     // 2. iframeUrl: 是否通过iframe嵌套展示内容, '以http[s]://开头': 是, '': 否
     // 提示: 如需要通过iframe嵌套展示内容, 但不通过tab打开, 请自行创建组件使用iframe处理!
-    // { path: '/home', component: _import('common/home'), name: 'home', meta: { title: '首页' } },
-    // { path: '/theme', component: _import('common/theme'), name: 'theme', meta: { title: '主题' } },
-    // { path: '/demo-echarts', component: _import('demo/echarts'), name: 'demo-echarts', meta: { title: 'demo-echarts', isTab: true } },
-    // { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } }
     { path: '/project', component: _import('modules/sys/project'), name: 'project', meta: { title: '项目' } },
-    { path: '/sys-deviceb', component: _import('modules/sys/devicebase'), name: 'deviceb', meta: { title: '设备基础' } },
-    { path: '/sys-gateways/:id/:option/:programId', component: _import('modules/sys/gateway-ortensia-details'), name: 'gateways', meta: { title: '网关详情基础' } },
-    // { path: '/sys-gateways', component: _import('modules/sys/gateway-details-ortensia'), name: 'gate', meta: { title: '网关详情传感器' } },
-    { path: '/sys-wizard', component: _import('modules/sys/netwizardbase'), name: 'wizard', meta: { title: '点位模版' } },
-    { path: '/sys-survey', component: _import('modules/sys/survey'), name: 'survey', meta: { title: '项目概况' } }
-    // { path: '/sys-ortensia', component: _import('modules/sys/ortensiabase'), name: 'ortensia', meta: { title: '传感器' } },
-    // { path: '/sys-trigger', component: _import('modules/sys/triggerbase'), name: 'trigger', meta: { title: '触发器' } }
+    { path: '/sys-device', component: _import('modules/sys/device-detail'), name: 'deviceb', meta: { title: '设备基础' } },
+    { path: '/sys-gatewayDetail/:id/:option', component: _import('modules/sys/gateway-detail'), name: 'gatewayDetail', meta: { title: '网关详情' } },
+    { path: '/sys-deviceDetail/:id/:option', component: _import('modules/sys/device-detail'), name: 'deviceDetail', meta: { title: '设备详情' } },
+    { path: '/sys-templateDetail/:id/:option', component: _import('modules/sys/sensortemplate-detail'), name: 'templateDetail', meta: { title: '点位模板详情' } },
+    { path: '/sys-survey', component: _import('modules/sys/survey'), name: 'survey', meta: { title: '项目概况' } },
+    { path: '/sys-dataView', component: _import('modules/sys/dataView'), name: 'dataView', meta: { title: '数据查看' } }
   ],
   beforeEnter (to, from, next) {
     // let token = Vue.cookie.get('token')
@@ -270,7 +265,7 @@ router.beforeEach((to, from, next) => {
           'name': '项目概况',
           'url': 'sys/survey',
           'perms': null,
-          'type': 0,
+          'type': 1,
           'icon': 'system',
           'orderNum': 0,
           'open': null,
@@ -293,7 +288,7 @@ router.beforeEach((to, from, next) => {
               'parentId': 62,
               'parentName': null,
               'name': '能源报表',
-              'url': 'sys/energy',
+              'url': 'sys/energyView',
               'perms': null,
               'type': 1,
               'icon': '',
@@ -306,7 +301,7 @@ router.beforeEach((to, from, next) => {
               'parentId': 62,
               'parentName': null,
               'name': '设备视图',
-              'url': 'sys/device',
+              'url': 'sys/deviceView',
               'perms': null,
               'type': 1,
               'icon': '',
@@ -319,7 +314,7 @@ router.beforeEach((to, from, next) => {
               'parentId': 62,
               'parentName': null,
               'name': '工单视图',
-              'url': 'sys/worker',
+              'url': 'sys/workerView',
               'perms': null,
               'type': 1,
               'icon': '',
@@ -399,7 +394,7 @@ router.beforeEach((to, from, next) => {
               'parentId': 70,
               'parentName': null,
               'name': '设备列表',
-              'url': 'sys/equipment',
+              'url': 'sys/device',
               'perms': null,
               'type': 1,
               'icon': '',
@@ -528,6 +523,19 @@ router.beforeEach((to, from, next) => {
               'list': null
             }
           ]
+        },
+        {
+          'menuId': 81,
+          'parentId':0,
+          'parentName': null,
+          'name': '数据查看',
+          'url':'sys/dataView',
+          'perms': null,
+          'type':0,
+          'icon': 'system',
+          'orderNum': 0,
+          'open': null,
+          'list': null
         }
       ],
       'permissions': [

@@ -1,15 +1,6 @@
 <template>
   <div>
     <div class="login-container">
-
-<!--      store测试-->
-<!--      <div>-->
-<!--        <h2>{{this.$store.state.count}}</h2>-->
-<!--        <h2>{{this.$store.getters.getStateCount}}</h2>-->
-<!--        <button @click="addFun"></button>-->
-<!--        <button @click="reductionFun"></button>-->
-<!--      </div>-->
-
       <el-form :model="dataForm" :rules="dataRule" ref="dataForm" class="login-form" auto-complete="on" label-position="left"
                @keyup.enter.native="dataFormSubmit()" status-icon>
         <div class="title-container">
@@ -55,7 +46,6 @@
 <!--          <span>注册会员</span>-->
 <!--        </div>-->
       </el-form>
-
     </div>
 <!--    <div class="particles">-->
 <!--      <vue-particles-->
@@ -95,10 +85,10 @@
         },
         dataRule: {
           userName: [
-            { required: true, message: '帐号不能为空', trigger: 'blur' }
+            { required: true, message: '帐号不能为空', trigger: 'change' }
           ],
           password: [
-            { required: true, message: '密码不能为空', trigger: 'blur' }
+            { required: true, message: '密码不能为空', trigger: 'change' }
           ]
           // captcha: [
           //   { required: true, message: '验证码不能为空', trigger: 'blur' }
@@ -138,6 +128,7 @@
             }).then(({data}) => {
               if (data && data.code === 200) {
                 sessionStorage.setItem('token', JSON.stringify(data.data.token))
+                this.$store.commit('user/updateName', data.data.username)
                 // this.$store.dispatch('user/login', JSON.stringify(data.data.token))
                 this.$message({
                   message: '登录成功',
@@ -150,9 +141,12 @@
                   }
                 })
               } else {
-                // this.getCaptcha()
+                this.loading = false
                 this.$message.error(data.msg)
               }
+            }).catch(() => {
+              this.loading = false
+              this.$message.error('连接服务失败，请检查网络是否可用！')
             })
           }
         })
@@ -176,12 +170,10 @@
       width: 85%;
 
       input {
-        background: transparent;
-        border: 0px;
         -webkit-appearance: none;
         border-radius: 0px;
         padding: 12px 5px 12px 15px;
-        color: #E5E5E5;;
+        /*color: #E5E5E5;*/
         height: 47px;
 /*
         &:-webkit-autofill {
@@ -277,6 +269,9 @@
     .login-btn-submit {
       width: 100%;
       margin-top: 38px;
+    }
+    .login-container .el-input input {
+      color: rgba(12, 35, 59, 0.74);
     }
   }
 

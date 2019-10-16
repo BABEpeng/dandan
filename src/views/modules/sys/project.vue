@@ -15,9 +15,9 @@
             <img src="~@/assets/img/bg_login.png" class="image">
             <div style="padding: 14px;">
               <div class="bottom clearfix">
-                <!--                    <p class="description">描述：{{item.description}}</p>-->
+                <!-- <p class="description">描述：{{item.description}}</p>-->
                 <p>地址：{{item.positionName}}</p>
-                <!--                <el-button type="text" class="button">进入</el-button>-->
+                <!--  <el-button type="text" class="button">进入</el-button>-->
               </div>
             </div>
           </el-card>
@@ -63,29 +63,29 @@
       saveProjectCli (item, index) {
         // this.saveProjectItemFuc(item)
         // 本地存储当前项目
-        sessionStorage.setItem('projectId', JSON.stringify(item.id))
-        // eslint-disable-next-line standard/object-curly-even-spacing
-        this.$router.push({ name: 'survey', query: {id: index}})
+        sessionStorage.setItem('projectId', item.id)
+        this.$router.push({name: 'survey', query: {id: index}})
       },
       // 获取项目列表
       getDataList () {
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/device/get/program'),
+          url: this.$http.adornUrl('equipment/program/list'),
           method: 'get',
           params: this.$http.adornParams()
         }).then(({data}) => {
-          console.log(data)
-            // 线上环境
-          this.dataList = data.data
-          // this.saveProjectFuc(data.data)
-          // this.saveProjectItemFuc(data.data.data.map(function (currentValue) {
-          //   return currentValue
-          // }))
-          // mock模拟
-          // this.saveProjectFuc(data.data.data)
-          // this.dataList = treeDataTranslate(data.data, 'menuId')
-          this.dataListLoading = false
+          if (data.code === 200) {
+            if (data.data.length > 0) {
+              let projectId = data.data[0].id
+              sessionStorage.setItem('projectId', projectId)
+            } else {
+              sessionStorage.setItem('projectId', 0)
+            }
+            this.dataList = data.data
+            this.dataListLoading = false
+          } else {
+            this.$message.error(data.msg)
+          }
         })
       },
       // 新增 / 修改

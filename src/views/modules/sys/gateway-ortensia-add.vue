@@ -144,6 +144,9 @@
         this.dataListLoading = false
       })
     },
+    activated () {
+    },
+
     computed: {
       // ...mapState({
       //   programId: state => state.projectData.item.id
@@ -151,9 +154,10 @@
     },
     methods: {
       init (id) {
+        this.isHttp = false
         this.visible = true
-        this.gatewayId = id.gatewayId
-        this.programId = id.programId
+        this.programId = sessionStorage.getItem('projectId')
+        this.gatewayId = sessionStorage.getItem('gatewayId')
           // this.dataForm.tableData[0].gatewayId = id
           // this.$refs['dataForm'].resetFields()
           // if (this.dataForm.id) {
@@ -280,18 +284,17 @@
       },
       addOrUpdateHandle () {
         this.dataForm.tableData.push({
-          slaveId: 0,
+          slaveId: '',
           name: '',
           no: '',
           position: '',
           description: '',
           templateId: '',
-          wheelLoop: 0,
+          wheelLoop: '',
           gatewayId: this.gatewayId,
           programId: this.programId
         })
         this.templateId = ''
-        this.getTemplateInfo(this.programId)
       },
       formatDate (value) {
         this.value1 = new Date(value.wheelLoop)
@@ -305,7 +308,7 @@
           method: 'post',
           data: this.$http.adornData({
               // 页码，每页条数
-            'programId': value,
+            'programId': this.programId,
             'page': this.pageIndex,
             'pageSize': this.pageSize,
             'feature': ''

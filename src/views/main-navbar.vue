@@ -117,16 +117,8 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$http({
-            url: this.$http.adornUrl('/sys/logout'),
-            method: 'post',
-            data: this.$http.adornData()
-          }).then(({data}) => {
-            if (data && data.code === 200) {
-              clearLoginInfo()
-              this.$router.push({ name: 'login' })
-            }
-          })
+          clearLoginInfo()
+          this.$router.push({ name: 'login' })
         }).catch(() => {})
       }
     }

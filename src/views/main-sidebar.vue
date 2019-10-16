@@ -36,6 +36,7 @@
           v-for="menu in menuList"
           :key="menu.menuId"
           :menu="menu"
+          :default-active="$route.path"
           :dynamicMenuRoutes="dynamicMenuRoutes">
         </sub-menu>
       </el-menu>

@@ -26,7 +26,7 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
 <!--      <el-button @click="visible = false">取消</el-button>-->
-      <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
+      <el-button type="primary" @click="dataFormSubmit()" :disabled="isHttp">确定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -36,6 +36,7 @@
   export default {
     data () {
       return {
+        isHttp: false,
         visible: false,
         dataForm: {
           id: 0,
@@ -63,6 +64,7 @@
     methods: {
       init (id) {
         // this.dataForm.id = id || 0
+        this.isHttp = false
         this.visible = true
         // this.$nextTick(() => {
         //   this.$refs['dataForm'].resetFields()
@@ -77,8 +79,9 @@
       dataFormSubmit () {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
+            this.isHttp = true
             this.$http({
-              url: this.$http.adornUrl(`/device/add/program`),
+              url: this.$http.adornUrl(`/equipment/program/save`),
               method: 'post',
               data: this.$http.adornData({
                 'name': this.dataForm.name,
@@ -89,6 +92,7 @@
             }).then(({data}) => {
               if (data && data.code === 200) {
                 // this.addGatewayIdFuc(data.data.id)
+                sessionStorage.setItem('projectId', data.data.programId)
                 this.programId = data.data.programId
                 this.gatewayId = data.data.id
                 this.buttonVisible = data.data.id
@@ -98,6 +102,7 @@
                   duration: 1500,
                   onClose: () => {
                     this.visible = false
+                    this.isHttp = false
                     this.$emit('refreshDataList')
                   }
                 })

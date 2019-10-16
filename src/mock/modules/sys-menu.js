@@ -723,7 +723,7 @@ var navDataList = [
         'parentId': 70,
         'parentName': null,
         'name': '设备列表',
-        'url': 'sys/equipment',
+        'url': 'sys/device',
         'perms': null,
         'type': 1,
         'icon': '',

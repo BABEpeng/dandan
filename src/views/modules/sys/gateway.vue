@@ -1,48 +1,36 @@
 <template>
   <div class="mod-device">
-    <div class="top_title">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item>网关管理</el-breadcrumb-item>
-        <el-breadcrumb-item>网关列表</el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
-    <div class="top_content">
-      <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
-        <el-form-item>
-          <el-input v-model="dataForm.paramKey" placeholder="网关名称 / 网关编号" clearable></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button @click="getDataList()">查询</el-button>
-        </el-form-item>
-        <el-form-item class="lay-dev">
-          <el-button type="primary" @click="gatewayAddOrUpdateHandle(programId)">新增网关</el-button>
-          <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+    <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+      <el-form-item>
+        <el-input v-model="dataForm.paramKey" placeholder="网关名称 / 网关编号" clearable></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="getDataList()">查询</el-button>
+      </el-form-item>
+      <el-form-item class="lay-dev">
+        <el-button type="primary" @click="gatewayAddOrUpdateHandle()">新增网关</el-button>
+      </el-form-item>
+    </el-form>
     <el-table
       :data="dataList"
       border
       v-loading="dataListLoading"
       @selection-change="selectionChangeHandle"
-      :header-cell-style="{color:'#333',fontFamily:'MicrosoftYaHeiUI',fontSize:'12px',fontWeight:900}"
+      :header-cell-style="{color:'#333',fontFamily:'MicrosoftYaHeiUI',fontSize:'14px',fontWeight:900}"
       :row-style="{fontSize:'12px',color:'#666',fontFamily:'MicrosoftYaHeiUI'}"
       style="width: 100%;">
       <el-table-column
-        type="selection"
+        type="index"
         header-align="center"
         align="center"
         width="50">
       </el-table-column>
       <el-table-column
-        prop="icon"
+        prop="no"
         header-align="center"
         align="center"
-        width="80"
-        label="示意图片">
-        <template   slot-scope="scope">
-          <img :src="scope.row.Icon"  min-width="70" height="70" />
-        </template>
+        width="150"
+        label="网关编号">
       </el-table-column>
       <el-table-column
         prop="name"
@@ -51,19 +39,13 @@
         label="网关名称">
       </el-table-column>
       <el-table-column
-        prop="no"
-        header-align="center"
-        align="center"
-        label="网关编号">
-      </el-table-column>
-      <el-table-column
         prop="registerCode"
         header-align="center"
         align="center"
         label="注册码">
       </el-table-column>
       <el-table-column
-        prop="protocol"
+        prop="protocolName"
         header-align="center"
         align="center"
         label="数据协议">
@@ -78,7 +60,8 @@
         prop="isOnline"
         header-align="center"
         align="center"
-        label="在线/离线">
+        label="在线/离线"
+        width="100">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.gatewayIsOnline === true" size="small">在线</el-tag>
           <el-tag v-else size="small" type="danger">离线</el-tag>
@@ -88,8 +71,8 @@
         prop="gatewayStatus"
         header-align="center"
         align="center"
-        width="70"
-        label="状态">
+        label="状态"
+        width="100">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.gatewayStatus === null" size="small">启用</el-tag>
           <el-tag v-else size="small" type="danger">暂停</el-tag>
@@ -99,21 +82,21 @@
         prop="addTimestamp"
         header-align="center"
         align="center"
-        width="90"
         :formatter="formatDate"
+        width="160"
         label="最后上线时间">
       </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
-        width="230"
+        width="220"
         label="操作">
         <template slot-scope="scope">
           <div class="fl">
-            <el-button type="primary" size="small" :disabled= true  @click="$router.push({ name: 'gateways',params: {id: scope.row.id,option:'first'}})">编辑</el-button>
-            <el-button type="primary" size="small" :disabled= true @click="deleteHandle(scope.row.id)">删除</el-button>
-            <el-button type="primary" size="small" :disabled= true @click="$router.push({ name: 'gateways',params: {id: scope.row.id,option:'second',programId:programId}})">传感器</el-button>
+            <el-button type="primary" size="small" @click="gatewayAddOrUpdateHandle(scope.row.id)">编辑</el-button>
+            <el-button type="primary" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+            <el-button type="primary" size="small" @click="$router.push({ name: 'gatewayDetail',params: {id: scope.row.id,option:'sensor'}})">传感器</el-button>
           </div>
         </template>
       </el-table-column>
@@ -136,8 +119,6 @@
   import GateWayAddOrUpdate from './gateway-add-or-update'
   import AddOrUpdate from './gateway-ortensia-add'
   import moment from 'moment'
-  // import Vuex from 'vuex'
-  // let { mapMutations, mapActions } = Vuex
   export default {
     data () {
       return {
@@ -160,16 +141,8 @@
       AddOrUpdate
     },
     activated () {
+      this.programId = sessionStorage.getItem('projectId')
       this.getDataList()
-    },
-    mounted () {
-      this.programId = JSON.parse(sessionStorage.getItem('projectId'))
-    },
-    computed: {
-      // ...mapState({
-      //   dataList: state => state.gatewayData.data,
-      //   programId: state => state.projectData.item.id
-      // })
     },
     methods: {
       formatDate (value) {
@@ -177,24 +150,11 @@
         let dateValue = moment(this.value1).format('YYYY-MM-DD HH:mm:ss')
         return dateValue
       },
-      formatData: function (row, column) {
-        return row.gatewayIsOnline === null ? '在线' : row.gatewayIsOnline === '' ? '离线' : '未知'
-      },
-      formatData2: function (row, column) {
-        return row.gatewayIsOnline === null ? '启用' : row.gatewayIsOnline === '' ? '停止' : '未知'
-      },
-      tabRowClassName ({row, rowIndex}) {
-        let index = rowIndex + 1
-        // eslint-disable-next-line eqeqeq
-        if (index % 2 == 0) {
-          return 'warning-row'
-        }
-      },
       // 获取网关数据列表
       getDataList (data) {
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/device/list/gateway'),
+          url: this.$http.adornUrl('/equipment/gateway/list'),
           method: 'post',
           data: this.$http.adornData({
             // 页码，每页条数
@@ -204,16 +164,14 @@
             'feature': this.dataForm.paramKey
           })
         }).then(({data}) => {
-          console.log(data)
           if (data && data.code === 200) {
             this.dataList = data.data.data
-            // this.saveGatewayFuc(data.data.data)
             this.totalPage = data.data.total
             this.pageIndex = data.data.page
             this.gatewayData = data
           } else {
-            this.saveGatewayFuc([])
             this.totalPage = 0
+            this.$message.error(data.message)
           }
           this.dataListLoading = false
         })
@@ -237,25 +195,23 @@
       gatewayAddOrUpdateHandle (id) {
         this.addOrUpdateVisible = true
         this.$nextTick(() => {
+          this.$refs.gatewayAddOrUpdate.getProtocolList()
           this.$refs.gatewayAddOrUpdate.init(id)
         })
       },
       // 删除
       deleteHandle (id) {
-        var ids = id ? [id] : this.dataListSelections.map(item => {
-          return item.id
-        })
-        this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
+        this.$confirm(`确定进行[删除]操作?`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.$http({
-            url: this.$http.adornUrl('/sys/net/delete'),
+            url: this.$http.adornUrl('/equipment/gateway/delete'),
             method: 'post',
-            data: this.$http.adornData(ids, false)
+            data: this.$http.adornData(id, false)
           }).then(({data}) => {
-            if (data && data.code === 0) {
+            if (data && data.code === 200) {
               this.$message({
                 message: '操作成功',
                 type: 'success',
@@ -270,8 +226,6 @@
           })
         }).catch(() => {})
       }
-      // ...mapMutations(['saveGateway']),
-      // ...mapActions(['saveGatewayFuc'])
     }
 
   }

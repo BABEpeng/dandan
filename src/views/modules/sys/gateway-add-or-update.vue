@@ -17,7 +17,10 @@
 <!--        </el-form-item>-->
         <el-form-item label="数据协议" prop="protocol" placeholder="输入协议类型">
           <el-radio-group v-model="dataForm.protocol">
-             <el-radio v-for="(type, index) in dataForm.typeList" :label="index" :key="index">{{ type }}</el-radio>
+             <el-radio 
+                  v-for="item in dataForm.protocolList" 
+                  :label="item.value" 
+                  :key="item.value">{{ item.name }}</el-radio>
           </el-radio-group>
         </el-form-item>
 <!--        <el-form-item label="轮询时间" prop="remark">-->
@@ -32,53 +35,55 @@
         <el-form-item label="网关位置" prop="remark">
           <el-input v-model="dataForm.position" placeholder="输入位置"></el-input>
         </el-form-item>
-        <el-form-item label="网关图片" prop="icon">
-          <el-input v-model="dataForm.icon" placeholder="路径/ddd/ddd"></el-input>
-        </el-form-item>
+<!--        <el-form-item label="网关图片" prop="icon">-->
+<!--          <el-input v-model="dataForm.icon" placeholder="路径/ddd/ddd"></el-input>-->
+<!--        </el-form-item>-->
         <el-form-item label="备注" prop="description">
           <el-input v-model="dataForm.description" placeholder="输入备注"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="dataFormSubmit()">完成网关添加</el-button>
-      <el-button v-if="buttonVisible" type="primary" @click="ortensiaHandle({programId:programId,gatewayId:gatewayId})">继续添加传感器</el-button>
-    </span>
-    </el-dialog>
-    <!-- 弹窗, 新增 / 修改 -->
+      <el-button type="primary" @click="dataFormSubmit()" :disabled="isHttp">确定</el-button>
+        <!--      <el-button  type="primary" @click="ortensiaHandle({programId:programId,gatewayId:gatewayId})">继续添加传感器</el-button>-->
+            </span>
+            </el-dialog>
+            <!-- 弹窗, 新增 / 修改 -->
     <add-or-update v-if="addOrUpdateVisible"  ref="addOrtensia" @refreshOrtensiaData="getDataList"></add-or-update>
   </div>
 </template>
 
 <script>
   import AddOrUpdate from './gateway-ortensia-add'
-  // import Vuex from 'vuex'
-  // let { mapState, mapMutations, mapActions } = Vuex
   export default {
     props: ['gatewayData'],
     data () {
       return {
+        isHttp: false,
         visible: false,
         dataForm: {
+          id: '',
+          gatewayId: '',
+          programId: '',
           name: '',
           no: '',
-          typeList: ['modbus协议', '协议一', '协议二'],
+          protocolList: [],
           position: '',
           icon: '路径/ddd/ddd',
-          protocol: 0,
+          protocol: 1,
           description: '',
-          remark: '',
+          registerCode: '',
           status: 0
         },
         dataRule: {
           name: [
             {required: true, message: '网关名称不能为空', trigger: 'blur'}
+          ],
+          no: [
+            {required: true, message: '网关编号不能为空', trigger: 'blur'}
+          ],
+          protocol: [
+            {required: true, message: '网关协议不能为空', trigger: 'blur'}
           ]
-          // no: [
-          //   {required: true, message: '网关编号不能为空', trigger: 'blur'}
-          // ],
-          // protocol: [
-          //   {required: true, message: '网关协议不能为空', trigger: 'blur'}
-          // ],
           // position: [
           //   {required: true, message: '网关位置不能为空', trigger: 'blur'}
           // ],
@@ -87,57 +92,54 @@
           // ]
         },
         dataListLoading: false,
-        addOrUpdateVisible: false,
-        buttonVisible: false,
-        gatewayId: '',
-        programId: ''
+        addOrUpdateVisible: false
       }
     },
     components: {
       AddOrUpdate
     },
-    activated () {
-      // this.getDataList()
-    },
-    mounted () {
-    },
-    computed: {
-      // ...mapState({
-      //   programId: state => state.projectData.item.id
-      // })
-    },
     methods: {
       init (id) {
-        // this.dataForm.id = id || 0
-        this.programId = id
+        this.dataForm.id = id || 0
+        this.dataForm.programId = sessionStorage.getItem('projectId')
+        this.isHttp = false
         this.visible = true
-        // this.$nextTick(() => {
-        //   this.$refs['dataForm'].resetFields()
-        //   // 修改逻辑
-        //   if (this.dataForm.id) {
-        //     this.$http({
-        //       url: this.$http.adornUrl(`/sys/device/info/${this.dataForm.id}`),
-        //       method: 'get',
-        //       params: this.$http.adornParams()
-        //     }).then(({data}) => {
-        //       if (data && data.code === 0) {
-        //         this.dataForm.paramKey = data.config.paramKey
-        //         this.dataForm.paramValue = data.config.paramValue
-        //         this.dataForm.remark = data.config.remark
-        //       }
-        //     })
-        //   }
-        // })
+        this.$nextTick(() => {
+          this.$refs['dataForm'].resetFields()
+          if (this.dataForm.id) {
+            this.$http({
+              url: this.$http.adornUrl(`/equipment/gateway/detail/${this.dataForm.id}`),
+              method: 'get',
+              params: this.$http.adornParams()
+            }).then(({data}) => {
+              if (data && data.code === 200) {
+                this.dataForm.id = data.data.id
+                this.dataForm.programId = data.data.programId
+                this.dataForm.no = data.data.no
+                this.dataForm.name = data.data.name
+                this.dataForm.icon = data.data.icon
+                this.dataForm.protocol = data.data.protocol
+                this.dataForm.protocolName = data.data.protocolName
+                this.dataForm.position = data.data.position
+                this.dataForm.description = data.data.description
+                this.dataForm.registerCode = data.data.registerCode
+              }
+            })
+          }
+        })
       },
       // 表单提交
       dataFormSubmit () {
+        console.log(`${!this.dataForm.id ? 'save' : 'update'}`)
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
+            this.isHttp = true
             this.$http({
-              url: this.$http.adornUrl(`/device/add/gateway`),
+              url: this.$http.adornUrl(`/equipment/gateway/${!this.dataForm.id ? 'save' : 'update'}`),
               method: 'post',
               data: this.$http.adornData({
-                'programId': this.programId,
+                'id': this.dataForm.id || undefined,
+                'programId': this.dataForm.programId,
                 'no': this.dataForm.no,
                 'name': this.dataForm.name,
                 'protocol': this.dataForm.protocol,
@@ -147,55 +149,38 @@
               })
             }).then(({data}) => {
               if (data && data.code === 200) {
-                // this.addGatewayIdFuc(data.data.id)
                 this.programId = data.data.programId
                 this.gatewayId = data.data.id
-                this.buttonVisible = data.data.id
                 this.$message({
                   message: '操作成功',
                   type: 'success',
                   duration: 1500,
                   onClose: () => {
                     this.visible = false
+                    this.isHttp = false
                     this.$emit('refreshData', data.data)
                   }
                 })
               } else {
-                // this.addGatewayIdFuc('')
+                this.isHttp = false
                 this.$message.error(data.msg)
               }
             })
           }
         })
       },
-      // 获取传感器列表
-      getDataList () {
-        this.dataListLoading = true
+      // 获取协议数据列表
+      getProtocolList (data) {
         this.$http({
-          url: this.$http.adornUrl('/sys/ortensia/list'),
+          url: this.$http.adornUrl('/equipment/protocol/list'),
           method: 'get',
           params: this.$http.adornParams()
         }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.dataList = data.page.list
-          } else {
-            this.dataList = []
-            this.totalPage = 0
+          if (data && data.code === 200) {
+            this.dataForm.protocolList = data.data
           }
-          this.dataListLoading = false
-          this.buttonVisible = false
-        })
-      },
-      // 传感器添加
-      ortensiaHandle (id) {
-        this.addOrUpdateVisible = true
-        this.visible = false
-        this.$nextTick(() => {
-          this.$refs.addOrtensia.init(id)
         })
       }
-      // ...mapMutations(['addGatewayId']),
-      // ...mapActions(['addGatewayIdFuc'])
     }
   }
 </script>

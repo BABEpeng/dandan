@@ -15,6 +15,11 @@ import { isAuth } from '@/utils'
 import BaiduMap from 'vue-baidu-map'
 import cloneDeep from 'lodash/cloneDeep'
 import VueParticles from 'vue-particles'
+
+import Echarts from 'echarts'
+Vue.prototype.echarts = Echarts
+Vue.use(Echarts)
+
 Vue.use(VueParticles)
 Vue.use(VueCookie)
 Vue.config.productionTip = false

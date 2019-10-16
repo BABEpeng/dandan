@@ -1,25 +1,21 @@
 <template>
   <div class="demo-image">
-    <div class="block" v-for="(item,i) in pro_url">
-<!--      <el-image-->
-<!--        style="width: 100%; height: 100%"-->
-<!--        :src="pro_url[this.$route.query.id]"-->
-<!--        ></el-image>-->
+    <div class="block">
       <el-image style="width: 100%; height: 100%"
-        :src="item"
+        :src="pro_url"
       ></el-image>
     </div>
   </div>
 </template>
 
 <script>
-  import pro1 from '../../../assets/img/首页.jpg'
+  import pro1 from '../../../assets/img/shebei.jpg'
   export default {
     // inject: ['refresh'],
     data () {
       return {
         // eslint-disable-next-line standard/array-bracket-even-spacing
-        pro_url: [pro1]
+        pro_url: pro1
       }
     },
     activated () {

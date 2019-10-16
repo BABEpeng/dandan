@@ -6,11 +6,11 @@
       :visible.sync="visible"
       >
       <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
-        <el-form-item label="编号" prop="no">
-          <el-input v-model="dataForm.no" placeholder="编号"></el-input>
-        </el-form-item>
         <el-form-item label="模版名称" prop="name">
           <el-input v-model="dataForm.name" placeholder="名称"></el-input>
+        </el-form-item>
+        <el-form-item label="编号" prop="no">
+          <el-input v-model="dataForm.no" placeholder="编号"></el-input>
         </el-form-item>
         <el-form-item label="备注" prop="description">
           <el-input v-model="dataForm.description" placeholder="备注"></el-input>
@@ -27,20 +27,16 @@
 
 <script>
   import AddOrUpdate from './ortensia-add-or-update'
-  // import Vuex from 'vuex'
-  // let { mapState } = Vuex
   export default {
     data () {
       return {
         visible: false,
-        programId: '',
         dataForm: {
           id: 0,
           no: '',
           name: '',
-          description: '',
-          remark: '',
-          status: 0
+          programId: '',
+          description: ''
         },
         dataRule: {
           no: [
@@ -58,26 +54,30 @@
       AddOrUpdate
     },
     activated () {
-      // this.getDataList()
     },
     mounted () {
-      this.programId = JSON.parse(sessionStorage.getItem('projectId'))
-    },
-    computed: {
-      // ...mapState({
-      //   programId: state => state.projectData.item.id
-      // })
+      this.programId = sessionStorage.getItem('projectId')
     },
     methods: {
       init (id) {
+        console.log(id)
         this.dataForm.id = id || 0
         this.visible = true
         this.$nextTick(() => {
           this.$refs['dataForm'].resetFields()
-          if (!this.dataForm.id) {
-            // 新增,根据提交按钮触发动作
-          } else {
-            // 项目修改或者编辑，
+          if (this.dataForm.id) {
+            this.$http({
+              url: this.$http.adornUrl(`/equipment/template/detail/${this.dataForm.id}`),
+              method: 'get',
+              params: this.$http.adornParams()
+            }).then(({data}) => {
+              if (data && data.code === 200) {
+                this.dataForm.id = data.data.id
+                this.dataForm.no = data.data.no
+                this.dataForm.name = data.data.name
+                this.dataForm.description = data.data.description
+              }
+            })
           }
         })
       },
@@ -86,15 +86,17 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/device/add/device`),
+              url: this.$http.adornUrl(`/equipment/template/${!this.dataForm.id ? 'save' : 'update'}`),
               method: 'post',
               data: this.$http.adornData({
+                'id': this.dataForm.id,
                 'programId': this.programId,
                 'no': this.dataForm.no,
                 'name': this.dataForm.name,
                 'description': this.dataForm.description
               })
             }).then(({data}) => {
+              console.log(data)
               if (data && data.code === 200) {
                 this.$message({
                   message: '操作成功',
@@ -106,35 +108,11 @@
                   }
                 })
               } else {
+                this.isHttp = false
                 this.$message.error(data.msg)
               }
             })
           }
-        })
-      },
-      // 获取传感器列表
-      getDataList () {
-        this.dataListLoading = true
-        this.$http({
-          url: this.$http.adornUrl('/sys/ortensia/list'),
-          method: 'get',
-          params: this.$http.adornParams()
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.dataList = data.page.list
-          } else {
-            this.dataList = []
-            this.totalPage = 0
-          }
-          this.dataListLoading = false
-        })
-      },
-      // 传感器设置
-      ortensiaHandle (id) {
-        this.addOrUpdateVisible = true
-        this.visible = false
-        this.$nextTick(() => {
-          this.$refs.addOrtensia.init(id)
         })
       }
     }

@@ -3,119 +3,112 @@
     <el-dialog
       :title="!dataForm.id ? '新增设备>绑定传感器' : '修改传感器'"
       :close-on-click-modal="false"
-      :visible.sync="visible"
-    >
-      <el-form :model="dataForm" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
-        <el-form-item label="网关选择:">
-          <template>
-            <el-select v-model="value" placeholder="请选择" @change="getGateOrtenInfo(value)">
-              <el-option
-                v-for="item in this.gatewayId"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-              </el-option>
-            </el-select>
-          </template>
-        </el-form-item>
+      :visible.sync="visible">
+     <el-form :model="dataForm" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
+       <el-form-item label="网关选择:">
+         <template>
+           <el-select v-model="value" placeholder="请选择" @change="getGateOrtenInfo(value)">
+             <el-option
+               v-for="item in this.gatewayId"
+               :key="item.id"
+               :label="item.name"
+               :value="item.id">
+             </el-option>
+           </el-select>
+         </template>
+       </el-form-item>
+     </el-form>
+     <el-form :model="dataForm" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
+       <el-table
+         :data="dataList"
+         size="mini"
+         v-loading="dataListLoading"
+        :header-cell-style="{color:'#333',fontFamily:'MicrosoftYaHeiUI',fontSize:'12px',fontWeight:900}"
+         :row-style="{fontSize:'12px',color:'#666',fontFamily:'MicrosoftYaHeiUI'}"
+         @selection-change="selectionChangeHandle"
+         style="width: 100%;">
+         <el-table-column
+           type="selection"
+           header-align="center"
+           align="center"
+           width="50">
+         </el-table-column>
+         <el-table-column  align="center" label="从机ID">
+           <template slot-scope="scope">
+             <el-form-item label-width="10px" label="" prop="">
+               {{cope.row.slaveId}}
+             </el-form-item>
+           </template>
+         </el-table-column>
+         <el-table-column prop="name" align="center" label="名称">
+           <template slot-scope="scope">
+             <el-form-item label-width="10px" label="" prop="">
+               {{scope.row.name}}
+             </el-form-item>
+           </template>
+         </el-table-column>
+         <el-table-column align="center" label="传感器编号">
+           <template slot-scope="scope">
+             <el-form-item label-width="10px" label="" prop="">
+               {{scope.row.no}}
+             </el-form-item>
+           </template>
+         </el-table-column>
+         <el-table-column align="center" label="位置">
+           <template slot-scope="scope">
+             <el-form-item label-width="10px" label="" prop="">
+               {{scope.row.position}}
+             </el-form-item>
+           </template>
+         </el-table-column>
+         <el-table-column align="center" label="备注">
+           <template slot-scope="scope">
+             <el-form-item label-width="10px" label="" prop="">
+               {{scope.row.description}}
+             </el-form-item>
+           </template>
+         </el-table-column>
+         <el-table-column align="center" width="110" label="点位模版">
+           <template slot-scope="scope">
+             <el-form-item  label-width="10px" prop="">
+               {{scope.row.templateName}}
+             </el-form-item>
+           </template>
+         </el-table-column>
+         <el-table-column align="center" label="状态">
+           <template slot-scope="scope">
+             <el-form-item label-width="10px" label="" prop="">
+               <el-switch
+                 v-model="scope.row.delivery"
+                 active-color="#13ce66"
+                 inactive-color="#ff4949">
+               </el-switch>
+             </el-form-item>
+           </template>
+         </el-table-column>
+         <el-table-column align="center" label="在线/离线">
+           <template slot-scope="scope">
+             <el-form-item label-width="10px" label="" prop="">
+               <el-tag v-if="scope.row.IsOnline === true" size="small">在线</el-tag>
+               <el-tag v-else size="small" type="danger">离线</el-tag>
+             </el-form-item>
+           </template>
+         </el-table-column>
+         <el-table-column align="center" width="100" label="轮询时间" :formatter="formatDate">
+           <template slot-scope="scope">
+             {{ scope.row.addTimestamp }}
+           </template>
+         </el-table-column>
+         <el-table-column align="center" label="绑定状态">
+           <template slot-scope="scope">
+              <el-form-item label-width="10px" label="" prop="">
+               <el-tag v-if="scope.row.IsOnline === true" size="small">已绑定</el-tag>
+               <el-tag v-else size="small" type="danger">未绑定</el-tag>
+             </el-form-item>
+           </template>
+         </el-table-column>
+       </el-table>
       </el-form>
-<!--      <el-form :model="dataForm" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">-->
-<!--        <el-form-item label="网关选择">-->
-<!--          <el-select v-model="" placeholder="网关名称">-->
-<!--            <el-option label="网关一" value="超级网关" />-->
-<!--            <el-option label="网关二" value="普通网关" />-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-<!--        <el-table-->
-<!--          :data="dataList"-->
-<!--          size="mini"-->
-<!--          v-loading="dataListLoading"-->
-<!--          :header-cell-style="{color:'#333',fontFamily:'MicrosoftYaHeiUI',fontSize:'12px',fontWeight:900}"-->
-<!--          :row-style="{fontSize:'12px',color:'#666',fontFamily:'MicrosoftYaHeiUI'}"-->
-<!--          @selection-change="selectionChangeHandle"-->
-<!--          style="width: 100%;">-->
-<!--          <el-table-column-->
-<!--            type="selection"-->
-<!--            header-align="center"-->
-<!--            align="center"-->
-<!--            width="50">-->
-<!--          </el-table-column>-->
-<!--          <el-table-column  align="center" label="从机ID">-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-form-item label-width="10px" label="" prop="">-->
-<!--                {{cope.row.slaveId}}-->
-<!--              </el-form-item>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column prop="name" align="center" label="名称">-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-form-item label-width="10px" label="" prop="">-->
-<!--                {{scope.row.name}}-->
-<!--              </el-form-item>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column align="center" label="传感器编号">-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-form-item label-width="10px" label="" prop="">-->
-<!--                {{scope.row.no}}-->
-<!--              </el-form-item>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column align="center" label="位置">-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-form-item label-width="10px" label="" prop="">-->
-<!--                {{scope.row.position}}-->
-<!--              </el-form-item>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column align="center" label="备注">-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-form-item label-width="10px" label="" prop="">-->
-<!--                {{scope.row.description}}-->
-<!--              </el-form-item>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column align="center" width="110" label="点位模版">-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-form-item  label-width="10px" prop="">-->
-<!--                {{scope.row.templateName}}-->
-<!--              </el-form-item>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column align="center" label="状态">-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-form-item label-width="10px" label="" prop="">-->
-<!--                <el-switch-->
-<!--                  v-model="scope.row.delivery"-->
-<!--                  active-color="#13ce66"-->
-<!--                  inactive-color="#ff4949">-->
-<!--                </el-switch>-->
-<!--              </el-form-item>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column align="center" label="在线/离线">-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-form-item label-width="10px" label="" prop="">-->
-<!--                <el-tag v-if="scope.row.IsOnline === true" size="small">在线</el-tag>-->
-<!--                <el-tag v-else size="small" type="danger">离线</el-tag>-->
-<!--              </el-form-item>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column align="center" width="100" label="轮询时间" :formatter="formatDate">-->
-<!--            <template slot-scope="scope">-->
-<!--              {{ scope.row.addTimestamp }}-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column align="center" label="绑定状态">-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-form-item label-width="10px" label="" prop="">-->
-<!--                <el-tag v-if="scope.row.IsOnline === true" size="small">已绑定</el-tag>-->
-<!--                <el-tag v-else size="small" type="danger">未绑定</el-tag>-->
-<!--              </el-form-item>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--        </el-table>-->
-<!--      </el-form>-->
       <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="visible = false">取消</el-button>
       <el-button type="primary" @click="dataFormSubmit()">完成设备添加</el-button>
