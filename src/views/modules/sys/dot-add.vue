@@ -34,11 +34,11 @@
               label="数据类型">
               <template slot-scope="scope">
                 <el-form-item prop="dataType">
-                  <el-select 
-                  @change="dataTypeChange(scope.$index)"
-                  v-model="scope.row.dataType" placeholder="数据类型" clearable style="width:155px;">
+                  <el-select size="mini"
+                  @change="dataTypeChange(scope.$index,scope.row)"
+                  v-model="scope.row.dataType" placeholder="数据类型" clearable>
                     <el-option
-                      v-for="item in scope.row.dataTypeList"
+                      v-for="item in dataTypeList"
                       :key="item.key"
                       :label="item.name"
                       :value="item.key">
@@ -54,12 +54,12 @@
               label="数值类型">
               <template slot-scope="scope">
                 <el-form-item prop="valueType">
-                  <el-select v-model="scope.row.valueType" placeholder="数值类型" clearable style="width:155px;">
+                  <el-select v-model="scope.row.valueType" size="mini" placeholder="数值类型" clearable>
                     <el-option
-                      v-for="item in scope.row.valueTypeList"
-                      :key="item.value"
-                      :label="item.description"
-                      :value="item.value">
+                      v-for="items in valueTypeList"
+                      :key="items.value"
+                      :label="items.description"
+                      :value="items.value">
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -93,10 +93,11 @@
               prop="operation"
               header-align="center"
               align="center"
+              width="150"
               label="读写模式">
               <template slot-scope="scope">
                 <el-form-item prop="operation">
-                  <el-select v-model="scope.row.operation" placeholder="读写模式" clearable style="width:155px;">
+                  <el-select v-model="scope.row.operation" size="mini" placeholder="读写模式" clearable >
                     <el-option
                       v-for="item in operationList"
                       :key="item.value"
@@ -153,6 +154,7 @@
     data () {
       return {
         visible: false,
+        indexNum:0,
         dotList: [],
         dataTypeList: [],
         valueTypeList: [],
@@ -240,13 +242,23 @@
         this.getDataTypeList()
         this.getOperationList()
       },
-      dataTypeChange (index) {
+      dataTypeChange (index,row) {
+        // console.log(this.dataTypeList,'======>',row)
         for (let i in this.dataTypeList) {
-          console.log(this.dataTypeList[i].key)
+          // console.log(this.dotList[index].dataType)
+          // console.log(this.dataTypeList[i].key)
+          // console.log(this.dataTypeList[i].name)
+          // console.log(this.dataTypeList[i].option[0].description)
+
           if (this.dataTypeList[i].key === this.dotList[index].dataType) {
-            this.dotList[index].valueTypeList = this.dataTypeList[i].option
+            // this.dotList[index].valueTypeList = this.dataTypeList[i].option
+            this.indexNum = i
+            console.log(this.indexNum)
           }
         }
+        this.valueTypeList = this.dataTypeList[this.indexNum].option
+        console.log(this.valueTypeList)
+        
       },
       getDataTypeList () {
         this.$http({
@@ -255,6 +267,7 @@
           data: this.$http.adornData()
         }).then(({data}) => {
           if (data && data.code === 200) {
+            // console.log(data.data)
             this.dataTypeList = data.data
             let row = {
               name: '',
@@ -283,7 +296,7 @@
         }).then(({data}) => {
           if (data && data.code === 200) {
             this.operationList = data.data
-            console.log(this.operationList)
+            // console.log(this.operationList)
           }
         })
       },

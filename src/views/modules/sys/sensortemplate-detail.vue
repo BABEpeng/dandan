@@ -137,10 +137,12 @@
       this.activeName = this.$route.params.option
       this.init(this.$route.params.id)
       this.getDotList()
+      console.log(this.$route.params.id)
     },
     methods: {
       // 初始化头部信息
       init (id) {
+        console.log(id)
         this.dataForm.id = id
         this.templateId = id
         this.$http({

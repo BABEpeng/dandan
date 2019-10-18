@@ -3,9 +3,10 @@
     :title="!dataForm.id ? '新建项目' : '修改项目'"
     :close-on-click-modal="false"
     :visible.sync="visible"
+    @close='closeDialog'
     center
   >
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="80px">
       <el-form-item label= "项目名称">
         <el-input v-model="dataForm.name" placeholder= '请输入项目名称'></el-input>
       </el-form-item>
@@ -75,6 +76,9 @@
         //   }
         // })
       },
+      closeDialog(){
+        this.dataForm={}
+      },
       // 表单提交
       dataFormSubmit () {
         this.$refs['dataForm'].validate((valid) => {
@@ -106,6 +110,7 @@
                     this.$emit('refreshDataList')
                   }
                 })
+                this.dataForm={}
               } else {
                 this.$message.error(data.msg)
               }
