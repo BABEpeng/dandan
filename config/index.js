@@ -14,7 +14,8 @@ module.exports = {
     proxyTable: devEnv.OPEN_PROXY === false ? {} : {
       '/proxyApi': {
         // target: 'http://demo.renren.io/renren-fast/',
-        target: 'http://112.126.102.198:9000',
+        target: 'http://api.lotinsight.com',
+        //target: 'http://192.168.153.85:8080',
         changeOrigin: true,
         pathRewrite: {
           '^/proxyApi': '/'
@@ -23,7 +24,7 @@ module.exports = {
     },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
-    port: 9090, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 80, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,

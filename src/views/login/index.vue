@@ -4,15 +4,15 @@
       <el-form :model="dataForm" :rules="dataRule" ref="dataForm" class="login-form" auto-complete="on" label-position="left"
                @keyup.enter.native="dataFormSubmit()" status-icon>
         <div class="title-container">
-          <h3 class="title">管理员登录</h3>
+          <p class="title">账号密码登录</p>
         </div>
         <el-form-item prop="userName">
            <span class="svg-container">
              <icon-svg name="user"></icon-svg>
            </span>
-          <el-input
+          <el-input 
             v-model="dataForm.userName"
-            placeholder="帐号"
+            placeholder="请输入登录账号"
           />
         </el-form-item>
         <el-form-item prop="password">
@@ -22,10 +22,11 @@
           <el-input
             v-model="dataForm.password"
             type="password"
-            placeholder="密码"
+            placeholder="请输入登录密码"
             ref="password"
           />
         </el-form-item>
+           <el-checkbox label=记住密码 name="type"></el-checkbox>
 
         <!--              <el-form-item prop="captcha">-->
         <!--                <el-row :gutter="20">-->
@@ -39,12 +40,13 @@
         <!--                </el-row>-->
         <!--              </el-form-item>-->
         <el-form-item>
-          <el-button class="login-btn-submit"  :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"@click="dataFormSubmit()">登录</el-button>
+          <el-button class="login-btn-submit"  :loading="loading" type="primary" style="width:100%;" @click="dataFormSubmit()">登录</el-button>
+          <p class="tips">
+            <span>忘记密码</span>
+            <span>注册会员</span>
+          </p>
         </el-form-item>
-<!--        <div class="tips">-->
-<!--          <span>忘记密码</span>-->
-<!--          <span>注册会员</span>-->
-<!--        </div>-->
+       
       </el-form>
     </div>
 <!--    <div class="particles">-->
@@ -162,12 +164,26 @@
 </script>
 
 <style lang="scss">
-
+  // .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner{
+    
+  // }
+  .tips{
+    text-align: right;
+    color: white
+  }
+  .el-checkbox__label{
+    color: #ccc;
+    font-size: 13px
+  }
+  .el-checkbox__inner{
+    background-color:#4a87e2;
+    border-color: #d1d1d1;
+  }
   /* reset element-ui css */
   .login-container {
     .el-input {
       display: inline-block;
-      height: 47px;
+      height: 36px;
       width: 85%;
 
       input {
@@ -175,7 +191,9 @@
         border-radius: 0px;
         padding: 12px 5px 12px 15px;
         /*color: #E5E5E5;*/
-        height: 47px;
+        height: 36px;
+        background: none;
+        border: none
 /*
         &:-webkit-autofill {
           box-shadow: 0 0 0px 1000px $bg inset !important;
@@ -189,9 +207,14 @@
       background: rgba(0, 0, 0, 0);
       border-radius: 5px;
       color: #454545;
+      margin-bottom:16px;
+    }
+    .el-form-item:last-child{
+      border: none
     }
     .el-button {
       background-color: #2082D9;
+      border: none
     }
     .el-form-item__error {
       color: #F56C6C;
@@ -202,10 +225,15 @@
       top: 100%;
       left: 50px;
     }
+    .el-form-item--medium .el-form-item__content{
+      line-height: 28px;
+    }
   }
 </style>
 
 <style lang="scss" scoped>
+  
+  
   .login-container {
     min-height: 100%;
     width: 100%;
@@ -217,11 +245,11 @@
       top: 0;
       left: 0;
       z-index: 0;
-      width: 60%;
+      width:100%;
       height: 100%;
       content: "";
-      background: url(~@/assets/img/bg.png) no-repeat;
-      background-size:100% 100%;
+      background: url(~@/assets/img/bg.jpg) no-repeat;
+      background-size: 100% 100%;
       /*-webkit-animation: bounce-up 1.4s linear infinite;*/
       /*animation: bounce-up 1.4s linear infinite;*/
       -webkit-animation: bounce-down 1.5s linear infinite;
@@ -235,11 +263,12 @@
       /*padding: 160px 35px 0;*/
       margin: 0 auto;
       overflow: hidden;
-      background: #FFFFFF;
-      width: 370px;
-      padding: 10px;
-      top: 200px;
-      left: 276px;
+      background:rgba(89, 144, 227,0.3);
+      border: 1px solid #4793f1;
+      width: 340px;
+      padding:34px 34px 0 34px;
+      top:160px;
+      left: 400px;
       z-index: 300;
     }
 
@@ -256,8 +285,8 @@
 
       .title {
         font-size: 16px;
-        text-align: center;
-        font-weight: bold;
+        text-align: left;
+        color: white
       }
     }
     .login-captcha {
@@ -277,11 +306,11 @@
   }
 
 
- @keyframes bounce-down {
-  25% {transform: translateY(-10px);}
-  50%, 100% {transform: translateY(0);}
-  75% {transform: translateY(10px);}
- }
+//  @keyframes bounce-down {
+//   25% {transform: translateY(-10px);}
+//   50%, 100% {transform: translateY(0);}
+//   75% {transform: translateY(10px);}
+//  }
 
   .particles {
     position: relative;
@@ -289,4 +318,7 @@
     height: 100%;
     padding-top: 100px;
   }
+  // .el-input .el-input--medium{
+    
+  // }
 </style>
